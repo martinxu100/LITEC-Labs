@@ -1,0 +1,132 @@
+/*	Name: Martin Xu
+	Section: 1
+	Side: B
+	Date: 5/30/19
+
+	Assignment description:
+		(for example, track button presses longer that 10s in one minute)
+
+	File name: hw6.c
+	Description: Basic template for Homework 6
+*/
+
+#include <c8051_SDCC.h>// include files. This file is available online
+#include <stdio.h>
+
+
+//-----------------------------------------------------------------------------
+// Function Prototypes
+//-----------------------------------------------------------------------------
+void Port_Init(void);		//Port Initialization
+void Timer_Init(void);     	//Initialize Timer 0 
+void Interrupt_Init(void); 	//Initialize interrupts
+void Timer0_ISR(void) __interrupt 1;
+
+//-----------------------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------------------
+
+unsigned int counts;				//overflow tracking variable
+unsigned char input;	//input variable
+// add additional global variables if needed
+unsigned int current_count;		//current count
+unsigned int button_count;		//button press count
+unsigned int press_length;		//how long each press is
+unsigned int long_presses;		//number of presses longer than 3s
+unsigned int before;				//counts at start of press
+unsigned int after;				//counts at end of press
+
+ __sbit __at 0xA3 PB;	// Pushbutton on Port 2 pin 3
+
+
+
+
+//***************
+void main(void)
+{
+	Sys_Init();      // System Initialization
+	putchar(' ');    // the quote fonts may not copy correctly into SiLabs IDE
+	Port_Init();
+	Interrupt_Init();
+	Timer_Init();    // Initialize Timer 0 
+
+    while (1) /* the following loop contains the button pressing/tracking code */
+    {
+		printf("Enter a keyboard character to begin \r\n");
+		input = getchar();
+
+		counts = 0;
+		button_count = 0;
+		long_presses = 0;
+		before = 0;
+		after = 0;
+		TMR0 = 0;
+
+		printf("Push the button as many times as you like in 20 seconds. \r\n");
+		// add necessary code
+
+		TR0 = 1;					//start timer
+		while (counts < 54000)		//20 seconds
+		{
+			if (PB == 0)				//if button is pressed
+			{
+				before = counts;						//record count at start of press
+				current_count = counts;					//record current count
+				while (counts < (current_count + 54));	//20ms debounce wait
+				while (PB == 0);						//wait for button to be released
+				after = counts;							//recored count at end of press
+				button_count++;							//increment button press count
+				current_count = counts;					//record current count
+				while (counts < (current_count + 54));	//20ms debounce wait
+				press_length = after - before;			//find press length
+				if (press_length > 8100)				//if press length is longer than 3 seconds
+				{
+					long_presses++;						//increment long press count
+				}
+			}
+			
+		}
+
+		printf("%d total presses.\r\n", button_count);
+		printf("%d long presses. \r\n", long_presses);
+    }
+}
+
+//***************
+
+void Port_Init(void)
+{
+	P2MDOUT &= 0xF7;
+	P2 |= ~0xF7;
+}
+
+//***************
+
+void Interrupt_Init(void)
+{
+	ET0 = 1;      // enable Timer0 Interrupt request
+	EA = 1;       // enable global interrupts
+}
+
+//***************
+void Timer_Init(void)
+{
+	
+	CKCON |= 0x08;  // CKCON as needed (SYSCLK)
+	TMOD &= 0xF0;   // TMOD as needed
+	TMOD |= 0x00;   // TMOD as needed (13 bit)
+	TR0 = 0;         // Stop Timer0
+	TL0 = 0;         // Clear low byte of register T0
+	TH0 = 0;         // Clear high byte of register T0
+
+}
+
+
+//***************
+void Timer0_ISR(void) __interrupt 1
+{
+	// add interrupt code here, in this homework, the code will increment the 
+	// global variable 'counts'
+	counts++;
+}
+
