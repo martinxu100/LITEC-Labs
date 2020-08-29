@@ -1,0 +1,1955 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module worksheet_11
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _main
+                                     12 	.globl _putchar
+                                     13 	.globl _printf
+                                     14 	.globl _getchar_nw
+                                     15 	.globl _Sys_Init
+                                     16 	.globl _UART0_Init
+                                     17 	.globl _SYSCLK_Init
+                                     18 	.globl _SPIF
+                                     19 	.globl _WCOL
+                                     20 	.globl _MODF
+                                     21 	.globl _RXOVRN
+                                     22 	.globl _TXBSY
+                                     23 	.globl _SLVSEL
+                                     24 	.globl _MSTEN
+                                     25 	.globl _SPIEN
+                                     26 	.globl _AD0EN
+                                     27 	.globl _ADCEN
+                                     28 	.globl _AD0TM
+                                     29 	.globl _ADCTM
+                                     30 	.globl _AD0INT
+                                     31 	.globl _ADCINT
+                                     32 	.globl _AD0BUSY
+                                     33 	.globl _ADBUSY
+                                     34 	.globl _AD0CM1
+                                     35 	.globl _ADSTM1
+                                     36 	.globl _AD0CM0
+                                     37 	.globl _ADSTM0
+                                     38 	.globl _AD0WINT
+                                     39 	.globl _ADWINT
+                                     40 	.globl _AD0LJST
+                                     41 	.globl _ADLJST
+                                     42 	.globl _CF
+                                     43 	.globl _CR
+                                     44 	.globl _CCF4
+                                     45 	.globl _CCF3
+                                     46 	.globl _CCF2
+                                     47 	.globl _CCF1
+                                     48 	.globl _CCF0
+                                     49 	.globl _CY
+                                     50 	.globl _AC
+                                     51 	.globl _F0
+                                     52 	.globl _RS1
+                                     53 	.globl _RS0
+                                     54 	.globl _OV
+                                     55 	.globl _F1
+                                     56 	.globl _P
+                                     57 	.globl _TF2
+                                     58 	.globl _EXF2
+                                     59 	.globl _RCLK
+                                     60 	.globl _TCLK
+                                     61 	.globl _EXEN2
+                                     62 	.globl _TR2
+                                     63 	.globl _CT2
+                                     64 	.globl _CPRL2
+                                     65 	.globl _BUSY
+                                     66 	.globl _ENSMB
+                                     67 	.globl _STA
+                                     68 	.globl _STO
+                                     69 	.globl _SI
+                                     70 	.globl _AA
+                                     71 	.globl _SMBFTE
+                                     72 	.globl _SMBTOE
+                                     73 	.globl _PT2
+                                     74 	.globl _PS
+                                     75 	.globl _PS0
+                                     76 	.globl _PT1
+                                     77 	.globl _PX1
+                                     78 	.globl _PT0
+                                     79 	.globl _PX0
+                                     80 	.globl _P3_7
+                                     81 	.globl _P3_6
+                                     82 	.globl _P3_5
+                                     83 	.globl _P3_4
+                                     84 	.globl _P3_3
+                                     85 	.globl _P3_2
+                                     86 	.globl _P3_1
+                                     87 	.globl _P3_0
+                                     88 	.globl _EA
+                                     89 	.globl _ET2
+                                     90 	.globl _ES
+                                     91 	.globl _ES0
+                                     92 	.globl _ET1
+                                     93 	.globl _EX1
+                                     94 	.globl _ET0
+                                     95 	.globl _EX0
+                                     96 	.globl _P2_7
+                                     97 	.globl _P2_6
+                                     98 	.globl _P2_5
+                                     99 	.globl _P2_4
+                                    100 	.globl _P2_3
+                                    101 	.globl _P2_2
+                                    102 	.globl _P2_1
+                                    103 	.globl _P2_0
+                                    104 	.globl _S0MODE
+                                    105 	.globl _SM00
+                                    106 	.globl _SM0
+                                    107 	.globl _SM10
+                                    108 	.globl _SM1
+                                    109 	.globl _MCE0
+                                    110 	.globl _SM20
+                                    111 	.globl _SM2
+                                    112 	.globl _REN0
+                                    113 	.globl _REN
+                                    114 	.globl _TB80
+                                    115 	.globl _TB8
+                                    116 	.globl _RB80
+                                    117 	.globl _RB8
+                                    118 	.globl _TI0
+                                    119 	.globl _TI
+                                    120 	.globl _RI0
+                                    121 	.globl _RI
+                                    122 	.globl _P1_7
+                                    123 	.globl _P1_6
+                                    124 	.globl _P1_5
+                                    125 	.globl _P1_4
+                                    126 	.globl _P1_3
+                                    127 	.globl _P1_2
+                                    128 	.globl _P1_1
+                                    129 	.globl _P1_0
+                                    130 	.globl _TF1
+                                    131 	.globl _TR1
+                                    132 	.globl _TF0
+                                    133 	.globl _TR0
+                                    134 	.globl _IE1
+                                    135 	.globl _IT1
+                                    136 	.globl _IE0
+                                    137 	.globl _IT0
+                                    138 	.globl _P0_7
+                                    139 	.globl _P0_6
+                                    140 	.globl _P0_5
+                                    141 	.globl _P0_4
+                                    142 	.globl _P0_3
+                                    143 	.globl _P0_2
+                                    144 	.globl _P0_1
+                                    145 	.globl _P0_0
+                                    146 	.globl _PCA0CP4
+                                    147 	.globl _PCA0CP3
+                                    148 	.globl _PCA0CP2
+                                    149 	.globl _PCA0CP1
+                                    150 	.globl _PCA0CP0
+                                    151 	.globl _PCA0
+                                    152 	.globl _DAC1
+                                    153 	.globl _DAC0
+                                    154 	.globl _ADC0LT
+                                    155 	.globl _ADC0GT
+                                    156 	.globl _ADC0
+                                    157 	.globl _RCAP4
+                                    158 	.globl _TMR4
+                                    159 	.globl _TMR3RL
+                                    160 	.globl _TMR3
+                                    161 	.globl _RCAP2
+                                    162 	.globl _TMR2
+                                    163 	.globl _TMR1
+                                    164 	.globl _TMR0
+                                    165 	.globl _WDTCN
+                                    166 	.globl _PCA0CPH4
+                                    167 	.globl _PCA0CPH3
+                                    168 	.globl _PCA0CPH2
+                                    169 	.globl _PCA0CPH1
+                                    170 	.globl _PCA0CPH0
+                                    171 	.globl _PCA0H
+                                    172 	.globl _SPI0CN
+                                    173 	.globl _EIP2
+                                    174 	.globl _EIP1
+                                    175 	.globl _TH4
+                                    176 	.globl _TL4
+                                    177 	.globl _SADDR1
+                                    178 	.globl _SBUF1
+                                    179 	.globl _SCON1
+                                    180 	.globl _B
+                                    181 	.globl _RSTSRC
+                                    182 	.globl _PCA0CPL4
+                                    183 	.globl _PCA0CPL3
+                                    184 	.globl _PCA0CPL2
+                                    185 	.globl _PCA0CPL1
+                                    186 	.globl _PCA0CPL0
+                                    187 	.globl _PCA0L
+                                    188 	.globl _ADC0CN
+                                    189 	.globl _EIE2
+                                    190 	.globl _EIE1
+                                    191 	.globl _RCAP4H
+                                    192 	.globl _RCAP4L
+                                    193 	.globl _XBR2
+                                    194 	.globl _XBR1
+                                    195 	.globl _XBR0
+                                    196 	.globl _ACC
+                                    197 	.globl _PCA0CPM4
+                                    198 	.globl _PCA0CPM3
+                                    199 	.globl _PCA0CPM2
+                                    200 	.globl _PCA0CPM1
+                                    201 	.globl _PCA0CPM0
+                                    202 	.globl _PCA0MD
+                                    203 	.globl _PCA0CN
+                                    204 	.globl _DAC1CN
+                                    205 	.globl _DAC1H
+                                    206 	.globl _DAC1L
+                                    207 	.globl _DAC0CN
+                                    208 	.globl _DAC0H
+                                    209 	.globl _DAC0L
+                                    210 	.globl _REF0CN
+                                    211 	.globl _PSW
+                                    212 	.globl _SMB0CR
+                                    213 	.globl _TH2
+                                    214 	.globl _TL2
+                                    215 	.globl _RCAP2H
+                                    216 	.globl _RCAP2L
+                                    217 	.globl _T4CON
+                                    218 	.globl _T2CON
+                                    219 	.globl _ADC0LTH
+                                    220 	.globl _ADC0LTL
+                                    221 	.globl _ADC0GTH
+                                    222 	.globl _ADC0GTL
+                                    223 	.globl _SMB0ADR
+                                    224 	.globl _SMB0DAT
+                                    225 	.globl _SMB0STA
+                                    226 	.globl _SMB0CN
+                                    227 	.globl _ADC0H
+                                    228 	.globl _ADC0L
+                                    229 	.globl _P1MDIN
+                                    230 	.globl _ADC0CF
+                                    231 	.globl _AMX0SL
+                                    232 	.globl _AMX0CF
+                                    233 	.globl _SADEN0
+                                    234 	.globl _IP
+                                    235 	.globl _FLACL
+                                    236 	.globl _FLSCL
+                                    237 	.globl _P74OUT
+                                    238 	.globl _OSCICN
+                                    239 	.globl _OSCXCN
+                                    240 	.globl _P3
+                                    241 	.globl __XPAGE
+                                    242 	.globl _EMI0CN
+                                    243 	.globl _SADEN1
+                                    244 	.globl _P3IF
+                                    245 	.globl _AMX1SL
+                                    246 	.globl _ADC1CF
+                                    247 	.globl _ADC1CN
+                                    248 	.globl _SADDR0
+                                    249 	.globl _IE
+                                    250 	.globl _P3MDOUT
+                                    251 	.globl _PRT3CF
+                                    252 	.globl _P2MDOUT
+                                    253 	.globl _PRT2CF
+                                    254 	.globl _P1MDOUT
+                                    255 	.globl _PRT1CF
+                                    256 	.globl _P0MDOUT
+                                    257 	.globl _PRT0CF
+                                    258 	.globl _EMI0CF
+                                    259 	.globl _EMI0TC
+                                    260 	.globl _P2
+                                    261 	.globl _CPT1CN
+                                    262 	.globl _CPT0CN
+                                    263 	.globl _SPI0CKR
+                                    264 	.globl _ADC1
+                                    265 	.globl _SPI0DAT
+                                    266 	.globl _SPI0CFG
+                                    267 	.globl _SBUF0
+                                    268 	.globl _SBUF
+                                    269 	.globl _SCON0
+                                    270 	.globl _SCON
+                                    271 	.globl _P7
+                                    272 	.globl _TMR3H
+                                    273 	.globl _TMR3L
+                                    274 	.globl _TMR3RLH
+                                    275 	.globl _TMR3RLL
+                                    276 	.globl _TMR3CN
+                                    277 	.globl _P1
+                                    278 	.globl _PSCTL
+                                    279 	.globl _CKCON
+                                    280 	.globl _TH1
+                                    281 	.globl _TH0
+                                    282 	.globl _TL1
+                                    283 	.globl _TL0
+                                    284 	.globl _TMOD
+                                    285 	.globl _TCON
+                                    286 	.globl _PCON
+                                    287 	.globl _P6
+                                    288 	.globl _P5
+                                    289 	.globl _P4
+                                    290 	.globl _DPH
+                                    291 	.globl _DPL
+                                    292 	.globl _SP
+                                    293 	.globl _P0
+                                    294 	.globl _temp_motorpw_alg6
+                                    295 	.globl _temp_motorpw_alg5
+                                    296 	.globl _temp_motorpw_alg4
+                                    297 	.globl _temp_motorpw_alg3
+                                    298 	.globl _temp_motorpw_alg2
+                                    299 	.globl _temp_motorpw_alg1
+                                    300 	.globl _temp_motorpw_2byte
+                                    301 	.globl _error
+                                    302 	.globl _previous_error
+                                    303 	.globl _pw_neut
+                                    304 	.globl _kd
+                                    305 	.globl _kp
+                                    306 	.globl _actual
+                                    307 	.globl _desired
+                                    308 ;--------------------------------------------------------
+                                    309 ; special function registers
+                                    310 ;--------------------------------------------------------
+                                    311 	.area RSEG    (ABS,DATA)
+      000000                        312 	.org 0x0000
+                           000080   313 G$P0$0$0 == 0x0080
+                           000080   314 _P0	=	0x0080
+                           000081   315 G$SP$0$0 == 0x0081
+                           000081   316 _SP	=	0x0081
+                           000082   317 G$DPL$0$0 == 0x0082
+                           000082   318 _DPL	=	0x0082
+                           000083   319 G$DPH$0$0 == 0x0083
+                           000083   320 _DPH	=	0x0083
+                           000084   321 G$P4$0$0 == 0x0084
+                           000084   322 _P4	=	0x0084
+                           000085   323 G$P5$0$0 == 0x0085
+                           000085   324 _P5	=	0x0085
+                           000086   325 G$P6$0$0 == 0x0086
+                           000086   326 _P6	=	0x0086
+                           000087   327 G$PCON$0$0 == 0x0087
+                           000087   328 _PCON	=	0x0087
+                           000088   329 G$TCON$0$0 == 0x0088
+                           000088   330 _TCON	=	0x0088
+                           000089   331 G$TMOD$0$0 == 0x0089
+                           000089   332 _TMOD	=	0x0089
+                           00008A   333 G$TL0$0$0 == 0x008a
+                           00008A   334 _TL0	=	0x008a
+                           00008B   335 G$TL1$0$0 == 0x008b
+                           00008B   336 _TL1	=	0x008b
+                           00008C   337 G$TH0$0$0 == 0x008c
+                           00008C   338 _TH0	=	0x008c
+                           00008D   339 G$TH1$0$0 == 0x008d
+                           00008D   340 _TH1	=	0x008d
+                           00008E   341 G$CKCON$0$0 == 0x008e
+                           00008E   342 _CKCON	=	0x008e
+                           00008F   343 G$PSCTL$0$0 == 0x008f
+                           00008F   344 _PSCTL	=	0x008f
+                           000090   345 G$P1$0$0 == 0x0090
+                           000090   346 _P1	=	0x0090
+                           000091   347 G$TMR3CN$0$0 == 0x0091
+                           000091   348 _TMR3CN	=	0x0091
+                           000092   349 G$TMR3RLL$0$0 == 0x0092
+                           000092   350 _TMR3RLL	=	0x0092
+                           000093   351 G$TMR3RLH$0$0 == 0x0093
+                           000093   352 _TMR3RLH	=	0x0093
+                           000094   353 G$TMR3L$0$0 == 0x0094
+                           000094   354 _TMR3L	=	0x0094
+                           000095   355 G$TMR3H$0$0 == 0x0095
+                           000095   356 _TMR3H	=	0x0095
+                           000096   357 G$P7$0$0 == 0x0096
+                           000096   358 _P7	=	0x0096
+                           000098   359 G$SCON$0$0 == 0x0098
+                           000098   360 _SCON	=	0x0098
+                           000098   361 G$SCON0$0$0 == 0x0098
+                           000098   362 _SCON0	=	0x0098
+                           000099   363 G$SBUF$0$0 == 0x0099
+                           000099   364 _SBUF	=	0x0099
+                           000099   365 G$SBUF0$0$0 == 0x0099
+                           000099   366 _SBUF0	=	0x0099
+                           00009A   367 G$SPI0CFG$0$0 == 0x009a
+                           00009A   368 _SPI0CFG	=	0x009a
+                           00009B   369 G$SPI0DAT$0$0 == 0x009b
+                           00009B   370 _SPI0DAT	=	0x009b
+                           00009C   371 G$ADC1$0$0 == 0x009c
+                           00009C   372 _ADC1	=	0x009c
+                           00009D   373 G$SPI0CKR$0$0 == 0x009d
+                           00009D   374 _SPI0CKR	=	0x009d
+                           00009E   375 G$CPT0CN$0$0 == 0x009e
+                           00009E   376 _CPT0CN	=	0x009e
+                           00009F   377 G$CPT1CN$0$0 == 0x009f
+                           00009F   378 _CPT1CN	=	0x009f
+                           0000A0   379 G$P2$0$0 == 0x00a0
+                           0000A0   380 _P2	=	0x00a0
+                           0000A1   381 G$EMI0TC$0$0 == 0x00a1
+                           0000A1   382 _EMI0TC	=	0x00a1
+                           0000A3   383 G$EMI0CF$0$0 == 0x00a3
+                           0000A3   384 _EMI0CF	=	0x00a3
+                           0000A4   385 G$PRT0CF$0$0 == 0x00a4
+                           0000A4   386 _PRT0CF	=	0x00a4
+                           0000A4   387 G$P0MDOUT$0$0 == 0x00a4
+                           0000A4   388 _P0MDOUT	=	0x00a4
+                           0000A5   389 G$PRT1CF$0$0 == 0x00a5
+                           0000A5   390 _PRT1CF	=	0x00a5
+                           0000A5   391 G$P1MDOUT$0$0 == 0x00a5
+                           0000A5   392 _P1MDOUT	=	0x00a5
+                           0000A6   393 G$PRT2CF$0$0 == 0x00a6
+                           0000A6   394 _PRT2CF	=	0x00a6
+                           0000A6   395 G$P2MDOUT$0$0 == 0x00a6
+                           0000A6   396 _P2MDOUT	=	0x00a6
+                           0000A7   397 G$PRT3CF$0$0 == 0x00a7
+                           0000A7   398 _PRT3CF	=	0x00a7
+                           0000A7   399 G$P3MDOUT$0$0 == 0x00a7
+                           0000A7   400 _P3MDOUT	=	0x00a7
+                           0000A8   401 G$IE$0$0 == 0x00a8
+                           0000A8   402 _IE	=	0x00a8
+                           0000A9   403 G$SADDR0$0$0 == 0x00a9
+                           0000A9   404 _SADDR0	=	0x00a9
+                           0000AA   405 G$ADC1CN$0$0 == 0x00aa
+                           0000AA   406 _ADC1CN	=	0x00aa
+                           0000AB   407 G$ADC1CF$0$0 == 0x00ab
+                           0000AB   408 _ADC1CF	=	0x00ab
+                           0000AC   409 G$AMX1SL$0$0 == 0x00ac
+                           0000AC   410 _AMX1SL	=	0x00ac
+                           0000AD   411 G$P3IF$0$0 == 0x00ad
+                           0000AD   412 _P3IF	=	0x00ad
+                           0000AE   413 G$SADEN1$0$0 == 0x00ae
+                           0000AE   414 _SADEN1	=	0x00ae
+                           0000AF   415 G$EMI0CN$0$0 == 0x00af
+                           0000AF   416 _EMI0CN	=	0x00af
+                           0000AF   417 G$_XPAGE$0$0 == 0x00af
+                           0000AF   418 __XPAGE	=	0x00af
+                           0000B0   419 G$P3$0$0 == 0x00b0
+                           0000B0   420 _P3	=	0x00b0
+                           0000B1   421 G$OSCXCN$0$0 == 0x00b1
+                           0000B1   422 _OSCXCN	=	0x00b1
+                           0000B2   423 G$OSCICN$0$0 == 0x00b2
+                           0000B2   424 _OSCICN	=	0x00b2
+                           0000B5   425 G$P74OUT$0$0 == 0x00b5
+                           0000B5   426 _P74OUT	=	0x00b5
+                           0000B6   427 G$FLSCL$0$0 == 0x00b6
+                           0000B6   428 _FLSCL	=	0x00b6
+                           0000B7   429 G$FLACL$0$0 == 0x00b7
+                           0000B7   430 _FLACL	=	0x00b7
+                           0000B8   431 G$IP$0$0 == 0x00b8
+                           0000B8   432 _IP	=	0x00b8
+                           0000B9   433 G$SADEN0$0$0 == 0x00b9
+                           0000B9   434 _SADEN0	=	0x00b9
+                           0000BA   435 G$AMX0CF$0$0 == 0x00ba
+                           0000BA   436 _AMX0CF	=	0x00ba
+                           0000BB   437 G$AMX0SL$0$0 == 0x00bb
+                           0000BB   438 _AMX0SL	=	0x00bb
+                           0000BC   439 G$ADC0CF$0$0 == 0x00bc
+                           0000BC   440 _ADC0CF	=	0x00bc
+                           0000BD   441 G$P1MDIN$0$0 == 0x00bd
+                           0000BD   442 _P1MDIN	=	0x00bd
+                           0000BE   443 G$ADC0L$0$0 == 0x00be
+                           0000BE   444 _ADC0L	=	0x00be
+                           0000BF   445 G$ADC0H$0$0 == 0x00bf
+                           0000BF   446 _ADC0H	=	0x00bf
+                           0000C0   447 G$SMB0CN$0$0 == 0x00c0
+                           0000C0   448 _SMB0CN	=	0x00c0
+                           0000C1   449 G$SMB0STA$0$0 == 0x00c1
+                           0000C1   450 _SMB0STA	=	0x00c1
+                           0000C2   451 G$SMB0DAT$0$0 == 0x00c2
+                           0000C2   452 _SMB0DAT	=	0x00c2
+                           0000C3   453 G$SMB0ADR$0$0 == 0x00c3
+                           0000C3   454 _SMB0ADR	=	0x00c3
+                           0000C4   455 G$ADC0GTL$0$0 == 0x00c4
+                           0000C4   456 _ADC0GTL	=	0x00c4
+                           0000C5   457 G$ADC0GTH$0$0 == 0x00c5
+                           0000C5   458 _ADC0GTH	=	0x00c5
+                           0000C6   459 G$ADC0LTL$0$0 == 0x00c6
+                           0000C6   460 _ADC0LTL	=	0x00c6
+                           0000C7   461 G$ADC0LTH$0$0 == 0x00c7
+                           0000C7   462 _ADC0LTH	=	0x00c7
+                           0000C8   463 G$T2CON$0$0 == 0x00c8
+                           0000C8   464 _T2CON	=	0x00c8
+                           0000C9   465 G$T4CON$0$0 == 0x00c9
+                           0000C9   466 _T4CON	=	0x00c9
+                           0000CA   467 G$RCAP2L$0$0 == 0x00ca
+                           0000CA   468 _RCAP2L	=	0x00ca
+                           0000CB   469 G$RCAP2H$0$0 == 0x00cb
+                           0000CB   470 _RCAP2H	=	0x00cb
+                           0000CC   471 G$TL2$0$0 == 0x00cc
+                           0000CC   472 _TL2	=	0x00cc
+                           0000CD   473 G$TH2$0$0 == 0x00cd
+                           0000CD   474 _TH2	=	0x00cd
+                           0000CF   475 G$SMB0CR$0$0 == 0x00cf
+                           0000CF   476 _SMB0CR	=	0x00cf
+                           0000D0   477 G$PSW$0$0 == 0x00d0
+                           0000D0   478 _PSW	=	0x00d0
+                           0000D1   479 G$REF0CN$0$0 == 0x00d1
+                           0000D1   480 _REF0CN	=	0x00d1
+                           0000D2   481 G$DAC0L$0$0 == 0x00d2
+                           0000D2   482 _DAC0L	=	0x00d2
+                           0000D3   483 G$DAC0H$0$0 == 0x00d3
+                           0000D3   484 _DAC0H	=	0x00d3
+                           0000D4   485 G$DAC0CN$0$0 == 0x00d4
+                           0000D4   486 _DAC0CN	=	0x00d4
+                           0000D5   487 G$DAC1L$0$0 == 0x00d5
+                           0000D5   488 _DAC1L	=	0x00d5
+                           0000D6   489 G$DAC1H$0$0 == 0x00d6
+                           0000D6   490 _DAC1H	=	0x00d6
+                           0000D7   491 G$DAC1CN$0$0 == 0x00d7
+                           0000D7   492 _DAC1CN	=	0x00d7
+                           0000D8   493 G$PCA0CN$0$0 == 0x00d8
+                           0000D8   494 _PCA0CN	=	0x00d8
+                           0000D9   495 G$PCA0MD$0$0 == 0x00d9
+                           0000D9   496 _PCA0MD	=	0x00d9
+                           0000DA   497 G$PCA0CPM0$0$0 == 0x00da
+                           0000DA   498 _PCA0CPM0	=	0x00da
+                           0000DB   499 G$PCA0CPM1$0$0 == 0x00db
+                           0000DB   500 _PCA0CPM1	=	0x00db
+                           0000DC   501 G$PCA0CPM2$0$0 == 0x00dc
+                           0000DC   502 _PCA0CPM2	=	0x00dc
+                           0000DD   503 G$PCA0CPM3$0$0 == 0x00dd
+                           0000DD   504 _PCA0CPM3	=	0x00dd
+                           0000DE   505 G$PCA0CPM4$0$0 == 0x00de
+                           0000DE   506 _PCA0CPM4	=	0x00de
+                           0000E0   507 G$ACC$0$0 == 0x00e0
+                           0000E0   508 _ACC	=	0x00e0
+                           0000E1   509 G$XBR0$0$0 == 0x00e1
+                           0000E1   510 _XBR0	=	0x00e1
+                           0000E2   511 G$XBR1$0$0 == 0x00e2
+                           0000E2   512 _XBR1	=	0x00e2
+                           0000E3   513 G$XBR2$0$0 == 0x00e3
+                           0000E3   514 _XBR2	=	0x00e3
+                           0000E4   515 G$RCAP4L$0$0 == 0x00e4
+                           0000E4   516 _RCAP4L	=	0x00e4
+                           0000E5   517 G$RCAP4H$0$0 == 0x00e5
+                           0000E5   518 _RCAP4H	=	0x00e5
+                           0000E6   519 G$EIE1$0$0 == 0x00e6
+                           0000E6   520 _EIE1	=	0x00e6
+                           0000E7   521 G$EIE2$0$0 == 0x00e7
+                           0000E7   522 _EIE2	=	0x00e7
+                           0000E8   523 G$ADC0CN$0$0 == 0x00e8
+                           0000E8   524 _ADC0CN	=	0x00e8
+                           0000E9   525 G$PCA0L$0$0 == 0x00e9
+                           0000E9   526 _PCA0L	=	0x00e9
+                           0000EA   527 G$PCA0CPL0$0$0 == 0x00ea
+                           0000EA   528 _PCA0CPL0	=	0x00ea
+                           0000EB   529 G$PCA0CPL1$0$0 == 0x00eb
+                           0000EB   530 _PCA0CPL1	=	0x00eb
+                           0000EC   531 G$PCA0CPL2$0$0 == 0x00ec
+                           0000EC   532 _PCA0CPL2	=	0x00ec
+                           0000ED   533 G$PCA0CPL3$0$0 == 0x00ed
+                           0000ED   534 _PCA0CPL3	=	0x00ed
+                           0000EE   535 G$PCA0CPL4$0$0 == 0x00ee
+                           0000EE   536 _PCA0CPL4	=	0x00ee
+                           0000EF   537 G$RSTSRC$0$0 == 0x00ef
+                           0000EF   538 _RSTSRC	=	0x00ef
+                           0000F0   539 G$B$0$0 == 0x00f0
+                           0000F0   540 _B	=	0x00f0
+                           0000F1   541 G$SCON1$0$0 == 0x00f1
+                           0000F1   542 _SCON1	=	0x00f1
+                           0000F2   543 G$SBUF1$0$0 == 0x00f2
+                           0000F2   544 _SBUF1	=	0x00f2
+                           0000F3   545 G$SADDR1$0$0 == 0x00f3
+                           0000F3   546 _SADDR1	=	0x00f3
+                           0000F4   547 G$TL4$0$0 == 0x00f4
+                           0000F4   548 _TL4	=	0x00f4
+                           0000F5   549 G$TH4$0$0 == 0x00f5
+                           0000F5   550 _TH4	=	0x00f5
+                           0000F6   551 G$EIP1$0$0 == 0x00f6
+                           0000F6   552 _EIP1	=	0x00f6
+                           0000F7   553 G$EIP2$0$0 == 0x00f7
+                           0000F7   554 _EIP2	=	0x00f7
+                           0000F8   555 G$SPI0CN$0$0 == 0x00f8
+                           0000F8   556 _SPI0CN	=	0x00f8
+                           0000F9   557 G$PCA0H$0$0 == 0x00f9
+                           0000F9   558 _PCA0H	=	0x00f9
+                           0000FA   559 G$PCA0CPH0$0$0 == 0x00fa
+                           0000FA   560 _PCA0CPH0	=	0x00fa
+                           0000FB   561 G$PCA0CPH1$0$0 == 0x00fb
+                           0000FB   562 _PCA0CPH1	=	0x00fb
+                           0000FC   563 G$PCA0CPH2$0$0 == 0x00fc
+                           0000FC   564 _PCA0CPH2	=	0x00fc
+                           0000FD   565 G$PCA0CPH3$0$0 == 0x00fd
+                           0000FD   566 _PCA0CPH3	=	0x00fd
+                           0000FE   567 G$PCA0CPH4$0$0 == 0x00fe
+                           0000FE   568 _PCA0CPH4	=	0x00fe
+                           0000FF   569 G$WDTCN$0$0 == 0x00ff
+                           0000FF   570 _WDTCN	=	0x00ff
+                           008C8A   571 G$TMR0$0$0 == 0x8c8a
+                           008C8A   572 _TMR0	=	0x8c8a
+                           008D8B   573 G$TMR1$0$0 == 0x8d8b
+                           008D8B   574 _TMR1	=	0x8d8b
+                           00CDCC   575 G$TMR2$0$0 == 0xcdcc
+                           00CDCC   576 _TMR2	=	0xcdcc
+                           00CBCA   577 G$RCAP2$0$0 == 0xcbca
+                           00CBCA   578 _RCAP2	=	0xcbca
+                           009594   579 G$TMR3$0$0 == 0x9594
+                           009594   580 _TMR3	=	0x9594
+                           009392   581 G$TMR3RL$0$0 == 0x9392
+                           009392   582 _TMR3RL	=	0x9392
+                           00F5F4   583 G$TMR4$0$0 == 0xf5f4
+                           00F5F4   584 _TMR4	=	0xf5f4
+                           00E5E4   585 G$RCAP4$0$0 == 0xe5e4
+                           00E5E4   586 _RCAP4	=	0xe5e4
+                           00BFBE   587 G$ADC0$0$0 == 0xbfbe
+                           00BFBE   588 _ADC0	=	0xbfbe
+                           00C5C4   589 G$ADC0GT$0$0 == 0xc5c4
+                           00C5C4   590 _ADC0GT	=	0xc5c4
+                           00C7C6   591 G$ADC0LT$0$0 == 0xc7c6
+                           00C7C6   592 _ADC0LT	=	0xc7c6
+                           00D3D2   593 G$DAC0$0$0 == 0xd3d2
+                           00D3D2   594 _DAC0	=	0xd3d2
+                           00D6D5   595 G$DAC1$0$0 == 0xd6d5
+                           00D6D5   596 _DAC1	=	0xd6d5
+                           00F9E9   597 G$PCA0$0$0 == 0xf9e9
+                           00F9E9   598 _PCA0	=	0xf9e9
+                           00FAEA   599 G$PCA0CP0$0$0 == 0xfaea
+                           00FAEA   600 _PCA0CP0	=	0xfaea
+                           00FBEB   601 G$PCA0CP1$0$0 == 0xfbeb
+                           00FBEB   602 _PCA0CP1	=	0xfbeb
+                           00FCEC   603 G$PCA0CP2$0$0 == 0xfcec
+                           00FCEC   604 _PCA0CP2	=	0xfcec
+                           00FDED   605 G$PCA0CP3$0$0 == 0xfded
+                           00FDED   606 _PCA0CP3	=	0xfded
+                           00FEEE   607 G$PCA0CP4$0$0 == 0xfeee
+                           00FEEE   608 _PCA0CP4	=	0xfeee
+                                    609 ;--------------------------------------------------------
+                                    610 ; special function bits
+                                    611 ;--------------------------------------------------------
+                                    612 	.area RSEG    (ABS,DATA)
+      000000                        613 	.org 0x0000
+                           000080   614 G$P0_0$0$0 == 0x0080
+                           000080   615 _P0_0	=	0x0080
+                           000081   616 G$P0_1$0$0 == 0x0081
+                           000081   617 _P0_1	=	0x0081
+                           000082   618 G$P0_2$0$0 == 0x0082
+                           000082   619 _P0_2	=	0x0082
+                           000083   620 G$P0_3$0$0 == 0x0083
+                           000083   621 _P0_3	=	0x0083
+                           000084   622 G$P0_4$0$0 == 0x0084
+                           000084   623 _P0_4	=	0x0084
+                           000085   624 G$P0_5$0$0 == 0x0085
+                           000085   625 _P0_5	=	0x0085
+                           000086   626 G$P0_6$0$0 == 0x0086
+                           000086   627 _P0_6	=	0x0086
+                           000087   628 G$P0_7$0$0 == 0x0087
+                           000087   629 _P0_7	=	0x0087
+                           000088   630 G$IT0$0$0 == 0x0088
+                           000088   631 _IT0	=	0x0088
+                           000089   632 G$IE0$0$0 == 0x0089
+                           000089   633 _IE0	=	0x0089
+                           00008A   634 G$IT1$0$0 == 0x008a
+                           00008A   635 _IT1	=	0x008a
+                           00008B   636 G$IE1$0$0 == 0x008b
+                           00008B   637 _IE1	=	0x008b
+                           00008C   638 G$TR0$0$0 == 0x008c
+                           00008C   639 _TR0	=	0x008c
+                           00008D   640 G$TF0$0$0 == 0x008d
+                           00008D   641 _TF0	=	0x008d
+                           00008E   642 G$TR1$0$0 == 0x008e
+                           00008E   643 _TR1	=	0x008e
+                           00008F   644 G$TF1$0$0 == 0x008f
+                           00008F   645 _TF1	=	0x008f
+                           000090   646 G$P1_0$0$0 == 0x0090
+                           000090   647 _P1_0	=	0x0090
+                           000091   648 G$P1_1$0$0 == 0x0091
+                           000091   649 _P1_1	=	0x0091
+                           000092   650 G$P1_2$0$0 == 0x0092
+                           000092   651 _P1_2	=	0x0092
+                           000093   652 G$P1_3$0$0 == 0x0093
+                           000093   653 _P1_3	=	0x0093
+                           000094   654 G$P1_4$0$0 == 0x0094
+                           000094   655 _P1_4	=	0x0094
+                           000095   656 G$P1_5$0$0 == 0x0095
+                           000095   657 _P1_5	=	0x0095
+                           000096   658 G$P1_6$0$0 == 0x0096
+                           000096   659 _P1_6	=	0x0096
+                           000097   660 G$P1_7$0$0 == 0x0097
+                           000097   661 _P1_7	=	0x0097
+                           000098   662 G$RI$0$0 == 0x0098
+                           000098   663 _RI	=	0x0098
+                           000098   664 G$RI0$0$0 == 0x0098
+                           000098   665 _RI0	=	0x0098
+                           000099   666 G$TI$0$0 == 0x0099
+                           000099   667 _TI	=	0x0099
+                           000099   668 G$TI0$0$0 == 0x0099
+                           000099   669 _TI0	=	0x0099
+                           00009A   670 G$RB8$0$0 == 0x009a
+                           00009A   671 _RB8	=	0x009a
+                           00009A   672 G$RB80$0$0 == 0x009a
+                           00009A   673 _RB80	=	0x009a
+                           00009B   674 G$TB8$0$0 == 0x009b
+                           00009B   675 _TB8	=	0x009b
+                           00009B   676 G$TB80$0$0 == 0x009b
+                           00009B   677 _TB80	=	0x009b
+                           00009C   678 G$REN$0$0 == 0x009c
+                           00009C   679 _REN	=	0x009c
+                           00009C   680 G$REN0$0$0 == 0x009c
+                           00009C   681 _REN0	=	0x009c
+                           00009D   682 G$SM2$0$0 == 0x009d
+                           00009D   683 _SM2	=	0x009d
+                           00009D   684 G$SM20$0$0 == 0x009d
+                           00009D   685 _SM20	=	0x009d
+                           00009D   686 G$MCE0$0$0 == 0x009d
+                           00009D   687 _MCE0	=	0x009d
+                           00009E   688 G$SM1$0$0 == 0x009e
+                           00009E   689 _SM1	=	0x009e
+                           00009E   690 G$SM10$0$0 == 0x009e
+                           00009E   691 _SM10	=	0x009e
+                           00009F   692 G$SM0$0$0 == 0x009f
+                           00009F   693 _SM0	=	0x009f
+                           00009F   694 G$SM00$0$0 == 0x009f
+                           00009F   695 _SM00	=	0x009f
+                           00009F   696 G$S0MODE$0$0 == 0x009f
+                           00009F   697 _S0MODE	=	0x009f
+                           0000A0   698 G$P2_0$0$0 == 0x00a0
+                           0000A0   699 _P2_0	=	0x00a0
+                           0000A1   700 G$P2_1$0$0 == 0x00a1
+                           0000A1   701 _P2_1	=	0x00a1
+                           0000A2   702 G$P2_2$0$0 == 0x00a2
+                           0000A2   703 _P2_2	=	0x00a2
+                           0000A3   704 G$P2_3$0$0 == 0x00a3
+                           0000A3   705 _P2_3	=	0x00a3
+                           0000A4   706 G$P2_4$0$0 == 0x00a4
+                           0000A4   707 _P2_4	=	0x00a4
+                           0000A5   708 G$P2_5$0$0 == 0x00a5
+                           0000A5   709 _P2_5	=	0x00a5
+                           0000A6   710 G$P2_6$0$0 == 0x00a6
+                           0000A6   711 _P2_6	=	0x00a6
+                           0000A7   712 G$P2_7$0$0 == 0x00a7
+                           0000A7   713 _P2_7	=	0x00a7
+                           0000A8   714 G$EX0$0$0 == 0x00a8
+                           0000A8   715 _EX0	=	0x00a8
+                           0000A9   716 G$ET0$0$0 == 0x00a9
+                           0000A9   717 _ET0	=	0x00a9
+                           0000AA   718 G$EX1$0$0 == 0x00aa
+                           0000AA   719 _EX1	=	0x00aa
+                           0000AB   720 G$ET1$0$0 == 0x00ab
+                           0000AB   721 _ET1	=	0x00ab
+                           0000AC   722 G$ES0$0$0 == 0x00ac
+                           0000AC   723 _ES0	=	0x00ac
+                           0000AC   724 G$ES$0$0 == 0x00ac
+                           0000AC   725 _ES	=	0x00ac
+                           0000AD   726 G$ET2$0$0 == 0x00ad
+                           0000AD   727 _ET2	=	0x00ad
+                           0000AF   728 G$EA$0$0 == 0x00af
+                           0000AF   729 _EA	=	0x00af
+                           0000B0   730 G$P3_0$0$0 == 0x00b0
+                           0000B0   731 _P3_0	=	0x00b0
+                           0000B1   732 G$P3_1$0$0 == 0x00b1
+                           0000B1   733 _P3_1	=	0x00b1
+                           0000B2   734 G$P3_2$0$0 == 0x00b2
+                           0000B2   735 _P3_2	=	0x00b2
+                           0000B3   736 G$P3_3$0$0 == 0x00b3
+                           0000B3   737 _P3_3	=	0x00b3
+                           0000B4   738 G$P3_4$0$0 == 0x00b4
+                           0000B4   739 _P3_4	=	0x00b4
+                           0000B5   740 G$P3_5$0$0 == 0x00b5
+                           0000B5   741 _P3_5	=	0x00b5
+                           0000B6   742 G$P3_6$0$0 == 0x00b6
+                           0000B6   743 _P3_6	=	0x00b6
+                           0000B7   744 G$P3_7$0$0 == 0x00b7
+                           0000B7   745 _P3_7	=	0x00b7
+                           0000B8   746 G$PX0$0$0 == 0x00b8
+                           0000B8   747 _PX0	=	0x00b8
+                           0000B9   748 G$PT0$0$0 == 0x00b9
+                           0000B9   749 _PT0	=	0x00b9
+                           0000BA   750 G$PX1$0$0 == 0x00ba
+                           0000BA   751 _PX1	=	0x00ba
+                           0000BB   752 G$PT1$0$0 == 0x00bb
+                           0000BB   753 _PT1	=	0x00bb
+                           0000BC   754 G$PS0$0$0 == 0x00bc
+                           0000BC   755 _PS0	=	0x00bc
+                           0000BC   756 G$PS$0$0 == 0x00bc
+                           0000BC   757 _PS	=	0x00bc
+                           0000BD   758 G$PT2$0$0 == 0x00bd
+                           0000BD   759 _PT2	=	0x00bd
+                           0000C0   760 G$SMBTOE$0$0 == 0x00c0
+                           0000C0   761 _SMBTOE	=	0x00c0
+                           0000C1   762 G$SMBFTE$0$0 == 0x00c1
+                           0000C1   763 _SMBFTE	=	0x00c1
+                           0000C2   764 G$AA$0$0 == 0x00c2
+                           0000C2   765 _AA	=	0x00c2
+                           0000C3   766 G$SI$0$0 == 0x00c3
+                           0000C3   767 _SI	=	0x00c3
+                           0000C4   768 G$STO$0$0 == 0x00c4
+                           0000C4   769 _STO	=	0x00c4
+                           0000C5   770 G$STA$0$0 == 0x00c5
+                           0000C5   771 _STA	=	0x00c5
+                           0000C6   772 G$ENSMB$0$0 == 0x00c6
+                           0000C6   773 _ENSMB	=	0x00c6
+                           0000C7   774 G$BUSY$0$0 == 0x00c7
+                           0000C7   775 _BUSY	=	0x00c7
+                           0000C8   776 G$CPRL2$0$0 == 0x00c8
+                           0000C8   777 _CPRL2	=	0x00c8
+                           0000C9   778 G$CT2$0$0 == 0x00c9
+                           0000C9   779 _CT2	=	0x00c9
+                           0000CA   780 G$TR2$0$0 == 0x00ca
+                           0000CA   781 _TR2	=	0x00ca
+                           0000CB   782 G$EXEN2$0$0 == 0x00cb
+                           0000CB   783 _EXEN2	=	0x00cb
+                           0000CC   784 G$TCLK$0$0 == 0x00cc
+                           0000CC   785 _TCLK	=	0x00cc
+                           0000CD   786 G$RCLK$0$0 == 0x00cd
+                           0000CD   787 _RCLK	=	0x00cd
+                           0000CE   788 G$EXF2$0$0 == 0x00ce
+                           0000CE   789 _EXF2	=	0x00ce
+                           0000CF   790 G$TF2$0$0 == 0x00cf
+                           0000CF   791 _TF2	=	0x00cf
+                           0000D0   792 G$P$0$0 == 0x00d0
+                           0000D0   793 _P	=	0x00d0
+                           0000D1   794 G$F1$0$0 == 0x00d1
+                           0000D1   795 _F1	=	0x00d1
+                           0000D2   796 G$OV$0$0 == 0x00d2
+                           0000D2   797 _OV	=	0x00d2
+                           0000D3   798 G$RS0$0$0 == 0x00d3
+                           0000D3   799 _RS0	=	0x00d3
+                           0000D4   800 G$RS1$0$0 == 0x00d4
+                           0000D4   801 _RS1	=	0x00d4
+                           0000D5   802 G$F0$0$0 == 0x00d5
+                           0000D5   803 _F0	=	0x00d5
+                           0000D6   804 G$AC$0$0 == 0x00d6
+                           0000D6   805 _AC	=	0x00d6
+                           0000D7   806 G$CY$0$0 == 0x00d7
+                           0000D7   807 _CY	=	0x00d7
+                           0000D8   808 G$CCF0$0$0 == 0x00d8
+                           0000D8   809 _CCF0	=	0x00d8
+                           0000D9   810 G$CCF1$0$0 == 0x00d9
+                           0000D9   811 _CCF1	=	0x00d9
+                           0000DA   812 G$CCF2$0$0 == 0x00da
+                           0000DA   813 _CCF2	=	0x00da
+                           0000DB   814 G$CCF3$0$0 == 0x00db
+                           0000DB   815 _CCF3	=	0x00db
+                           0000DC   816 G$CCF4$0$0 == 0x00dc
+                           0000DC   817 _CCF4	=	0x00dc
+                           0000DE   818 G$CR$0$0 == 0x00de
+                           0000DE   819 _CR	=	0x00de
+                           0000DF   820 G$CF$0$0 == 0x00df
+                           0000DF   821 _CF	=	0x00df
+                           0000E8   822 G$ADLJST$0$0 == 0x00e8
+                           0000E8   823 _ADLJST	=	0x00e8
+                           0000E8   824 G$AD0LJST$0$0 == 0x00e8
+                           0000E8   825 _AD0LJST	=	0x00e8
+                           0000E9   826 G$ADWINT$0$0 == 0x00e9
+                           0000E9   827 _ADWINT	=	0x00e9
+                           0000E9   828 G$AD0WINT$0$0 == 0x00e9
+                           0000E9   829 _AD0WINT	=	0x00e9
+                           0000EA   830 G$ADSTM0$0$0 == 0x00ea
+                           0000EA   831 _ADSTM0	=	0x00ea
+                           0000EA   832 G$AD0CM0$0$0 == 0x00ea
+                           0000EA   833 _AD0CM0	=	0x00ea
+                           0000EB   834 G$ADSTM1$0$0 == 0x00eb
+                           0000EB   835 _ADSTM1	=	0x00eb
+                           0000EB   836 G$AD0CM1$0$0 == 0x00eb
+                           0000EB   837 _AD0CM1	=	0x00eb
+                           0000EC   838 G$ADBUSY$0$0 == 0x00ec
+                           0000EC   839 _ADBUSY	=	0x00ec
+                           0000EC   840 G$AD0BUSY$0$0 == 0x00ec
+                           0000EC   841 _AD0BUSY	=	0x00ec
+                           0000ED   842 G$ADCINT$0$0 == 0x00ed
+                           0000ED   843 _ADCINT	=	0x00ed
+                           0000ED   844 G$AD0INT$0$0 == 0x00ed
+                           0000ED   845 _AD0INT	=	0x00ed
+                           0000EE   846 G$ADCTM$0$0 == 0x00ee
+                           0000EE   847 _ADCTM	=	0x00ee
+                           0000EE   848 G$AD0TM$0$0 == 0x00ee
+                           0000EE   849 _AD0TM	=	0x00ee
+                           0000EF   850 G$ADCEN$0$0 == 0x00ef
+                           0000EF   851 _ADCEN	=	0x00ef
+                           0000EF   852 G$AD0EN$0$0 == 0x00ef
+                           0000EF   853 _AD0EN	=	0x00ef
+                           0000F8   854 G$SPIEN$0$0 == 0x00f8
+                           0000F8   855 _SPIEN	=	0x00f8
+                           0000F9   856 G$MSTEN$0$0 == 0x00f9
+                           0000F9   857 _MSTEN	=	0x00f9
+                           0000FA   858 G$SLVSEL$0$0 == 0x00fa
+                           0000FA   859 _SLVSEL	=	0x00fa
+                           0000FB   860 G$TXBSY$0$0 == 0x00fb
+                           0000FB   861 _TXBSY	=	0x00fb
+                           0000FC   862 G$RXOVRN$0$0 == 0x00fc
+                           0000FC   863 _RXOVRN	=	0x00fc
+                           0000FD   864 G$MODF$0$0 == 0x00fd
+                           0000FD   865 _MODF	=	0x00fd
+                           0000FE   866 G$WCOL$0$0 == 0x00fe
+                           0000FE   867 _WCOL	=	0x00fe
+                           0000FF   868 G$SPIF$0$0 == 0x00ff
+                           0000FF   869 _SPIF	=	0x00ff
+                                    870 ;--------------------------------------------------------
+                                    871 ; overlayable register banks
+                                    872 ;--------------------------------------------------------
+                                    873 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        874 	.ds 8
+                                    875 ;--------------------------------------------------------
+                                    876 ; internal ram data
+                                    877 ;--------------------------------------------------------
+                                    878 	.area DSEG    (DATA)
+                           000000   879 G$desired$0$0==.
+      000000                        880 _desired::
+      000000                        881 	.ds 2
+                           000002   882 G$actual$0$0==.
+      000002                        883 _actual::
+      000002                        884 	.ds 2
+                           000004   885 G$kp$0$0==.
+      000004                        886 _kp::
+      000004                        887 	.ds 2
+                           000006   888 G$kd$0$0==.
+      000006                        889 _kd::
+      000006                        890 	.ds 2
+                           000008   891 G$pw_neut$0$0==.
+      000008                        892 _pw_neut::
+      000008                        893 	.ds 2
+                           00000A   894 G$previous_error$0$0==.
+      00000A                        895 _previous_error::
+      00000A                        896 	.ds 2
+                           00000C   897 G$error$0$0==.
+      00000C                        898 _error::
+      00000C                        899 	.ds 2
+                           00000E   900 G$temp_motorpw_2byte$0$0==.
+      00000E                        901 _temp_motorpw_2byte::
+      00000E                        902 	.ds 2
+                           000010   903 G$temp_motorpw_alg1$0$0==.
+      000010                        904 _temp_motorpw_alg1::
+      000010                        905 	.ds 4
+                           000014   906 G$temp_motorpw_alg2$0$0==.
+      000014                        907 _temp_motorpw_alg2::
+      000014                        908 	.ds 4
+                           000018   909 G$temp_motorpw_alg3$0$0==.
+      000018                        910 _temp_motorpw_alg3::
+      000018                        911 	.ds 4
+                           00001C   912 G$temp_motorpw_alg4$0$0==.
+      00001C                        913 _temp_motorpw_alg4::
+      00001C                        914 	.ds 4
+                           000020   915 G$temp_motorpw_alg5$0$0==.
+      000020                        916 _temp_motorpw_alg5::
+      000020                        917 	.ds 4
+                           000024   918 G$temp_motorpw_alg6$0$0==.
+      000024                        919 _temp_motorpw_alg6::
+      000024                        920 	.ds 4
+                           000028   921 Lworksheet_11.main$sloc0$1$0==.
+      000028                        922 _main_sloc0_1_0:
+      000028                        923 	.ds 4
+                                    924 ;--------------------------------------------------------
+                                    925 ; overlayable items in internal ram 
+                                    926 ;--------------------------------------------------------
+                                    927 	.area	OSEG    (OVR,DATA)
+                                    928 	.area	OSEG    (OVR,DATA)
+                                    929 ;--------------------------------------------------------
+                                    930 ; Stack segment in internal ram 
+                                    931 ;--------------------------------------------------------
+                                    932 	.area	SSEG
+      000000                        933 __start__stack:
+      000000                        934 	.ds	1
+                                    935 
+                                    936 ;--------------------------------------------------------
+                                    937 ; indirectly addressable internal ram data
+                                    938 ;--------------------------------------------------------
+                                    939 	.area ISEG    (DATA)
+                                    940 ;--------------------------------------------------------
+                                    941 ; absolute internal ram data
+                                    942 ;--------------------------------------------------------
+                                    943 	.area IABS    (ABS,DATA)
+                                    944 	.area IABS    (ABS,DATA)
+                                    945 ;--------------------------------------------------------
+                                    946 ; bit data
+                                    947 ;--------------------------------------------------------
+                                    948 	.area BSEG    (BIT)
+                                    949 ;--------------------------------------------------------
+                                    950 ; paged external ram data
+                                    951 ;--------------------------------------------------------
+                                    952 	.area PSEG    (PAG,XDATA)
+                                    953 ;--------------------------------------------------------
+                                    954 ; external ram data
+                                    955 ;--------------------------------------------------------
+                                    956 	.area XSEG    (XDATA)
+                                    957 ;--------------------------------------------------------
+                                    958 ; absolute external ram data
+                                    959 ;--------------------------------------------------------
+                                    960 	.area XABS    (ABS,XDATA)
+                                    961 ;--------------------------------------------------------
+                                    962 ; external initialized ram data
+                                    963 ;--------------------------------------------------------
+                                    964 	.area XISEG   (XDATA)
+                                    965 	.area HOME    (CODE)
+                                    966 	.area GSINIT0 (CODE)
+                                    967 	.area GSINIT1 (CODE)
+                                    968 	.area GSINIT2 (CODE)
+                                    969 	.area GSINIT3 (CODE)
+                                    970 	.area GSINIT4 (CODE)
+                                    971 	.area GSINIT5 (CODE)
+                                    972 	.area GSINIT  (CODE)
+                                    973 	.area GSFINAL (CODE)
+                                    974 	.area CSEG    (CODE)
+                                    975 ;--------------------------------------------------------
+                                    976 ; interrupt vector 
+                                    977 ;--------------------------------------------------------
+                                    978 	.area HOME    (CODE)
+      000000                        979 __interrupt_vect:
+      000000 02r00r00         [24]  980 	ljmp	__sdcc_gsinit_startup
+                                    981 ;--------------------------------------------------------
+                                    982 ; global & static initialisations
+                                    983 ;--------------------------------------------------------
+                                    984 	.area HOME    (CODE)
+                                    985 	.area GSINIT  (CODE)
+                                    986 	.area GSFINAL (CODE)
+                                    987 	.area GSINIT  (CODE)
+                                    988 	.globl __sdcc_gsinit_startup
+                                    989 	.globl __sdcc_program_startup
+                                    990 	.globl __start__stack
+                                    991 	.globl __mcs51_genXINIT
+                                    992 	.globl __mcs51_genXRAMCLEAR
+                                    993 	.globl __mcs51_genRAMCLEAR
+                           000000   994 	C$worksheet_11.c$20$1$27 ==.
+                                    995 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:20: unsigned int desired = 0;           // set this value
+      000000 E4               [12]  996 	clr	a
+      000001 F5*00            [12]  997 	mov	_desired,a
+      000003 F5*01            [12]  998 	mov	(_desired + 1),a
+                           000005   999 	C$worksheet_11.c$21$1$27 ==.
+                                   1000 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:21: unsigned int actual = 0;            // set this value
+      000005 F5*02            [12] 1001 	mov	_actual,a
+      000007 F5*03            [12] 1002 	mov	(_actual + 1),a
+                           000009  1003 	C$worksheet_11.c$22$1$27 ==.
+                                   1004 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:22: unsigned int kp = 0;                // set this value
+      000009 F5*04            [12] 1005 	mov	_kp,a
+      00000B F5*05            [12] 1006 	mov	(_kp + 1),a
+                           00000D  1007 	C$worksheet_11.c$23$1$27 ==.
+                                   1008 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:23: unsigned int kd = 0;                // set this value
+      00000D F5*06            [12] 1009 	mov	_kd,a
+      00000F F5*07            [12] 1010 	mov	(_kd + 1),a
+                           000011  1011 	C$worksheet_11.c$24$1$27 ==.
+                                   1012 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:24: signed int pw_neut = 0;             // set this value
+      000011 F5*08            [12] 1013 	mov	_pw_neut,a
+      000013 F5*09            [12] 1014 	mov	(_pw_neut + 1),a
+                           000015  1015 	C$worksheet_11.c$25$1$27 ==.
+                                   1016 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:25: signed int previous_error = 0;      // set this value
+      000015 F5*0A            [12] 1017 	mov	_previous_error,a
+      000017 F5*0B            [12] 1018 	mov	(_previous_error + 1),a
+                           000019  1019 	C$worksheet_11.c$26$1$27 ==.
+                                   1020 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:26: signed int error = 0;               // set this value
+      000019 F5*0C            [12] 1021 	mov	_error,a
+      00001B F5*0D            [12] 1022 	mov	(_error + 1),a
+                           00001D  1023 	C$worksheet_11.c$27$1$27 ==.
+                                   1024 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:27: signed int temp_motorpw_2byte = 0;
+      00001D F5*0E            [12] 1025 	mov	_temp_motorpw_2byte,a
+      00001F F5*0F            [12] 1026 	mov	(_temp_motorpw_2byte + 1),a
+                           000021  1027 	C$worksheet_11.c$28$1$27 ==.
+                                   1028 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:28: signed long temp_motorpw_alg1 = 0;
+      000021 F5*10            [12] 1029 	mov	_temp_motorpw_alg1,a
+      000023 F5*11            [12] 1030 	mov	(_temp_motorpw_alg1 + 1),a
+      000025 F5*12            [12] 1031 	mov	(_temp_motorpw_alg1 + 2),a
+      000027 F5*13            [12] 1032 	mov	(_temp_motorpw_alg1 + 3),a
+                           000029  1033 	C$worksheet_11.c$29$1$27 ==.
+                                   1034 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:29: signed long temp_motorpw_alg2 = 0;
+      000029 F5*14            [12] 1035 	mov	_temp_motorpw_alg2,a
+      00002B F5*15            [12] 1036 	mov	(_temp_motorpw_alg2 + 1),a
+      00002D F5*16            [12] 1037 	mov	(_temp_motorpw_alg2 + 2),a
+      00002F F5*17            [12] 1038 	mov	(_temp_motorpw_alg2 + 3),a
+                           000031  1039 	C$worksheet_11.c$30$1$27 ==.
+                                   1040 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:30: signed long temp_motorpw_alg3 = 0;
+      000031 F5*18            [12] 1041 	mov	_temp_motorpw_alg3,a
+      000033 F5*19            [12] 1042 	mov	(_temp_motorpw_alg3 + 1),a
+      000035 F5*1A            [12] 1043 	mov	(_temp_motorpw_alg3 + 2),a
+      000037 F5*1B            [12] 1044 	mov	(_temp_motorpw_alg3 + 3),a
+                           000039  1045 	C$worksheet_11.c$31$1$27 ==.
+                                   1046 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:31: signed long temp_motorpw_alg4 = 0;
+      000039 F5*1C            [12] 1047 	mov	_temp_motorpw_alg4,a
+      00003B F5*1D            [12] 1048 	mov	(_temp_motorpw_alg4 + 1),a
+      00003D F5*1E            [12] 1049 	mov	(_temp_motorpw_alg4 + 2),a
+      00003F F5*1F            [12] 1050 	mov	(_temp_motorpw_alg4 + 3),a
+                           000041  1051 	C$worksheet_11.c$32$1$27 ==.
+                                   1052 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:32: signed long temp_motorpw_alg5 = 0;
+      000041 F5*20            [12] 1053 	mov	_temp_motorpw_alg5,a
+      000043 F5*21            [12] 1054 	mov	(_temp_motorpw_alg5 + 1),a
+      000045 F5*22            [12] 1055 	mov	(_temp_motorpw_alg5 + 2),a
+      000047 F5*23            [12] 1056 	mov	(_temp_motorpw_alg5 + 3),a
+                           000049  1057 	C$worksheet_11.c$33$1$27 ==.
+                                   1058 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:33: signed long temp_motorpw_alg6 = 0;
+      000049 F5*24            [12] 1059 	mov	_temp_motorpw_alg6,a
+      00004B F5*25            [12] 1060 	mov	(_temp_motorpw_alg6 + 1),a
+      00004D F5*26            [12] 1061 	mov	(_temp_motorpw_alg6 + 2),a
+      00004F F5*27            [12] 1062 	mov	(_temp_motorpw_alg6 + 3),a
+                                   1063 	.area GSFINAL (CODE)
+      000000 02r00r03         [24] 1064 	ljmp	__sdcc_program_startup
+                                   1065 ;--------------------------------------------------------
+                                   1066 ; Home
+                                   1067 ;--------------------------------------------------------
+                                   1068 	.area HOME    (CODE)
+                                   1069 	.area HOME    (CODE)
+      000003                       1070 __sdcc_program_startup:
+      000003 02r00r7B         [24] 1071 	ljmp	_main
+                                   1072 ;	return from main will return to caller
+                                   1073 ;--------------------------------------------------------
+                                   1074 ; code
+                                   1075 ;--------------------------------------------------------
+                                   1076 	.area CSEG    (CODE)
+                                   1077 ;------------------------------------------------------------
+                                   1078 ;Allocation info for local variables in function 'SYSCLK_Init'
+                                   1079 ;------------------------------------------------------------
+                                   1080 ;i                         Allocated to registers r6 r7 
+                                   1081 ;------------------------------------------------------------
+                           000000  1082 	G$SYSCLK_Init$0$0 ==.
+                           000000  1083 	C$c8051_SDCC.h$62$0$0 ==.
+                                   1084 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:62: void SYSCLK_Init(void)
+                                   1085 ;	-----------------------------------------
+                                   1086 ;	 function SYSCLK_Init
+                                   1087 ;	-----------------------------------------
+      000000                       1088 _SYSCLK_Init:
+                           000007  1089 	ar7 = 0x07
+                           000006  1090 	ar6 = 0x06
+                           000005  1091 	ar5 = 0x05
+                           000004  1092 	ar4 = 0x04
+                           000003  1093 	ar3 = 0x03
+                           000002  1094 	ar2 = 0x02
+                           000001  1095 	ar1 = 0x01
+                           000000  1096 	ar0 = 0x00
+                           000000  1097 	C$c8051_SDCC.h$66$1$2 ==.
+                                   1098 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:66: OSCXCN = 0x67;                      // start external oscillator with
+      000000 75 B1 67         [24] 1099 	mov	_OSCXCN,#0x67
+                           000003  1100 	C$c8051_SDCC.h$69$1$2 ==.
+                                   1101 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:69: for (i=0; i < 256; i++);            // wait for oscillator to start
+      000003 7E 00            [12] 1102 	mov	r6,#0x00
+      000005 7F 01            [12] 1103 	mov	r7,#0x01
+      000007                       1104 00107$:
+      000007 EE               [12] 1105 	mov	a,r6
+      000008 24 FF            [12] 1106 	add	a,#0xff
+      00000A FC               [12] 1107 	mov	r4,a
+      00000B EF               [12] 1108 	mov	a,r7
+      00000C 34 FF            [12] 1109 	addc	a,#0xff
+      00000E FD               [12] 1110 	mov	r5,a
+      00000F 8C 06            [24] 1111 	mov	ar6,r4
+      000011 8D 07            [24] 1112 	mov	ar7,r5
+      000013 EC               [12] 1113 	mov	a,r4
+      000014 4D               [12] 1114 	orl	a,r5
+      000015 70 F0            [24] 1115 	jnz	00107$
+                           000017  1116 	C$c8051_SDCC.h$71$1$2 ==.
+                                   1117 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:71: while (!(OSCXCN & 0x80));           // Wait for crystal osc. to settle
+      000017                       1118 00102$:
+      000017 E5 B1            [12] 1119 	mov	a,_OSCXCN
+      000019 30 E7 FB         [24] 1120 	jnb	acc.7,00102$
+                           00001C  1121 	C$c8051_SDCC.h$73$1$2 ==.
+                                   1122 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:73: OSCICN = 0x88;                      // select external oscillator as SYSCLK
+      00001C 75 B2 88         [24] 1123 	mov	_OSCICN,#0x88
+                           00001F  1124 	C$c8051_SDCC.h$76$1$2 ==.
+                           00001F  1125 	XG$SYSCLK_Init$0$0 ==.
+      00001F 22               [24] 1126 	ret
+                                   1127 ;------------------------------------------------------------
+                                   1128 ;Allocation info for local variables in function 'UART0_Init'
+                                   1129 ;------------------------------------------------------------
+                           000020  1130 	G$UART0_Init$0$0 ==.
+                           000020  1131 	C$c8051_SDCC.h$84$1$2 ==.
+                                   1132 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:84: void UART0_Init(void)
+                                   1133 ;	-----------------------------------------
+                                   1134 ;	 function UART0_Init
+                                   1135 ;	-----------------------------------------
+      000020                       1136 _UART0_Init:
+                           000020  1137 	C$c8051_SDCC.h$86$1$4 ==.
+                                   1138 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:86: SCON0  = 0x50;                      // SCON0: mode 1, 8-bit UART, enable RX
+      000020 75 98 50         [24] 1139 	mov	_SCON0,#0x50
+                           000023  1140 	C$c8051_SDCC.h$87$1$4 ==.
+                                   1141 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:87: TMOD   = 0x20;                      // TMOD: timer 1, mode 2, 8-bit reload
+      000023 75 89 20         [24] 1142 	mov	_TMOD,#0x20
+                           000026  1143 	C$c8051_SDCC.h$88$1$4 ==.
+                                   1144 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:88: TH1    = 0xFF&-(SYSCLK/BAUDRATE/16);     // set Timer1 reload value for baudrate
+      000026 75 8D DC         [24] 1145 	mov	_TH1,#0xdc
+                           000029  1146 	C$c8051_SDCC.h$89$1$4 ==.
+                                   1147 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:89: TR1    = 1;                         // start Timer1
+      000029 D2 8E            [12] 1148 	setb	_TR1
+                           00002B  1149 	C$c8051_SDCC.h$90$1$4 ==.
+                                   1150 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:90: CKCON |= 0x10;                      // Timer1 uses SYSCLK as time base
+      00002B 43 8E 10         [24] 1151 	orl	_CKCON,#0x10
+                           00002E  1152 	C$c8051_SDCC.h$91$1$4 ==.
+                                   1153 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:91: PCON  |= 0x80;                      // SMOD00 = 1 (disable baud rate 
+      00002E 43 87 80         [24] 1154 	orl	_PCON,#0x80
+                           000031  1155 	C$c8051_SDCC.h$93$1$4 ==.
+                                   1156 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:93: TI0    = 1;                         // Indicate TX0 ready
+      000031 D2 99            [12] 1157 	setb	_TI0
+                           000033  1158 	C$c8051_SDCC.h$94$1$4 ==.
+                                   1159 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:94: P0MDOUT |= 0x01;                    // Set TX0 to push/pull
+      000033 43 A4 01         [24] 1160 	orl	_P0MDOUT,#0x01
+                           000036  1161 	C$c8051_SDCC.h$95$1$4 ==.
+                           000036  1162 	XG$UART0_Init$0$0 ==.
+      000036 22               [24] 1163 	ret
+                                   1164 ;------------------------------------------------------------
+                                   1165 ;Allocation info for local variables in function 'Sys_Init'
+                                   1166 ;------------------------------------------------------------
+                           000037  1167 	G$Sys_Init$0$0 ==.
+                           000037  1168 	C$c8051_SDCC.h$103$1$4 ==.
+                                   1169 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:103: void Sys_Init(void)
+                                   1170 ;	-----------------------------------------
+                                   1171 ;	 function Sys_Init
+                                   1172 ;	-----------------------------------------
+      000037                       1173 _Sys_Init:
+                           000037  1174 	C$c8051_SDCC.h$105$1$6 ==.
+                                   1175 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:105: WDTCN = 0xde;			// disable watchdog timer
+      000037 75 FF DE         [24] 1176 	mov	_WDTCN,#0xde
+                           00003A  1177 	C$c8051_SDCC.h$106$1$6 ==.
+                                   1178 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:106: WDTCN = 0xad;
+      00003A 75 FF AD         [24] 1179 	mov	_WDTCN,#0xad
+                           00003D  1180 	C$c8051_SDCC.h$108$1$6 ==.
+                                   1181 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:108: SYSCLK_Init();			// initialize oscillator
+      00003D 12r00r00         [24] 1182 	lcall	_SYSCLK_Init
+                           000040  1183 	C$c8051_SDCC.h$109$1$6 ==.
+                                   1184 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:109: UART0_Init();			// initialize UART0
+      000040 12r00r20         [24] 1185 	lcall	_UART0_Init
+                           000043  1186 	C$c8051_SDCC.h$111$1$6 ==.
+                                   1187 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:111: XBR0 |= 0x04;
+      000043 43 E1 04         [24] 1188 	orl	_XBR0,#0x04
+                           000046  1189 	C$c8051_SDCC.h$112$1$6 ==.
+                                   1190 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:112: XBR2 |= 0x40;                    	// Enable crossbar and weak pull-ups
+      000046 43 E3 40         [24] 1191 	orl	_XBR2,#0x40
+                           000049  1192 	C$c8051_SDCC.h$113$1$6 ==.
+                           000049  1193 	XG$Sys_Init$0$0 ==.
+      000049 22               [24] 1194 	ret
+                                   1195 ;------------------------------------------------------------
+                                   1196 ;Allocation info for local variables in function 'putchar'
+                                   1197 ;------------------------------------------------------------
+                                   1198 ;c                         Allocated to registers r7 
+                                   1199 ;------------------------------------------------------------
+                           00004A  1200 	G$putchar$0$0 ==.
+                           00004A  1201 	C$c8051_SDCC.h$129$1$6 ==.
+                                   1202 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:129: void putchar(char c)
+                                   1203 ;	-----------------------------------------
+                                   1204 ;	 function putchar
+                                   1205 ;	-----------------------------------------
+      00004A                       1206 _putchar:
+      00004A AF 82            [24] 1207 	mov	r7,dpl
+                           00004C  1208 	C$c8051_SDCC.h$132$1$8 ==.
+                                   1209 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:132: while (!TI0); 
+      00004C                       1210 00101$:
+                           00004C  1211 	C$c8051_SDCC.h$133$1$8 ==.
+                                   1212 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:133: TI0 = 0;
+      00004C 10 99 02         [24] 1213 	jbc	_TI0,00112$
+      00004F 80 FB            [24] 1214 	sjmp	00101$
+      000051                       1215 00112$:
+                           000051  1216 	C$c8051_SDCC.h$134$1$8 ==.
+                                   1217 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:134: SBUF0 = c;
+      000051 8F 99            [24] 1218 	mov	_SBUF0,r7
+                           000053  1219 	C$c8051_SDCC.h$135$1$8 ==.
+                           000053  1220 	XG$putchar$0$0 ==.
+      000053 22               [24] 1221 	ret
+                                   1222 ;------------------------------------------------------------
+                                   1223 ;Allocation info for local variables in function 'getchar'
+                                   1224 ;------------------------------------------------------------
+                                   1225 ;c                         Allocated to registers r7 
+                                   1226 ;------------------------------------------------------------
+                           000054  1227 	G$getchar$0$0 ==.
+                           000054  1228 	C$c8051_SDCC.h$154$1$8 ==.
+                                   1229 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:154: char getchar(void)
+                                   1230 ;	-----------------------------------------
+                                   1231 ;	 function getchar
+                                   1232 ;	-----------------------------------------
+      000054                       1233 _getchar:
+                           000054  1234 	C$c8051_SDCC.h$157$1$10 ==.
+                                   1235 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:157: while (!RI0);
+      000054                       1236 00101$:
+                           000054  1237 	C$c8051_SDCC.h$158$1$10 ==.
+                                   1238 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:158: RI0 = 0;
+      000054 10 98 02         [24] 1239 	jbc	_RI0,00112$
+      000057 80 FB            [24] 1240 	sjmp	00101$
+      000059                       1241 00112$:
+                           000059  1242 	C$c8051_SDCC.h$159$1$10 ==.
+                                   1243 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:159: c = SBUF0;
+      000059 AF 99            [24] 1244 	mov	r7,_SBUF0
+                           00005B  1245 	C$c8051_SDCC.h$160$1$10 ==.
+                                   1246 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:160: putchar(c);                          // echo to terminal
+      00005B 8F 82            [24] 1247 	mov	dpl,r7
+      00005D C0 07            [24] 1248 	push	ar7
+      00005F 12r00r4A         [24] 1249 	lcall	_putchar
+      000062 D0 07            [24] 1250 	pop	ar7
+                           000064  1251 	C$c8051_SDCC.h$161$1$10 ==.
+                                   1252 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:161: return c;
+      000064 8F 82            [24] 1253 	mov	dpl,r7
+                           000066  1254 	C$c8051_SDCC.h$162$1$10 ==.
+                           000066  1255 	XG$getchar$0$0 ==.
+      000066 22               [24] 1256 	ret
+                                   1257 ;------------------------------------------------------------
+                                   1258 ;Allocation info for local variables in function 'getchar_nw'
+                                   1259 ;------------------------------------------------------------
+                                   1260 ;c                         Allocated to registers 
+                                   1261 ;------------------------------------------------------------
+                           000067  1262 	G$getchar_nw$0$0 ==.
+                           000067  1263 	C$c8051_SDCC.h$168$1$10 ==.
+                                   1264 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:168: char getchar_nw(void)
+                                   1265 ;	-----------------------------------------
+                                   1266 ;	 function getchar_nw
+                                   1267 ;	-----------------------------------------
+      000067                       1268 _getchar_nw:
+                           000067  1269 	C$c8051_SDCC.h$171$1$12 ==.
+                                   1270 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:171: if (!RI0) return 0xFF;
+      000067 20 98 05         [24] 1271 	jb	_RI0,00102$
+      00006A 75 82 FF         [24] 1272 	mov	dpl,#0xff
+      00006D 80 0B            [24] 1273 	sjmp	00104$
+      00006F                       1274 00102$:
+                           00006F  1275 	C$c8051_SDCC.h$174$2$13 ==.
+                                   1276 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:174: RI0 = 0;
+      00006F C2 98            [12] 1277 	clr	_RI0
+                           000071  1278 	C$c8051_SDCC.h$175$2$13 ==.
+                                   1279 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:175: c = SBUF0;
+      000071 85 99 82         [24] 1280 	mov	dpl,_SBUF0
+                           000074  1281 	C$c8051_SDCC.h$176$2$13 ==.
+                                   1282 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:176: putchar(c);                          // echo to terminal
+      000074 12r00r4A         [24] 1283 	lcall	_putchar
+                           000077  1284 	C$c8051_SDCC.h$177$2$13 ==.
+                                   1285 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:177: return SBUF0;
+      000077 85 99 82         [24] 1286 	mov	dpl,_SBUF0
+      00007A                       1287 00104$:
+                           00007A  1288 	C$c8051_SDCC.h$179$1$12 ==.
+                           00007A  1289 	XG$getchar_nw$0$0 ==.
+      00007A 22               [24] 1290 	ret
+                                   1291 ;------------------------------------------------------------
+                                   1292 ;Allocation info for local variables in function 'main'
+                                   1293 ;------------------------------------------------------------
+                                   1294 ;sloc0                     Allocated with name '_main_sloc0_1_0'
+                                   1295 ;------------------------------------------------------------
+                           00007B  1296 	G$main$0$0 ==.
+                           00007B  1297 	C$worksheet_11.c$35$1$12 ==.
+                                   1298 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:35: void main()
+                                   1299 ;	-----------------------------------------
+                                   1300 ;	 function main
+                                   1301 ;	-----------------------------------------
+      00007B                       1302 _main:
+                           00007B  1303 	C$worksheet_11.c$37$1$27 ==.
+                                   1304 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:37: Sys_Init();
+      00007B 12r00r37         [24] 1305 	lcall	_Sys_Init
+                           00007E  1306 	C$worksheet_11.c$38$1$27 ==.
+                                   1307 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:38: putchar(' ');
+      00007E 75 82 20         [24] 1308 	mov	dpl,#0x20
+      000081 12r00r4A         [24] 1309 	lcall	_putchar
+                           000084  1310 	C$worksheet_11.c$39$1$27 ==.
+                                   1311 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:39: error = desired-actual;
+      000084 E5*00            [12] 1312 	mov	a,_desired
+      000086 C3               [12] 1313 	clr	c
+      000087 95*02            [12] 1314 	subb	a,_actual
+      000089 F5*0C            [12] 1315 	mov	_error,a
+      00008B E5*01            [12] 1316 	mov	a,(_desired + 1)
+      00008D 95*03            [12] 1317 	subb	a,(_actual + 1)
+      00008F F5*0D            [12] 1318 	mov	(_error + 1),a
+                           000091  1319 	C$worksheet_11.c$41$1$27 ==.
+                                   1320 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:41: temp_motorpw_2byte = pw_neut+kp*error+kd*(error-previous_error);
+      000091 85*0C*00         [24] 1321 	mov	__mulint_PARM_2,_error
+      000094 85*0D*01         [24] 1322 	mov	(__mulint_PARM_2 + 1),(_error + 1)
+      000097 85*04 82         [24] 1323 	mov	dpl,_kp
+      00009A 85*05 83         [24] 1324 	mov	dph,(_kp + 1)
+      00009D 12r00r00         [24] 1325 	lcall	__mulint
+      0000A0 AE 82            [24] 1326 	mov	r6,dpl
+      0000A2 AF 83            [24] 1327 	mov	r7,dph
+      0000A4 AC*08            [24] 1328 	mov	r4,_pw_neut
+      0000A6 AD*09            [24] 1329 	mov	r5,(_pw_neut + 1)
+      0000A8 EE               [12] 1330 	mov	a,r6
+      0000A9 2C               [12] 1331 	add	a,r4
+      0000AA FE               [12] 1332 	mov	r6,a
+      0000AB EF               [12] 1333 	mov	a,r7
+      0000AC 3D               [12] 1334 	addc	a,r5
+      0000AD FF               [12] 1335 	mov	r7,a
+      0000AE E5*0C            [12] 1336 	mov	a,_error
+      0000B0 C3               [12] 1337 	clr	c
+      0000B1 95*0A            [12] 1338 	subb	a,_previous_error
+      0000B3 FC               [12] 1339 	mov	r4,a
+      0000B4 E5*0D            [12] 1340 	mov	a,(_error + 1)
+      0000B6 95*0B            [12] 1341 	subb	a,(_previous_error + 1)
+      0000B8 FD               [12] 1342 	mov	r5,a
+      0000B9 8C*00            [24] 1343 	mov	__mulint_PARM_2,r4
+      0000BB 8D*01            [24] 1344 	mov	(__mulint_PARM_2 + 1),r5
+      0000BD 85*06 82         [24] 1345 	mov	dpl,_kd
+      0000C0 85*07 83         [24] 1346 	mov	dph,(_kd + 1)
+      0000C3 C0 07            [24] 1347 	push	ar7
+      0000C5 C0 06            [24] 1348 	push	ar6
+      0000C7 12r00r00         [24] 1349 	lcall	__mulint
+      0000CA AC 82            [24] 1350 	mov	r4,dpl
+      0000CC AD 83            [24] 1351 	mov	r5,dph
+      0000CE D0 06            [24] 1352 	pop	ar6
+      0000D0 D0 07            [24] 1353 	pop	ar7
+      0000D2 EC               [12] 1354 	mov	a,r4
+      0000D3 2E               [12] 1355 	add	a,r6
+      0000D4 F5*0E            [12] 1356 	mov	_temp_motorpw_2byte,a
+      0000D6 ED               [12] 1357 	mov	a,r5
+      0000D7 3F               [12] 1358 	addc	a,r7
+      0000D8 F5*0F            [12] 1359 	mov	(_temp_motorpw_2byte + 1),a
+                           0000DA  1360 	C$worksheet_11.c$42$1$27 ==.
+                                   1361 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:42: printf("The two byte calculation of motorpw is %d \r\n",temp_motorpw_2byte);
+      0000DA C0*0E            [24] 1362 	push	_temp_motorpw_2byte
+      0000DC C0*0F            [24] 1363 	push	(_temp_motorpw_2byte + 1)
+      0000DE 74r00            [12] 1364 	mov	a,#___str_0
+      0000E0 C0 E0            [24] 1365 	push	acc
+      0000E2 74s00            [12] 1366 	mov	a,#(___str_0 >> 8)
+      0000E4 C0 E0            [24] 1367 	push	acc
+      0000E6 74 80            [12] 1368 	mov	a,#0x80
+      0000E8 C0 E0            [24] 1369 	push	acc
+      0000EA 12r00r00         [24] 1370 	lcall	_printf
+      0000ED E5 81            [12] 1371 	mov	a,sp
+      0000EF 24 FB            [12] 1372 	add	a,#0xfb
+      0000F1 F5 81            [12] 1373 	mov	sp,a
+                           0000F3  1374 	C$worksheet_11.c$44$1$27 ==.
+                                   1375 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:44: temp_motorpw_alg1 = pw_neut+kp*error+kd*(error-previous_error);
+      0000F3 85*0C*00         [24] 1376 	mov	__mulint_PARM_2,_error
+      0000F6 85*0D*01         [24] 1377 	mov	(__mulint_PARM_2 + 1),(_error + 1)
+      0000F9 85*04 82         [24] 1378 	mov	dpl,_kp
+      0000FC 85*05 83         [24] 1379 	mov	dph,(_kp + 1)
+      0000FF 12r00r00         [24] 1380 	lcall	__mulint
+      000102 AE 82            [24] 1381 	mov	r6,dpl
+      000104 AF 83            [24] 1382 	mov	r7,dph
+      000106 AC*08            [24] 1383 	mov	r4,_pw_neut
+      000108 AD*09            [24] 1384 	mov	r5,(_pw_neut + 1)
+      00010A EE               [12] 1385 	mov	a,r6
+      00010B 2C               [12] 1386 	add	a,r4
+      00010C FE               [12] 1387 	mov	r6,a
+      00010D EF               [12] 1388 	mov	a,r7
+      00010E 3D               [12] 1389 	addc	a,r5
+      00010F FF               [12] 1390 	mov	r7,a
+      000110 E5*0C            [12] 1391 	mov	a,_error
+      000112 C3               [12] 1392 	clr	c
+      000113 95*0A            [12] 1393 	subb	a,_previous_error
+      000115 FC               [12] 1394 	mov	r4,a
+      000116 E5*0D            [12] 1395 	mov	a,(_error + 1)
+      000118 95*0B            [12] 1396 	subb	a,(_previous_error + 1)
+      00011A FD               [12] 1397 	mov	r5,a
+      00011B 8C*00            [24] 1398 	mov	__mulint_PARM_2,r4
+      00011D 8D*01            [24] 1399 	mov	(__mulint_PARM_2 + 1),r5
+      00011F 85*06 82         [24] 1400 	mov	dpl,_kd
+      000122 85*07 83         [24] 1401 	mov	dph,(_kd + 1)
+      000125 C0 07            [24] 1402 	push	ar7
+      000127 C0 06            [24] 1403 	push	ar6
+      000129 12r00r00         [24] 1404 	lcall	__mulint
+      00012C AC 82            [24] 1405 	mov	r4,dpl
+      00012E AD 83            [24] 1406 	mov	r5,dph
+      000130 D0 06            [24] 1407 	pop	ar6
+      000132 D0 07            [24] 1408 	pop	ar7
+      000134 EC               [12] 1409 	mov	a,r4
+      000135 2E               [12] 1410 	add	a,r6
+      000136 FE               [12] 1411 	mov	r6,a
+      000137 ED               [12] 1412 	mov	a,r5
+      000138 3F               [12] 1413 	addc	a,r7
+      000139 FF               [12] 1414 	mov	r7,a
+      00013A 8E*10            [24] 1415 	mov	_temp_motorpw_alg1,r6
+      00013C 8F*11            [24] 1416 	mov	(_temp_motorpw_alg1 + 1),r7
+      00013E 75*12 00         [24] 1417 	mov	(_temp_motorpw_alg1 + 2),#0x00
+      000141 75*13 00         [24] 1418 	mov	(_temp_motorpw_alg1 + 3),#0x00
+                           000144  1419 	C$worksheet_11.c$45$1$27 ==.
+                                   1420 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:45: printf("Algorithm 1, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg1);
+      000144 C0*10            [24] 1421 	push	_temp_motorpw_alg1
+      000146 C0*11            [24] 1422 	push	(_temp_motorpw_alg1 + 1)
+      000148 C0*12            [24] 1423 	push	(_temp_motorpw_alg1 + 2)
+      00014A C0*13            [24] 1424 	push	(_temp_motorpw_alg1 + 3)
+      00014C 74r2D            [12] 1425 	mov	a,#___str_1
+      00014E C0 E0            [24] 1426 	push	acc
+      000150 74s00            [12] 1427 	mov	a,#(___str_1 >> 8)
+      000152 C0 E0            [24] 1428 	push	acc
+      000154 74 80            [12] 1429 	mov	a,#0x80
+      000156 C0 E0            [24] 1430 	push	acc
+      000158 12r00r00         [24] 1431 	lcall	_printf
+      00015B E5 81            [12] 1432 	mov	a,sp
+      00015D 24 F9            [12] 1433 	add	a,#0xf9
+      00015F F5 81            [12] 1434 	mov	sp,a
+                           000161  1435 	C$worksheet_11.c$47$1$27 ==.
+                                   1436 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:47: temp_motorpw_alg2 = pw_neut+(signed long)kp*error+kd*(error-previous_error);
+      000161 AC*04            [24] 1437 	mov	r4,_kp
+      000163 AD*05            [24] 1438 	mov	r5,(_kp + 1)
+      000165 7E 00            [12] 1439 	mov	r6,#0x00
+      000167 7F 00            [12] 1440 	mov	r7,#0x00
+      000169 85*0C*00         [24] 1441 	mov	__mullong_PARM_2,_error
+      00016C E5*0D            [12] 1442 	mov	a,(_error + 1)
+      00016E F5*01            [12] 1443 	mov	(__mullong_PARM_2 + 1),a
+      000170 33               [12] 1444 	rlc	a
+      000171 95 E0            [12] 1445 	subb	a,acc
+      000173 F5*02            [12] 1446 	mov	(__mullong_PARM_2 + 2),a
+      000175 F5*03            [12] 1447 	mov	(__mullong_PARM_2 + 3),a
+      000177 8C 82            [24] 1448 	mov	dpl,r4
+      000179 8D 83            [24] 1449 	mov	dph,r5
+      00017B 8E F0            [24] 1450 	mov	b,r6
+      00017D EF               [12] 1451 	mov	a,r7
+      00017E 12r00r00         [24] 1452 	lcall	__mullong
+      000181 AC 82            [24] 1453 	mov	r4,dpl
+      000183 AD 83            [24] 1454 	mov	r5,dph
+      000185 AE F0            [24] 1455 	mov	r6,b
+      000187 FF               [12] 1456 	mov	r7,a
+      000188 A8*08            [24] 1457 	mov	r0,_pw_neut
+      00018A E5*09            [12] 1458 	mov	a,(_pw_neut + 1)
+      00018C F9               [12] 1459 	mov	r1,a
+      00018D 33               [12] 1460 	rlc	a
+      00018E 95 E0            [12] 1461 	subb	a,acc
+      000190 FA               [12] 1462 	mov	r2,a
+      000191 FB               [12] 1463 	mov	r3,a
+      000192 EC               [12] 1464 	mov	a,r4
+      000193 28               [12] 1465 	add	a,r0
+      000194 FC               [12] 1466 	mov	r4,a
+      000195 ED               [12] 1467 	mov	a,r5
+      000196 39               [12] 1468 	addc	a,r1
+      000197 FD               [12] 1469 	mov	r5,a
+      000198 EE               [12] 1470 	mov	a,r6
+      000199 3A               [12] 1471 	addc	a,r2
+      00019A FE               [12] 1472 	mov	r6,a
+      00019B EF               [12] 1473 	mov	a,r7
+      00019C 3B               [12] 1474 	addc	a,r3
+      00019D FF               [12] 1475 	mov	r7,a
+      00019E E5*0C            [12] 1476 	mov	a,_error
+      0001A0 C3               [12] 1477 	clr	c
+      0001A1 95*0A            [12] 1478 	subb	a,_previous_error
+      0001A3 FA               [12] 1479 	mov	r2,a
+      0001A4 E5*0D            [12] 1480 	mov	a,(_error + 1)
+      0001A6 95*0B            [12] 1481 	subb	a,(_previous_error + 1)
+      0001A8 FB               [12] 1482 	mov	r3,a
+      0001A9 8A*00            [24] 1483 	mov	__mulint_PARM_2,r2
+      0001AB 8B*01            [24] 1484 	mov	(__mulint_PARM_2 + 1),r3
+      0001AD 85*06 82         [24] 1485 	mov	dpl,_kd
+      0001B0 85*07 83         [24] 1486 	mov	dph,(_kd + 1)
+      0001B3 C0 07            [24] 1487 	push	ar7
+      0001B5 C0 06            [24] 1488 	push	ar6
+      0001B7 C0 05            [24] 1489 	push	ar5
+      0001B9 C0 04            [24] 1490 	push	ar4
+      0001BB 12r00r00         [24] 1491 	lcall	__mulint
+      0001BE AA 82            [24] 1492 	mov	r2,dpl
+      0001C0 AB 83            [24] 1493 	mov	r3,dph
+      0001C2 D0 04            [24] 1494 	pop	ar4
+      0001C4 D0 05            [24] 1495 	pop	ar5
+      0001C6 D0 06            [24] 1496 	pop	ar6
+      0001C8 D0 07            [24] 1497 	pop	ar7
+      0001CA 8A 00            [24] 1498 	mov	ar0,r2
+      0001CC 8B 01            [24] 1499 	mov	ar1,r3
+      0001CE E4               [12] 1500 	clr	a
+      0001CF FA               [12] 1501 	mov	r2,a
+      0001D0 FB               [12] 1502 	mov	r3,a
+      0001D1 E8               [12] 1503 	mov	a,r0
+      0001D2 2C               [12] 1504 	add	a,r4
+      0001D3 F5*14            [12] 1505 	mov	_temp_motorpw_alg2,a
+      0001D5 E9               [12] 1506 	mov	a,r1
+      0001D6 3D               [12] 1507 	addc	a,r5
+      0001D7 F5*15            [12] 1508 	mov	(_temp_motorpw_alg2 + 1),a
+      0001D9 EA               [12] 1509 	mov	a,r2
+      0001DA 3E               [12] 1510 	addc	a,r6
+      0001DB F5*16            [12] 1511 	mov	(_temp_motorpw_alg2 + 2),a
+      0001DD EB               [12] 1512 	mov	a,r3
+      0001DE 3F               [12] 1513 	addc	a,r7
+      0001DF F5*17            [12] 1514 	mov	(_temp_motorpw_alg2 + 3),a
+                           0001E1  1515 	C$worksheet_11.c$48$1$27 ==.
+                                   1516 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:48: printf("Algorithm 2, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg2);
+      0001E1 C0*14            [24] 1517 	push	_temp_motorpw_alg2
+      0001E3 C0*15            [24] 1518 	push	(_temp_motorpw_alg2 + 1)
+      0001E5 C0*16            [24] 1519 	push	(_temp_motorpw_alg2 + 2)
+      0001E7 C0*17            [24] 1520 	push	(_temp_motorpw_alg2 + 3)
+      0001E9 74r65            [12] 1521 	mov	a,#___str_2
+      0001EB C0 E0            [24] 1522 	push	acc
+      0001ED 74s00            [12] 1523 	mov	a,#(___str_2 >> 8)
+      0001EF C0 E0            [24] 1524 	push	acc
+      0001F1 74 80            [12] 1525 	mov	a,#0x80
+      0001F3 C0 E0            [24] 1526 	push	acc
+      0001F5 12r00r00         [24] 1527 	lcall	_printf
+      0001F8 E5 81            [12] 1528 	mov	a,sp
+      0001FA 24 F9            [12] 1529 	add	a,#0xf9
+      0001FC F5 81            [12] 1530 	mov	sp,a
+                           0001FE  1531 	C$worksheet_11.c$50$1$27 ==.
+                                   1532 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:50: temp_motorpw_alg3 = (signed long)( pw_neut + kp * (error) + kd * (error - previous_error));
+      0001FE 85*0C*00         [24] 1533 	mov	__mulint_PARM_2,_error
+      000201 85*0D*01         [24] 1534 	mov	(__mulint_PARM_2 + 1),(_error + 1)
+      000204 85*04 82         [24] 1535 	mov	dpl,_kp
+      000207 85*05 83         [24] 1536 	mov	dph,(_kp + 1)
+      00020A 12r00r00         [24] 1537 	lcall	__mulint
+      00020D AE 82            [24] 1538 	mov	r6,dpl
+      00020F AF 83            [24] 1539 	mov	r7,dph
+      000211 AC*08            [24] 1540 	mov	r4,_pw_neut
+      000213 AD*09            [24] 1541 	mov	r5,(_pw_neut + 1)
+      000215 EE               [12] 1542 	mov	a,r6
+      000216 2C               [12] 1543 	add	a,r4
+      000217 FE               [12] 1544 	mov	r6,a
+      000218 EF               [12] 1545 	mov	a,r7
+      000219 3D               [12] 1546 	addc	a,r5
+      00021A FF               [12] 1547 	mov	r7,a
+      00021B E5*0C            [12] 1548 	mov	a,_error
+      00021D C3               [12] 1549 	clr	c
+      00021E 95*0A            [12] 1550 	subb	a,_previous_error
+      000220 FC               [12] 1551 	mov	r4,a
+      000221 E5*0D            [12] 1552 	mov	a,(_error + 1)
+      000223 95*0B            [12] 1553 	subb	a,(_previous_error + 1)
+      000225 FD               [12] 1554 	mov	r5,a
+      000226 8C*00            [24] 1555 	mov	__mulint_PARM_2,r4
+      000228 8D*01            [24] 1556 	mov	(__mulint_PARM_2 + 1),r5
+      00022A 85*06 82         [24] 1557 	mov	dpl,_kd
+      00022D 85*07 83         [24] 1558 	mov	dph,(_kd + 1)
+      000230 C0 07            [24] 1559 	push	ar7
+      000232 C0 06            [24] 1560 	push	ar6
+      000234 12r00r00         [24] 1561 	lcall	__mulint
+      000237 AC 82            [24] 1562 	mov	r4,dpl
+      000239 AD 83            [24] 1563 	mov	r5,dph
+      00023B D0 06            [24] 1564 	pop	ar6
+      00023D D0 07            [24] 1565 	pop	ar7
+      00023F EC               [12] 1566 	mov	a,r4
+      000240 2E               [12] 1567 	add	a,r6
+      000241 FE               [12] 1568 	mov	r6,a
+      000242 ED               [12] 1569 	mov	a,r5
+      000243 3F               [12] 1570 	addc	a,r7
+      000244 FF               [12] 1571 	mov	r7,a
+      000245 8E*18            [24] 1572 	mov	_temp_motorpw_alg3,r6
+      000247 8F*19            [24] 1573 	mov	(_temp_motorpw_alg3 + 1),r7
+      000249 75*1A 00         [24] 1574 	mov	(_temp_motorpw_alg3 + 2),#0x00
+      00024C 75*1B 00         [24] 1575 	mov	(_temp_motorpw_alg3 + 3),#0x00
+                           00024F  1576 	C$worksheet_11.c$51$1$27 ==.
+                                   1577 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:51: printf("Algorithm 3, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg3);
+      00024F C0*18            [24] 1578 	push	_temp_motorpw_alg3
+      000251 C0*19            [24] 1579 	push	(_temp_motorpw_alg3 + 1)
+      000253 C0*1A            [24] 1580 	push	(_temp_motorpw_alg3 + 2)
+      000255 C0*1B            [24] 1581 	push	(_temp_motorpw_alg3 + 3)
+      000257 74r9D            [12] 1582 	mov	a,#___str_3
+      000259 C0 E0            [24] 1583 	push	acc
+      00025B 74s00            [12] 1584 	mov	a,#(___str_3 >> 8)
+      00025D C0 E0            [24] 1585 	push	acc
+      00025F 74 80            [12] 1586 	mov	a,#0x80
+      000261 C0 E0            [24] 1587 	push	acc
+      000263 12r00r00         [24] 1588 	lcall	_printf
+      000266 E5 81            [12] 1589 	mov	a,sp
+      000268 24 F9            [12] 1590 	add	a,#0xf9
+      00026A F5 81            [12] 1591 	mov	sp,a
+                           00026C  1592 	C$worksheet_11.c$53$1$27 ==.
+                                   1593 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:53: temp_motorpw_alg4 = pw_neut+kp*(signed int)(error)+kd*(signed int)(error-previous_error);
+      00026C 85*0C*00         [24] 1594 	mov	__mulint_PARM_2,_error
+      00026F 85*0D*01         [24] 1595 	mov	(__mulint_PARM_2 + 1),(_error + 1)
+      000272 85*04 82         [24] 1596 	mov	dpl,_kp
+      000275 85*05 83         [24] 1597 	mov	dph,(_kp + 1)
+      000278 12r00r00         [24] 1598 	lcall	__mulint
+      00027B AE 82            [24] 1599 	mov	r6,dpl
+      00027D AF 83            [24] 1600 	mov	r7,dph
+      00027F AC*08            [24] 1601 	mov	r4,_pw_neut
+      000281 AD*09            [24] 1602 	mov	r5,(_pw_neut + 1)
+      000283 EE               [12] 1603 	mov	a,r6
+      000284 2C               [12] 1604 	add	a,r4
+      000285 FE               [12] 1605 	mov	r6,a
+      000286 EF               [12] 1606 	mov	a,r7
+      000287 3D               [12] 1607 	addc	a,r5
+      000288 FF               [12] 1608 	mov	r7,a
+      000289 E5*0C            [12] 1609 	mov	a,_error
+      00028B C3               [12] 1610 	clr	c
+      00028C 95*0A            [12] 1611 	subb	a,_previous_error
+      00028E FC               [12] 1612 	mov	r4,a
+      00028F E5*0D            [12] 1613 	mov	a,(_error + 1)
+      000291 95*0B            [12] 1614 	subb	a,(_previous_error + 1)
+      000293 FD               [12] 1615 	mov	r5,a
+      000294 8C*00            [24] 1616 	mov	__mulint_PARM_2,r4
+      000296 8D*01            [24] 1617 	mov	(__mulint_PARM_2 + 1),r5
+      000298 85*06 82         [24] 1618 	mov	dpl,_kd
+      00029B 85*07 83         [24] 1619 	mov	dph,(_kd + 1)
+      00029E C0 07            [24] 1620 	push	ar7
+      0002A0 C0 06            [24] 1621 	push	ar6
+      0002A2 12r00r00         [24] 1622 	lcall	__mulint
+      0002A5 AC 82            [24] 1623 	mov	r4,dpl
+      0002A7 AD 83            [24] 1624 	mov	r5,dph
+      0002A9 D0 06            [24] 1625 	pop	ar6
+      0002AB D0 07            [24] 1626 	pop	ar7
+      0002AD EC               [12] 1627 	mov	a,r4
+      0002AE 2E               [12] 1628 	add	a,r6
+      0002AF FE               [12] 1629 	mov	r6,a
+      0002B0 ED               [12] 1630 	mov	a,r5
+      0002B1 3F               [12] 1631 	addc	a,r7
+      0002B2 FF               [12] 1632 	mov	r7,a
+      0002B3 8E*1C            [24] 1633 	mov	_temp_motorpw_alg4,r6
+      0002B5 8F*1D            [24] 1634 	mov	(_temp_motorpw_alg4 + 1),r7
+      0002B7 75*1E 00         [24] 1635 	mov	(_temp_motorpw_alg4 + 2),#0x00
+      0002BA 75*1F 00         [24] 1636 	mov	(_temp_motorpw_alg4 + 3),#0x00
+                           0002BD  1637 	C$worksheet_11.c$54$1$27 ==.
+                                   1638 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:54: printf("Algorithm 4, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg4);
+      0002BD C0*1C            [24] 1639 	push	_temp_motorpw_alg4
+      0002BF C0*1D            [24] 1640 	push	(_temp_motorpw_alg4 + 1)
+      0002C1 C0*1E            [24] 1641 	push	(_temp_motorpw_alg4 + 2)
+      0002C3 C0*1F            [24] 1642 	push	(_temp_motorpw_alg4 + 3)
+      0002C5 74rD5            [12] 1643 	mov	a,#___str_4
+      0002C7 C0 E0            [24] 1644 	push	acc
+      0002C9 74s00            [12] 1645 	mov	a,#(___str_4 >> 8)
+      0002CB C0 E0            [24] 1646 	push	acc
+      0002CD 74 80            [12] 1647 	mov	a,#0x80
+      0002CF C0 E0            [24] 1648 	push	acc
+      0002D1 12r00r00         [24] 1649 	lcall	_printf
+      0002D4 E5 81            [12] 1650 	mov	a,sp
+      0002D6 24 F9            [12] 1651 	add	a,#0xf9
+      0002D8 F5 81            [12] 1652 	mov	sp,a
+                           0002DA  1653 	C$worksheet_11.c$56$1$27 ==.
+                                   1654 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:56: temp_motorpw_alg5 = (signed long)pw_neut+(signed long)(kp*(error))+(signed long)(kd*(error-previous_error));
+      0002DA AC*08            [24] 1655 	mov	r4,_pw_neut
+      0002DC E5*09            [12] 1656 	mov	a,(_pw_neut + 1)
+      0002DE FD               [12] 1657 	mov	r5,a
+      0002DF 33               [12] 1658 	rlc	a
+      0002E0 95 E0            [12] 1659 	subb	a,acc
+      0002E2 FE               [12] 1660 	mov	r6,a
+      0002E3 FF               [12] 1661 	mov	r7,a
+      0002E4 85*0C*00         [24] 1662 	mov	__mulint_PARM_2,_error
+      0002E7 85*0D*01         [24] 1663 	mov	(__mulint_PARM_2 + 1),(_error + 1)
+      0002EA 85*04 82         [24] 1664 	mov	dpl,_kp
+      0002ED 85*05 83         [24] 1665 	mov	dph,(_kp + 1)
+      0002F0 C0 07            [24] 1666 	push	ar7
+      0002F2 C0 06            [24] 1667 	push	ar6
+      0002F4 C0 05            [24] 1668 	push	ar5
+      0002F6 C0 04            [24] 1669 	push	ar4
+      0002F8 12r00r00         [24] 1670 	lcall	__mulint
+      0002FB AA 82            [24] 1671 	mov	r2,dpl
+      0002FD AB 83            [24] 1672 	mov	r3,dph
+      0002FF D0 04            [24] 1673 	pop	ar4
+      000301 D0 05            [24] 1674 	pop	ar5
+      000303 D0 06            [24] 1675 	pop	ar6
+      000305 D0 07            [24] 1676 	pop	ar7
+      000307 8A 00            [24] 1677 	mov	ar0,r2
+      000309 8B 01            [24] 1678 	mov	ar1,r3
+      00030B E4               [12] 1679 	clr	a
+      00030C FA               [12] 1680 	mov	r2,a
+      00030D FB               [12] 1681 	mov	r3,a
+      00030E E8               [12] 1682 	mov	a,r0
+      00030F 2C               [12] 1683 	add	a,r4
+      000310 FC               [12] 1684 	mov	r4,a
+      000311 E9               [12] 1685 	mov	a,r1
+      000312 3D               [12] 1686 	addc	a,r5
+      000313 FD               [12] 1687 	mov	r5,a
+      000314 EA               [12] 1688 	mov	a,r2
+      000315 3E               [12] 1689 	addc	a,r6
+      000316 FE               [12] 1690 	mov	r6,a
+      000317 EB               [12] 1691 	mov	a,r3
+      000318 3F               [12] 1692 	addc	a,r7
+      000319 FF               [12] 1693 	mov	r7,a
+      00031A E5*0C            [12] 1694 	mov	a,_error
+      00031C C3               [12] 1695 	clr	c
+      00031D 95*0A            [12] 1696 	subb	a,_previous_error
+      00031F FA               [12] 1697 	mov	r2,a
+      000320 E5*0D            [12] 1698 	mov	a,(_error + 1)
+      000322 95*0B            [12] 1699 	subb	a,(_previous_error + 1)
+      000324 FB               [12] 1700 	mov	r3,a
+      000325 8A*00            [24] 1701 	mov	__mulint_PARM_2,r2
+      000327 8B*01            [24] 1702 	mov	(__mulint_PARM_2 + 1),r3
+      000329 85*06 82         [24] 1703 	mov	dpl,_kd
+      00032C 85*07 83         [24] 1704 	mov	dph,(_kd + 1)
+      00032F C0 07            [24] 1705 	push	ar7
+      000331 C0 06            [24] 1706 	push	ar6
+      000333 C0 05            [24] 1707 	push	ar5
+      000335 C0 04            [24] 1708 	push	ar4
+      000337 12r00r00         [24] 1709 	lcall	__mulint
+      00033A AA 82            [24] 1710 	mov	r2,dpl
+      00033C AB 83            [24] 1711 	mov	r3,dph
+      00033E D0 04            [24] 1712 	pop	ar4
+      000340 D0 05            [24] 1713 	pop	ar5
+      000342 D0 06            [24] 1714 	pop	ar6
+      000344 D0 07            [24] 1715 	pop	ar7
+      000346 8A 00            [24] 1716 	mov	ar0,r2
+      000348 8B 01            [24] 1717 	mov	ar1,r3
+      00034A E4               [12] 1718 	clr	a
+      00034B FA               [12] 1719 	mov	r2,a
+      00034C FB               [12] 1720 	mov	r3,a
+      00034D E8               [12] 1721 	mov	a,r0
+      00034E 2C               [12] 1722 	add	a,r4
+      00034F F5*20            [12] 1723 	mov	_temp_motorpw_alg5,a
+      000351 E9               [12] 1724 	mov	a,r1
+      000352 3D               [12] 1725 	addc	a,r5
+      000353 F5*21            [12] 1726 	mov	(_temp_motorpw_alg5 + 1),a
+      000355 EA               [12] 1727 	mov	a,r2
+      000356 3E               [12] 1728 	addc	a,r6
+      000357 F5*22            [12] 1729 	mov	(_temp_motorpw_alg5 + 2),a
+      000359 EB               [12] 1730 	mov	a,r3
+      00035A 3F               [12] 1731 	addc	a,r7
+      00035B F5*23            [12] 1732 	mov	(_temp_motorpw_alg5 + 3),a
+                           00035D  1733 	C$worksheet_11.c$57$1$27 ==.
+                                   1734 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:57: printf("Algorithm 5, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg5);
+      00035D C0*20            [24] 1735 	push	_temp_motorpw_alg5
+      00035F C0*21            [24] 1736 	push	(_temp_motorpw_alg5 + 1)
+      000361 C0*22            [24] 1737 	push	(_temp_motorpw_alg5 + 2)
+      000363 C0*23            [24] 1738 	push	(_temp_motorpw_alg5 + 3)
+      000365 74r0D            [12] 1739 	mov	a,#___str_5
+      000367 C0 E0            [24] 1740 	push	acc
+      000369 74s01            [12] 1741 	mov	a,#(___str_5 >> 8)
+      00036B C0 E0            [24] 1742 	push	acc
+      00036D 74 80            [12] 1743 	mov	a,#0x80
+      00036F C0 E0            [24] 1744 	push	acc
+      000371 12r00r00         [24] 1745 	lcall	_printf
+      000374 E5 81            [12] 1746 	mov	a,sp
+      000376 24 F9            [12] 1747 	add	a,#0xf9
+      000378 F5 81            [12] 1748 	mov	sp,a
+                           00037A  1749 	C$worksheet_11.c$59$1$27 ==.
+                                   1750 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:59: temp_motorpw_alg6 = (signed long)pw_neut+(signed long)kp*(signed long)error+(signed long)kd*(signed long)(error-previous_error);
+      00037A AC*08            [24] 1751 	mov	r4,_pw_neut
+      00037C E5*09            [12] 1752 	mov	a,(_pw_neut + 1)
+      00037E FD               [12] 1753 	mov	r5,a
+      00037F 33               [12] 1754 	rlc	a
+      000380 95 E0            [12] 1755 	subb	a,acc
+      000382 FE               [12] 1756 	mov	r6,a
+      000383 FF               [12] 1757 	mov	r7,a
+      000384 A8*04            [24] 1758 	mov	r0,_kp
+      000386 A9*05            [24] 1759 	mov	r1,(_kp + 1)
+      000388 7A 00            [12] 1760 	mov	r2,#0x00
+      00038A 7B 00            [12] 1761 	mov	r3,#0x00
+      00038C 85*0C*00         [24] 1762 	mov	__mullong_PARM_2,_error
+      00038F E5*0D            [12] 1763 	mov	a,(_error + 1)
+      000391 F5*01            [12] 1764 	mov	(__mullong_PARM_2 + 1),a
+      000393 33               [12] 1765 	rlc	a
+      000394 95 E0            [12] 1766 	subb	a,acc
+      000396 F5*02            [12] 1767 	mov	(__mullong_PARM_2 + 2),a
+      000398 F5*03            [12] 1768 	mov	(__mullong_PARM_2 + 3),a
+      00039A 88 82            [24] 1769 	mov	dpl,r0
+      00039C 89 83            [24] 1770 	mov	dph,r1
+      00039E 8A F0            [24] 1771 	mov	b,r2
+      0003A0 EB               [12] 1772 	mov	a,r3
+      0003A1 C0 07            [24] 1773 	push	ar7
+      0003A3 C0 06            [24] 1774 	push	ar6
+      0003A5 C0 05            [24] 1775 	push	ar5
+      0003A7 C0 04            [24] 1776 	push	ar4
+      0003A9 12r00r00         [24] 1777 	lcall	__mullong
+      0003AC A8 82            [24] 1778 	mov	r0,dpl
+      0003AE A9 83            [24] 1779 	mov	r1,dph
+      0003B0 AA F0            [24] 1780 	mov	r2,b
+      0003B2 FB               [12] 1781 	mov	r3,a
+      0003B3 D0 04            [24] 1782 	pop	ar4
+      0003B5 D0 05            [24] 1783 	pop	ar5
+      0003B7 D0 06            [24] 1784 	pop	ar6
+      0003B9 D0 07            [24] 1785 	pop	ar7
+      0003BB E8               [12] 1786 	mov	a,r0
+      0003BC 2C               [12] 1787 	add	a,r4
+      0003BD FC               [12] 1788 	mov	r4,a
+      0003BE E9               [12] 1789 	mov	a,r1
+      0003BF 3D               [12] 1790 	addc	a,r5
+      0003C0 FD               [12] 1791 	mov	r5,a
+      0003C1 EA               [12] 1792 	mov	a,r2
+      0003C2 3E               [12] 1793 	addc	a,r6
+      0003C3 FE               [12] 1794 	mov	r6,a
+      0003C4 EB               [12] 1795 	mov	a,r3
+      0003C5 3F               [12] 1796 	addc	a,r7
+      0003C6 FF               [12] 1797 	mov	r7,a
+      0003C7 85*06*28         [24] 1798 	mov	_main_sloc0_1_0,_kd
+      0003CA 85*07*29         [24] 1799 	mov	(_main_sloc0_1_0 + 1),(_kd + 1)
+      0003CD E4               [12] 1800 	clr	a
+      0003CE F5*2A            [12] 1801 	mov	(_main_sloc0_1_0 + 2),a
+      0003D0 F5*2B            [12] 1802 	mov	(_main_sloc0_1_0 + 3),a
+      0003D2 E5*0C            [12] 1803 	mov	a,_error
+      0003D4 C3               [12] 1804 	clr	c
+      0003D5 95*0A            [12] 1805 	subb	a,_previous_error
+      0003D7 FA               [12] 1806 	mov	r2,a
+      0003D8 E5*0D            [12] 1807 	mov	a,(_error + 1)
+      0003DA 95*0B            [12] 1808 	subb	a,(_previous_error + 1)
+      0003DC 8A*00            [24] 1809 	mov	__mullong_PARM_2,r2
+      0003DE F5*01            [12] 1810 	mov	(__mullong_PARM_2 + 1),a
+      0003E0 33               [12] 1811 	rlc	a
+      0003E1 95 E0            [12] 1812 	subb	a,acc
+      0003E3 F5*02            [12] 1813 	mov	(__mullong_PARM_2 + 2),a
+      0003E5 F5*03            [12] 1814 	mov	(__mullong_PARM_2 + 3),a
+      0003E7 85*28 82         [24] 1815 	mov	dpl,_main_sloc0_1_0
+      0003EA 85*29 83         [24] 1816 	mov	dph,(_main_sloc0_1_0 + 1)
+      0003ED 85*2A F0         [24] 1817 	mov	b,(_main_sloc0_1_0 + 2)
+      0003F0 E5*2B            [12] 1818 	mov	a,(_main_sloc0_1_0 + 3)
+      0003F2 C0 07            [24] 1819 	push	ar7
+      0003F4 C0 06            [24] 1820 	push	ar6
+      0003F6 C0 05            [24] 1821 	push	ar5
+      0003F8 C0 04            [24] 1822 	push	ar4
+      0003FA 12r00r00         [24] 1823 	lcall	__mullong
+      0003FD A8 82            [24] 1824 	mov	r0,dpl
+      0003FF A9 83            [24] 1825 	mov	r1,dph
+      000401 AA F0            [24] 1826 	mov	r2,b
+      000403 FB               [12] 1827 	mov	r3,a
+      000404 D0 04            [24] 1828 	pop	ar4
+      000406 D0 05            [24] 1829 	pop	ar5
+      000408 D0 06            [24] 1830 	pop	ar6
+      00040A D0 07            [24] 1831 	pop	ar7
+      00040C E8               [12] 1832 	mov	a,r0
+      00040D 2C               [12] 1833 	add	a,r4
+      00040E F5*24            [12] 1834 	mov	_temp_motorpw_alg6,a
+      000410 E9               [12] 1835 	mov	a,r1
+      000411 3D               [12] 1836 	addc	a,r5
+      000412 F5*25            [12] 1837 	mov	(_temp_motorpw_alg6 + 1),a
+      000414 EA               [12] 1838 	mov	a,r2
+      000415 3E               [12] 1839 	addc	a,r6
+      000416 F5*26            [12] 1840 	mov	(_temp_motorpw_alg6 + 2),a
+      000418 EB               [12] 1841 	mov	a,r3
+      000419 3F               [12] 1842 	addc	a,r7
+      00041A F5*27            [12] 1843 	mov	(_temp_motorpw_alg6 + 3),a
+                           00041C  1844 	C$worksheet_11.c$60$1$27 ==.
+                                   1845 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 5\worksheet_11.c:60: printf("Algorithm 6, four byte calculation of motorpw is %ld \r\n",temp_motorpw_alg6);
+      00041C C0*24            [24] 1846 	push	_temp_motorpw_alg6
+      00041E C0*25            [24] 1847 	push	(_temp_motorpw_alg6 + 1)
+      000420 C0*26            [24] 1848 	push	(_temp_motorpw_alg6 + 2)
+      000422 C0*27            [24] 1849 	push	(_temp_motorpw_alg6 + 3)
+      000424 74r45            [12] 1850 	mov	a,#___str_6
+      000426 C0 E0            [24] 1851 	push	acc
+      000428 74s01            [12] 1852 	mov	a,#(___str_6 >> 8)
+      00042A C0 E0            [24] 1853 	push	acc
+      00042C 74 80            [12] 1854 	mov	a,#0x80
+      00042E C0 E0            [24] 1855 	push	acc
+      000430 12r00r00         [24] 1856 	lcall	_printf
+      000433 E5 81            [12] 1857 	mov	a,sp
+      000435 24 F9            [12] 1858 	add	a,#0xf9
+      000437 F5 81            [12] 1859 	mov	sp,a
+                           000439  1860 	C$worksheet_11.c$61$1$27 ==.
+                           000439  1861 	XG$main$0$0 ==.
+      000439 22               [24] 1862 	ret
+                                   1863 	.area CSEG    (CODE)
+                                   1864 	.area CONST   (CODE)
+                           000000  1865 Fworksheet_11$__str_0$0$0 == .
+      000000                       1866 ___str_0:
+      000000 54 68 65 20 74 77 6F  1867 	.ascii "The two byte calculation of motorpw is %d "
+             20 62 79 74 65 20 63
+             61 6C 63 75 6C 61 74
+             69 6F 6E 20 6F 66 20
+             6D 6F 74 6F 72 70 77
+             20 69 73 20 25 64 20
+      00002A 0D                    1868 	.db 0x0d
+      00002B 0A                    1869 	.db 0x0a
+      00002C 00                    1870 	.db 0x00
+                           00002D  1871 Fworksheet_11$__str_1$0$0 == .
+      00002D                       1872 ___str_1:
+      00002D 41 6C 67 6F 72 69 74  1873 	.ascii "Algorithm 1, four byte calculation of motorpw is %ld "
+             68 6D 20 31 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      000062 0D                    1874 	.db 0x0d
+      000063 0A                    1875 	.db 0x0a
+      000064 00                    1876 	.db 0x00
+                           000065  1877 Fworksheet_11$__str_2$0$0 == .
+      000065                       1878 ___str_2:
+      000065 41 6C 67 6F 72 69 74  1879 	.ascii "Algorithm 2, four byte calculation of motorpw is %ld "
+             68 6D 20 32 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      00009A 0D                    1880 	.db 0x0d
+      00009B 0A                    1881 	.db 0x0a
+      00009C 00                    1882 	.db 0x00
+                           00009D  1883 Fworksheet_11$__str_3$0$0 == .
+      00009D                       1884 ___str_3:
+      00009D 41 6C 67 6F 72 69 74  1885 	.ascii "Algorithm 3, four byte calculation of motorpw is %ld "
+             68 6D 20 33 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      0000D2 0D                    1886 	.db 0x0d
+      0000D3 0A                    1887 	.db 0x0a
+      0000D4 00                    1888 	.db 0x00
+                           0000D5  1889 Fworksheet_11$__str_4$0$0 == .
+      0000D5                       1890 ___str_4:
+      0000D5 41 6C 67 6F 72 69 74  1891 	.ascii "Algorithm 4, four byte calculation of motorpw is %ld "
+             68 6D 20 34 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      00010A 0D                    1892 	.db 0x0d
+      00010B 0A                    1893 	.db 0x0a
+      00010C 00                    1894 	.db 0x00
+                           00010D  1895 Fworksheet_11$__str_5$0$0 == .
+      00010D                       1896 ___str_5:
+      00010D 41 6C 67 6F 72 69 74  1897 	.ascii "Algorithm 5, four byte calculation of motorpw is %ld "
+             68 6D 20 35 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      000142 0D                    1898 	.db 0x0d
+      000143 0A                    1899 	.db 0x0a
+      000144 00                    1900 	.db 0x00
+                           000145  1901 Fworksheet_11$__str_6$0$0 == .
+      000145                       1902 ___str_6:
+      000145 41 6C 67 6F 72 69 74  1903 	.ascii "Algorithm 6, four byte calculation of motorpw is %ld "
+             68 6D 20 36 2C 20 66
+             6F 75 72 20 62 79 74
+             65 20 63 61 6C 63 75
+             6C 61 74 69 6F 6E 20
+             6F 66 20 6D 6F 74 6F
+             72 70 77 20 69 73 20
+             25 6C 64 20
+      00017A 0D                    1904 	.db 0x0d
+      00017B 0A                    1905 	.db 0x0a
+      00017C 00                    1906 	.db 0x00
+                                   1907 	.area XINIT   (CODE)
+                                   1908 	.area CABS    (ABS,CODE)

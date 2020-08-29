@@ -1,0 +1,378 @@
+/* Name: Martin Xu, Daniel Alegria, Ankur Singh
+Section: 1
+Date: 6/28/19
+File name: Lab 5
+Description: Automated drive with user inputted settings
+*/
+
+#include <c8051_SDCC.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <i2c.h>
+#include <math.h>
+//-----------------------------------------------------------------------------
+// Function Prototypes
+//-----------------------------------------------------------------------------
+void Port_Init (void);
+void PCA_Init (void);
+void Interrupt_Init (void);
+void XBR0_Init();
+void SMB_Init(void);
+void Set_DrivePulsewidth(void);
+void PCA_ISR (void) __interrupt 9;
+void errHeading(void);
+void getGain(void);
+void printData(void);
+unsigned char read_AD_input(unsigned char n);
+void ADC_Init(void);
+void ReadAccel(void);
+void Accel_Calibrate(void);
+
+//-----------------------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------------------
+
+//Drive
+unsigned int dr_DrivePW_Neutral = 2750;	//Drive Motor Initialization
+unsigned int dr_DrivePW_Min = 2013; 	//
+unsigned int dr_DrivePW_Max = 3487;		//
+unsigned int dr_DrivePW;				//current drive pulsewidth
+signed char dr_kx = 0;					//speed modifier in the pulsewidth equation
+signed char dr_ky = 0;
+unsigned char ADC_value;				//sets fraction of max speed with data from the potentiometer
+
+//Steering
+unsigned int SV_PW_CENTER = 2770; 		//Steering Initialization
+unsigned int SV_PW_LEFT = 2260;			//
+unsigned int SV_PW_RIGHT = 3280;		//
+unsigned int SV_SERVO_PW;				//current steering pulsewidth
+signed int sv_k = 0;					//steering multiplier
+signed int sv_temp_servo_pw;			//intermediary between current pulsewidth and input + equations to determine new pulsewidth
+
+unsigned int counts;
+unsigned char printcounts;
+
+__sbit __at 0xB4 FBSS;					//sbit labels
+__sbit __at 0xB7 RSSS;
+__sbit __at 0xB5 BLED1;	//green
+__sbit __at 0xB6 BLED2;	//red
+__sbit __at 0x93 POT;
+
+//Accelerometer
+signed int gx;
+signed int gy;
+signed int x0;
+signed int y0;
+signed int avg_gx;
+signed int avg_gy;
+
+
+//-----------------------------------------------------------------------------
+// Main Function
+//-----------------------------------------------------------------------------
+void main(void)
+{
+    //initialize board
+    Sys_Init();
+    putchar(' ');
+    Port_Init();
+    XBR0_Init();
+    PCA_Init();
+    Interrupt_Init();
+	SMB_Init();
+	ADC_Init();
+	Accel_Init_C();
+	CR = 1;
+
+	//set the PCA output to a neutral setting and wait 1 second
+    dr_DrivePW = dr_DrivePW_Neutral;
+	PCA0CP2 = 0xFFFF - dr_DrivePW;
+	counts = 0;
+	while (counts <= 50);
+	lcd_clear();
+
+    while(1)
+	{
+		if (RSSS)		//switch off
+		{
+			//Set drive to neutral
+			dr_DrivePW = dr_DrivePW_Neutral;
+			PCA0CP2 = 0xFFFF - dr_DrivePW;
+
+			//Set steering to center
+			SV_SERVO_PW = SV_PW_CENTER;
+			PCA0CPL0 = 0xFFFF - SV_SERVO_PW;
+			PCA0CPH0 = (0xFFFF - SV_SERVO_PW) >> 8;
+
+			//Get inputs
+			getGain();
+
+			ADC_value = read_AD_input(3);
+			Accel_Calibrate();
+		}
+
+
+		if (!RSSS)		//switch on
+		{
+			if (dr_DrivePW != dr_DrivePW_Neutral)		//if not level, BiLED green
+			{
+				BLED1 = 1;
+				BLED2 = 0;
+			}
+			else
+			{
+				BLED1 = 0;
+				BLED2 = 1;
+			}
+
+			ReadAccel();
+			errHeading();
+			Set_DrivePulsewidth();
+
+			counts = 0;
+			while (counts < 20);		//400ms wait
+			printData();			
+		}
+	}
+}
+
+
+//-----------------------------------------------------------------------------
+// Drive
+//-----------------------------------------------------------------------------
+void Set_DrivePulsewidth(void)					//pulsewidth depends on both A/D and inputted gain
+{
+	if (abs(gx) > 35 || abs(gy) > 15)			//if there is more than a 25 in either x accel or y accel
+	{
+		if (FBSS == 1)					//driving forward
+		{
+			dr_DrivePW = dr_DrivePW_Neutral + 50 + ((ADC_value/255.0) * dr_ky * abs(gy));
+			dr_DrivePW += dr_kx * abs(gx);
+		}
+		else if (FBSS == 0)				//driving backward
+		{
+			dr_DrivePW = dr_DrivePW_Neutral - 50 - ((ADC_value/255.0) * dr_ky * abs(gy));
+			dr_DrivePW -= dr_kx * abs(gx);
+		}
+	}
+
+	else
+	{
+		dr_DrivePW = dr_DrivePW_Neutral;
+	}
+
+
+	if (dr_DrivePW > dr_DrivePW_Max)	//check if greater than pulsewidth maximum
+		{
+			dr_DrivePW = dr_DrivePW_Max;	//set PW to the maximum value
+		}
+	if (dr_DrivePW < dr_DrivePW_Min)	//check if greater than pulsewidth maximum
+		{
+			dr_DrivePW = dr_DrivePW_Min;	//set PW to the maximum value
+		}
+
+    PCA0CP2 = 0xFFFF - dr_DrivePW;
+}
+
+
+//-----------------------------------------------------------------------------
+// Steering
+//-----------------------------------------------------------------------------
+void errHeading(void)
+{
+	if (FBSS == 1)								//switches direction but maintains magnitude of wheel turn if moving reverse
+	{
+		sv_temp_servo_pw = SV_PW_CENTER + ((500.0 * gx * sv_k)/1800.0);
+	} 
+	else
+	{
+		sv_temp_servo_pw = SV_PW_CENTER - ((500.0 * gx * sv_k)/1800.0);
+	}
+
+	if (sv_temp_servo_pw > SV_PW_RIGHT)
+	{
+		sv_temp_servo_pw = SV_PW_RIGHT;
+	}
+	else if (sv_temp_servo_pw < SV_PW_LEFT)
+	{
+		sv_temp_servo_pw = SV_PW_LEFT;
+	}
+
+	SV_SERVO_PW = sv_temp_servo_pw;						//saves the equation value as the current pulsewidth
+	PCA0CPL0 = 0xFFFF - SV_SERVO_PW;
+	PCA0CPH0 = (0xFFFF - SV_SERVO_PW) >> 8;
+}
+
+
+//-----------------------------------------------------------------------------
+// Accelerometer
+//-----------------------------------------------------------------------------
+void ReadAccel(void)
+{
+	unsigned char accelData[4];
+	unsigned char addrAccel = 0x3A;
+	unsigned char j = 0;
+
+	avg_gx = 0;
+	avg_gy = 0;
+
+	while (j < 8)
+	{
+		i2c_read_data(addrAccel, 0x27, accelData, 1);
+		if ((accelData[0] & 0x03) == 0x03)
+		{
+			i2c_read_data(addrAccel, 0x28|0x80, accelData, 4);	//assert MSB to read mult. Bytes
+			avg_gx += ((accelData[1] << 8) >> 4); 				//a simple << 4 WILL NOT WORK;
+			avg_gy += ((accelData[3] << 8) >> 4);				//it will not set the sign bit correctly
+			j++;
+		}
+	}
+
+	avg_gx = avg_gx/8.0;
+	avg_gy = avg_gy/8.0;
+	gx = avg_gx - x0;
+	gy = avg_gy - y0;
+}
+
+void Accel_Calibrate(void)
+{
+	unsigned int xsum = 0;
+	unsigned int ysum = 0;
+	unsigned char i = 0;
+
+	while (i < 64)
+	{
+		ReadAccel();
+		xsum += gx;
+		ysum += gy;
+		i++;
+	}
+
+	x0 = xsum/64.0;
+	y0 = ysum/64.0;
+}
+
+
+//-----------------------------------------------------------------------------
+// Get Inputs
+//-----------------------------------------------------------------------------
+void getGain(void) 
+{
+	lcd_clear();									//clears lcd screen
+	lcd_print("Input Drive X Gain: \r");			//gets input of desired drive gain from keypad and saves to variable
+	dr_kx = kpd_input(1);
+	printf("Drive X Gain: %d \r\n", dr_kx);
+	printcounts = 0;
+	while (printcounts < 100);
+	lcd_clear();
+
+	lcd_print("Input Drive Y Gain: \r");			//gets input of desired drive gain from keypad and saves to variable
+	dr_ky = kpd_input(1);
+	printf("Drive Y Gain: %d \r\n", dr_ky);
+	printcounts = 0;
+	while (printcounts < 100);
+	lcd_clear();							
+
+	lcd_print("Input Steer Gain: \r\n");			//gets input of steering from keypad and saves to variable
+	sv_k = kpd_input(1);
+	printf("Steer Gain: %d \r\n", sv_k);
+	printcounts = 0;
+	while (printcounts < 100);
+	lcd_clear();
+}
+
+
+//-----------------------------------------------------------------------------
+// Print Data
+//-----------------------------------------------------------------------------
+void printData(void)								//prints necessary values
+{
+	printf("X accel.   Y accel.   X zero   Y zero   Drive PW   Steering PW \r\n");
+	printf("%8.3d,   %7.3d,   %5.3d,   %5.3d,   %7.4d,   %10.4d \r\n\n", gx, gy, x0, y0, dr_DrivePW, sv_temp_servo_pw);
+
+	lcd_clear();
+	lcd_print("Xgain: %.2d Ygain: %.2d\r", dr_kx, dr_ky);
+	lcd_print("Drive PW: %.4d \r", dr_DrivePW);
+	lcd_print("Steering PW: %.4d \r", sv_temp_servo_pw);
+	lcd_print("Xacl: %.3d Yacl: %.3d\r", gx, gy);
+}
+
+
+//-----------------------------------------------------------------------------
+// Init
+//-----------------------------------------------------------------------------
+// Set up ports for input and output
+void Port_Init()
+{
+	P0MDOUT &= 0x3F;
+	P1MDOUT &= 0xE6;
+	P1MDIN &= ~0x08;
+	P1MDIN |= 0x11;
+	P1 |= ~0xE6;
+	P3MDOUT &= 0x6F;
+	P3MDOUT |= 0x60; 		
+	P3 |= ~0x6F; 
+}
+
+// XBR0_Init
+// Set up the crossbar
+void XBR0_Init()
+{
+	XBR0 = 0x1F;
+}
+
+// PCA_Init
+// Set up Programmable Counter Array
+void PCA_Init(void)
+{
+	PCA0MD = 0x81;		//SYSCLK/12
+	PCA0CPM0 = 0xC2;
+	PCA0CPM1 = 0x00;
+	PCA0CPM2 = 0xC2;
+	PCA0CN = 0x40; 		//enable PCA counter
+}
+
+// Interrupt_Init
+// Set up the PCA overflow interrupts
+void Interrupt_Init()
+{
+	EA = 1;			//enable global interrupts
+	EIE1 = 0x08;	//enable PCA interrupt
+	ET0 =1;
+}
+
+// PCA_ISR
+// Interrupt Service Routine for Programmable Counter Array Overflow Interrupt
+void PCA_ISR (void) __interrupt 9
+{
+	counts++;
+	printcounts++;
+	PCA0 = 28672;				//20ms start value
+	CF = 0;
+	PCA0CN &= 0x40;
+}
+
+// SMB_Init
+void SMB_Init(void)
+{
+	SMB0CR=0x93; 	//set SCL to 100KHz (actual freq ~ 94,594Hz)*/
+	ENSMB=1; 		//bit 6 of SMB0CN, enable the SMBus */
+}
+
+//ADC_Init
+void ADC_Init(void)
+{
+	
+	REF0CN = 0x03;  //set VREF to internal pin not external
+	ADC1CN = 0x80;  //set ADC1 to active
+	ADC1CF |= 0x01; //set gain to 1
+}
+
+unsigned char read_AD_input(unsigned char n)
+{
+	AMX1SL = n; 			 		 //sets pin P1.n as analog input for ADC1
+	ADC1CN &= ~0x20; 				 //clears conversion flag
+	ADC1CN |= 0x10; 				 //initiate A/D conversion
+	while ((ADC1CN & 0x20) == 0x00); //waits until the control register says conversion is complete
+	return ADC1; 				   	 //outputs conversion's value
+}
