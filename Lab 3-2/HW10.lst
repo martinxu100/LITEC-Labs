@@ -1,0 +1,2813 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.6.0 #9615 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module HW10
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _main
+                                     12 	.globl _read_keypad
+                                     13 	.globl _strlen
+                                     14 	.globl _putchar
+                                     15 	.globl _vsprintf
+                                     16 	.globl _printf
+                                     17 	.globl _getchar_nw
+                                     18 	.globl _Sys_Init
+                                     19 	.globl _UART0_Init
+                                     20 	.globl _SYSCLK_Init
+                                     21 	.globl _BUS_SCL
+                                     22 	.globl _BUS_TOE
+                                     23 	.globl _BUS_FTE
+                                     24 	.globl _BUS_AA
+                                     25 	.globl _BUS_INT
+                                     26 	.globl _BUS_STOP
+                                     27 	.globl _BUS_START
+                                     28 	.globl _BUS_EN
+                                     29 	.globl _BUS_BUSY
+                                     30 	.globl _SPIF
+                                     31 	.globl _WCOL
+                                     32 	.globl _MODF
+                                     33 	.globl _RXOVRN
+                                     34 	.globl _TXBSY
+                                     35 	.globl _SLVSEL
+                                     36 	.globl _MSTEN
+                                     37 	.globl _SPIEN
+                                     38 	.globl _AD0EN
+                                     39 	.globl _ADCEN
+                                     40 	.globl _AD0TM
+                                     41 	.globl _ADCTM
+                                     42 	.globl _AD0INT
+                                     43 	.globl _ADCINT
+                                     44 	.globl _AD0BUSY
+                                     45 	.globl _ADBUSY
+                                     46 	.globl _AD0CM1
+                                     47 	.globl _ADSTM1
+                                     48 	.globl _AD0CM0
+                                     49 	.globl _ADSTM0
+                                     50 	.globl _AD0WINT
+                                     51 	.globl _ADWINT
+                                     52 	.globl _AD0LJST
+                                     53 	.globl _ADLJST
+                                     54 	.globl _CF
+                                     55 	.globl _CR
+                                     56 	.globl _CCF4
+                                     57 	.globl _CCF3
+                                     58 	.globl _CCF2
+                                     59 	.globl _CCF1
+                                     60 	.globl _CCF0
+                                     61 	.globl _CY
+                                     62 	.globl _AC
+                                     63 	.globl _F0
+                                     64 	.globl _RS1
+                                     65 	.globl _RS0
+                                     66 	.globl _OV
+                                     67 	.globl _F1
+                                     68 	.globl _P
+                                     69 	.globl _TF2
+                                     70 	.globl _EXF2
+                                     71 	.globl _RCLK
+                                     72 	.globl _TCLK
+                                     73 	.globl _EXEN2
+                                     74 	.globl _TR2
+                                     75 	.globl _CT2
+                                     76 	.globl _CPRL2
+                                     77 	.globl _BUSY
+                                     78 	.globl _ENSMB
+                                     79 	.globl _STA
+                                     80 	.globl _STO
+                                     81 	.globl _SI
+                                     82 	.globl _AA
+                                     83 	.globl _SMBFTE
+                                     84 	.globl _SMBTOE
+                                     85 	.globl _PT2
+                                     86 	.globl _PS
+                                     87 	.globl _PS0
+                                     88 	.globl _PT1
+                                     89 	.globl _PX1
+                                     90 	.globl _PT0
+                                     91 	.globl _PX0
+                                     92 	.globl _P3_7
+                                     93 	.globl _P3_6
+                                     94 	.globl _P3_5
+                                     95 	.globl _P3_4
+                                     96 	.globl _P3_3
+                                     97 	.globl _P3_2
+                                     98 	.globl _P3_1
+                                     99 	.globl _P3_0
+                                    100 	.globl _EA
+                                    101 	.globl _ET2
+                                    102 	.globl _ES
+                                    103 	.globl _ES0
+                                    104 	.globl _ET1
+                                    105 	.globl _EX1
+                                    106 	.globl _ET0
+                                    107 	.globl _EX0
+                                    108 	.globl _P2_7
+                                    109 	.globl _P2_6
+                                    110 	.globl _P2_5
+                                    111 	.globl _P2_4
+                                    112 	.globl _P2_3
+                                    113 	.globl _P2_2
+                                    114 	.globl _P2_1
+                                    115 	.globl _P2_0
+                                    116 	.globl _S0MODE
+                                    117 	.globl _SM00
+                                    118 	.globl _SM0
+                                    119 	.globl _SM10
+                                    120 	.globl _SM1
+                                    121 	.globl _MCE0
+                                    122 	.globl _SM20
+                                    123 	.globl _SM2
+                                    124 	.globl _REN0
+                                    125 	.globl _REN
+                                    126 	.globl _TB80
+                                    127 	.globl _TB8
+                                    128 	.globl _RB80
+                                    129 	.globl _RB8
+                                    130 	.globl _TI0
+                                    131 	.globl _TI
+                                    132 	.globl _RI0
+                                    133 	.globl _RI
+                                    134 	.globl _P1_7
+                                    135 	.globl _P1_6
+                                    136 	.globl _P1_5
+                                    137 	.globl _P1_4
+                                    138 	.globl _P1_3
+                                    139 	.globl _P1_2
+                                    140 	.globl _P1_1
+                                    141 	.globl _P1_0
+                                    142 	.globl _TF1
+                                    143 	.globl _TR1
+                                    144 	.globl _TF0
+                                    145 	.globl _TR0
+                                    146 	.globl _IE1
+                                    147 	.globl _IT1
+                                    148 	.globl _IE0
+                                    149 	.globl _IT0
+                                    150 	.globl _P0_7
+                                    151 	.globl _P0_6
+                                    152 	.globl _P0_5
+                                    153 	.globl _P0_4
+                                    154 	.globl _P0_3
+                                    155 	.globl _P0_2
+                                    156 	.globl _P0_1
+                                    157 	.globl _P0_0
+                                    158 	.globl _PCA0CP4
+                                    159 	.globl _PCA0CP3
+                                    160 	.globl _PCA0CP2
+                                    161 	.globl _PCA0CP1
+                                    162 	.globl _PCA0CP0
+                                    163 	.globl _PCA0
+                                    164 	.globl _DAC1
+                                    165 	.globl _DAC0
+                                    166 	.globl _ADC0LT
+                                    167 	.globl _ADC0GT
+                                    168 	.globl _ADC0
+                                    169 	.globl _RCAP4
+                                    170 	.globl _TMR4
+                                    171 	.globl _TMR3RL
+                                    172 	.globl _TMR3
+                                    173 	.globl _RCAP2
+                                    174 	.globl _TMR2
+                                    175 	.globl _TMR1
+                                    176 	.globl _TMR0
+                                    177 	.globl _WDTCN
+                                    178 	.globl _PCA0CPH4
+                                    179 	.globl _PCA0CPH3
+                                    180 	.globl _PCA0CPH2
+                                    181 	.globl _PCA0CPH1
+                                    182 	.globl _PCA0CPH0
+                                    183 	.globl _PCA0H
+                                    184 	.globl _SPI0CN
+                                    185 	.globl _EIP2
+                                    186 	.globl _EIP1
+                                    187 	.globl _TH4
+                                    188 	.globl _TL4
+                                    189 	.globl _SADDR1
+                                    190 	.globl _SBUF1
+                                    191 	.globl _SCON1
+                                    192 	.globl _B
+                                    193 	.globl _RSTSRC
+                                    194 	.globl _PCA0CPL4
+                                    195 	.globl _PCA0CPL3
+                                    196 	.globl _PCA0CPL2
+                                    197 	.globl _PCA0CPL1
+                                    198 	.globl _PCA0CPL0
+                                    199 	.globl _PCA0L
+                                    200 	.globl _ADC0CN
+                                    201 	.globl _EIE2
+                                    202 	.globl _EIE1
+                                    203 	.globl _RCAP4H
+                                    204 	.globl _RCAP4L
+                                    205 	.globl _XBR2
+                                    206 	.globl _XBR1
+                                    207 	.globl _XBR0
+                                    208 	.globl _ACC
+                                    209 	.globl _PCA0CPM4
+                                    210 	.globl _PCA0CPM3
+                                    211 	.globl _PCA0CPM2
+                                    212 	.globl _PCA0CPM1
+                                    213 	.globl _PCA0CPM0
+                                    214 	.globl _PCA0MD
+                                    215 	.globl _PCA0CN
+                                    216 	.globl _DAC1CN
+                                    217 	.globl _DAC1H
+                                    218 	.globl _DAC1L
+                                    219 	.globl _DAC0CN
+                                    220 	.globl _DAC0H
+                                    221 	.globl _DAC0L
+                                    222 	.globl _REF0CN
+                                    223 	.globl _PSW
+                                    224 	.globl _SMB0CR
+                                    225 	.globl _TH2
+                                    226 	.globl _TL2
+                                    227 	.globl _RCAP2H
+                                    228 	.globl _RCAP2L
+                                    229 	.globl _T4CON
+                                    230 	.globl _T2CON
+                                    231 	.globl _ADC0LTH
+                                    232 	.globl _ADC0LTL
+                                    233 	.globl _ADC0GTH
+                                    234 	.globl _ADC0GTL
+                                    235 	.globl _SMB0ADR
+                                    236 	.globl _SMB0DAT
+                                    237 	.globl _SMB0STA
+                                    238 	.globl _SMB0CN
+                                    239 	.globl _ADC0H
+                                    240 	.globl _ADC0L
+                                    241 	.globl _P1MDIN
+                                    242 	.globl _ADC0CF
+                                    243 	.globl _AMX0SL
+                                    244 	.globl _AMX0CF
+                                    245 	.globl _SADEN0
+                                    246 	.globl _IP
+                                    247 	.globl _FLACL
+                                    248 	.globl _FLSCL
+                                    249 	.globl _P74OUT
+                                    250 	.globl _OSCICN
+                                    251 	.globl _OSCXCN
+                                    252 	.globl _P3
+                                    253 	.globl __XPAGE
+                                    254 	.globl _EMI0CN
+                                    255 	.globl _SADEN1
+                                    256 	.globl _P3IF
+                                    257 	.globl _AMX1SL
+                                    258 	.globl _ADC1CF
+                                    259 	.globl _ADC1CN
+                                    260 	.globl _SADDR0
+                                    261 	.globl _IE
+                                    262 	.globl _P3MDOUT
+                                    263 	.globl _PRT3CF
+                                    264 	.globl _P2MDOUT
+                                    265 	.globl _PRT2CF
+                                    266 	.globl _P1MDOUT
+                                    267 	.globl _PRT1CF
+                                    268 	.globl _P0MDOUT
+                                    269 	.globl _PRT0CF
+                                    270 	.globl _EMI0CF
+                                    271 	.globl _EMI0TC
+                                    272 	.globl _P2
+                                    273 	.globl _CPT1CN
+                                    274 	.globl _CPT0CN
+                                    275 	.globl _SPI0CKR
+                                    276 	.globl _ADC1
+                                    277 	.globl _SPI0DAT
+                                    278 	.globl _SPI0CFG
+                                    279 	.globl _SBUF0
+                                    280 	.globl _SBUF
+                                    281 	.globl _SCON0
+                                    282 	.globl _SCON
+                                    283 	.globl _P7
+                                    284 	.globl _TMR3H
+                                    285 	.globl _TMR3L
+                                    286 	.globl _TMR3RLH
+                                    287 	.globl _TMR3RLL
+                                    288 	.globl _TMR3CN
+                                    289 	.globl _P1
+                                    290 	.globl _PSCTL
+                                    291 	.globl _CKCON
+                                    292 	.globl _TH1
+                                    293 	.globl _TH0
+                                    294 	.globl _TL1
+                                    295 	.globl _TL0
+                                    296 	.globl _TMOD
+                                    297 	.globl _TCON
+                                    298 	.globl _PCON
+                                    299 	.globl _P6
+                                    300 	.globl _P5
+                                    301 	.globl _P4
+                                    302 	.globl _DPH
+                                    303 	.globl _DPL
+                                    304 	.globl _SP
+                                    305 	.globl _P0
+                                    306 	.globl _version_array
+                                    307 	.globl _data_array
+                                    308 	.globl _ranger_version
+                                    309 	.globl _compass_version
+                                    310 	.globl _input_data
+                                    311 	.globl _range
+                                    312 	.globl _heading
+                                    313 	.globl _does_compass_have_new_data
+                                    314 	.globl _does_ranger_have_new_data
+                                    315 	.globl _compass_count
+                                    316 	.globl _ranger_count
+                                    317 	.globl _counts
+                                    318 	.globl _i2c_read_data_PARM_4
+                                    319 	.globl _i2c_read_data_PARM_3
+                                    320 	.globl _i2c_read_data_PARM_2
+                                    321 	.globl _i2c_write_data_PARM_4
+                                    322 	.globl _i2c_write_data_PARM_3
+                                    323 	.globl _i2c_write_data_PARM_2
+                                    324 	.globl _aligned_alloc_PARM_2
+                                    325 	.globl _Data2
+                                    326 	.globl _lcd_print
+                                    327 	.globl _lcd_clear
+                                    328 	.globl _kpd_input
+                                    329 	.globl _delay_time
+                                    330 	.globl _i2c_start
+                                    331 	.globl _i2c_write
+                                    332 	.globl _i2c_write_and_stop
+                                    333 	.globl _i2c_read
+                                    334 	.globl _i2c_read_and_stop
+                                    335 	.globl _i2c_write_data
+                                    336 	.globl _i2c_read_data
+                                    337 	.globl _Accel_Init
+                                    338 	.globl _Accel_Init_C
+                                    339 	.globl _Port_Init
+                                    340 	.globl _XBR0_Init
+                                    341 	.globl _PCA_Init
+                                    342 	.globl _SMB_Init
+                                    343 	.globl _PCA_ISR
+                                    344 	.globl _ranger
+                                    345 	.globl _compass
+                                    346 ;--------------------------------------------------------
+                                    347 ; special function registers
+                                    348 ;--------------------------------------------------------
+                                    349 	.area RSEG    (ABS,DATA)
+      000000                        350 	.org 0x0000
+                           000080   351 G$P0$0$0 == 0x0080
+                           000080   352 _P0	=	0x0080
+                           000081   353 G$SP$0$0 == 0x0081
+                           000081   354 _SP	=	0x0081
+                           000082   355 G$DPL$0$0 == 0x0082
+                           000082   356 _DPL	=	0x0082
+                           000083   357 G$DPH$0$0 == 0x0083
+                           000083   358 _DPH	=	0x0083
+                           000084   359 G$P4$0$0 == 0x0084
+                           000084   360 _P4	=	0x0084
+                           000085   361 G$P5$0$0 == 0x0085
+                           000085   362 _P5	=	0x0085
+                           000086   363 G$P6$0$0 == 0x0086
+                           000086   364 _P6	=	0x0086
+                           000087   365 G$PCON$0$0 == 0x0087
+                           000087   366 _PCON	=	0x0087
+                           000088   367 G$TCON$0$0 == 0x0088
+                           000088   368 _TCON	=	0x0088
+                           000089   369 G$TMOD$0$0 == 0x0089
+                           000089   370 _TMOD	=	0x0089
+                           00008A   371 G$TL0$0$0 == 0x008a
+                           00008A   372 _TL0	=	0x008a
+                           00008B   373 G$TL1$0$0 == 0x008b
+                           00008B   374 _TL1	=	0x008b
+                           00008C   375 G$TH0$0$0 == 0x008c
+                           00008C   376 _TH0	=	0x008c
+                           00008D   377 G$TH1$0$0 == 0x008d
+                           00008D   378 _TH1	=	0x008d
+                           00008E   379 G$CKCON$0$0 == 0x008e
+                           00008E   380 _CKCON	=	0x008e
+                           00008F   381 G$PSCTL$0$0 == 0x008f
+                           00008F   382 _PSCTL	=	0x008f
+                           000090   383 G$P1$0$0 == 0x0090
+                           000090   384 _P1	=	0x0090
+                           000091   385 G$TMR3CN$0$0 == 0x0091
+                           000091   386 _TMR3CN	=	0x0091
+                           000092   387 G$TMR3RLL$0$0 == 0x0092
+                           000092   388 _TMR3RLL	=	0x0092
+                           000093   389 G$TMR3RLH$0$0 == 0x0093
+                           000093   390 _TMR3RLH	=	0x0093
+                           000094   391 G$TMR3L$0$0 == 0x0094
+                           000094   392 _TMR3L	=	0x0094
+                           000095   393 G$TMR3H$0$0 == 0x0095
+                           000095   394 _TMR3H	=	0x0095
+                           000096   395 G$P7$0$0 == 0x0096
+                           000096   396 _P7	=	0x0096
+                           000098   397 G$SCON$0$0 == 0x0098
+                           000098   398 _SCON	=	0x0098
+                           000098   399 G$SCON0$0$0 == 0x0098
+                           000098   400 _SCON0	=	0x0098
+                           000099   401 G$SBUF$0$0 == 0x0099
+                           000099   402 _SBUF	=	0x0099
+                           000099   403 G$SBUF0$0$0 == 0x0099
+                           000099   404 _SBUF0	=	0x0099
+                           00009A   405 G$SPI0CFG$0$0 == 0x009a
+                           00009A   406 _SPI0CFG	=	0x009a
+                           00009B   407 G$SPI0DAT$0$0 == 0x009b
+                           00009B   408 _SPI0DAT	=	0x009b
+                           00009C   409 G$ADC1$0$0 == 0x009c
+                           00009C   410 _ADC1	=	0x009c
+                           00009D   411 G$SPI0CKR$0$0 == 0x009d
+                           00009D   412 _SPI0CKR	=	0x009d
+                           00009E   413 G$CPT0CN$0$0 == 0x009e
+                           00009E   414 _CPT0CN	=	0x009e
+                           00009F   415 G$CPT1CN$0$0 == 0x009f
+                           00009F   416 _CPT1CN	=	0x009f
+                           0000A0   417 G$P2$0$0 == 0x00a0
+                           0000A0   418 _P2	=	0x00a0
+                           0000A1   419 G$EMI0TC$0$0 == 0x00a1
+                           0000A1   420 _EMI0TC	=	0x00a1
+                           0000A3   421 G$EMI0CF$0$0 == 0x00a3
+                           0000A3   422 _EMI0CF	=	0x00a3
+                           0000A4   423 G$PRT0CF$0$0 == 0x00a4
+                           0000A4   424 _PRT0CF	=	0x00a4
+                           0000A4   425 G$P0MDOUT$0$0 == 0x00a4
+                           0000A4   426 _P0MDOUT	=	0x00a4
+                           0000A5   427 G$PRT1CF$0$0 == 0x00a5
+                           0000A5   428 _PRT1CF	=	0x00a5
+                           0000A5   429 G$P1MDOUT$0$0 == 0x00a5
+                           0000A5   430 _P1MDOUT	=	0x00a5
+                           0000A6   431 G$PRT2CF$0$0 == 0x00a6
+                           0000A6   432 _PRT2CF	=	0x00a6
+                           0000A6   433 G$P2MDOUT$0$0 == 0x00a6
+                           0000A6   434 _P2MDOUT	=	0x00a6
+                           0000A7   435 G$PRT3CF$0$0 == 0x00a7
+                           0000A7   436 _PRT3CF	=	0x00a7
+                           0000A7   437 G$P3MDOUT$0$0 == 0x00a7
+                           0000A7   438 _P3MDOUT	=	0x00a7
+                           0000A8   439 G$IE$0$0 == 0x00a8
+                           0000A8   440 _IE	=	0x00a8
+                           0000A9   441 G$SADDR0$0$0 == 0x00a9
+                           0000A9   442 _SADDR0	=	0x00a9
+                           0000AA   443 G$ADC1CN$0$0 == 0x00aa
+                           0000AA   444 _ADC1CN	=	0x00aa
+                           0000AB   445 G$ADC1CF$0$0 == 0x00ab
+                           0000AB   446 _ADC1CF	=	0x00ab
+                           0000AC   447 G$AMX1SL$0$0 == 0x00ac
+                           0000AC   448 _AMX1SL	=	0x00ac
+                           0000AD   449 G$P3IF$0$0 == 0x00ad
+                           0000AD   450 _P3IF	=	0x00ad
+                           0000AE   451 G$SADEN1$0$0 == 0x00ae
+                           0000AE   452 _SADEN1	=	0x00ae
+                           0000AF   453 G$EMI0CN$0$0 == 0x00af
+                           0000AF   454 _EMI0CN	=	0x00af
+                           0000AF   455 G$_XPAGE$0$0 == 0x00af
+                           0000AF   456 __XPAGE	=	0x00af
+                           0000B0   457 G$P3$0$0 == 0x00b0
+                           0000B0   458 _P3	=	0x00b0
+                           0000B1   459 G$OSCXCN$0$0 == 0x00b1
+                           0000B1   460 _OSCXCN	=	0x00b1
+                           0000B2   461 G$OSCICN$0$0 == 0x00b2
+                           0000B2   462 _OSCICN	=	0x00b2
+                           0000B5   463 G$P74OUT$0$0 == 0x00b5
+                           0000B5   464 _P74OUT	=	0x00b5
+                           0000B6   465 G$FLSCL$0$0 == 0x00b6
+                           0000B6   466 _FLSCL	=	0x00b6
+                           0000B7   467 G$FLACL$0$0 == 0x00b7
+                           0000B7   468 _FLACL	=	0x00b7
+                           0000B8   469 G$IP$0$0 == 0x00b8
+                           0000B8   470 _IP	=	0x00b8
+                           0000B9   471 G$SADEN0$0$0 == 0x00b9
+                           0000B9   472 _SADEN0	=	0x00b9
+                           0000BA   473 G$AMX0CF$0$0 == 0x00ba
+                           0000BA   474 _AMX0CF	=	0x00ba
+                           0000BB   475 G$AMX0SL$0$0 == 0x00bb
+                           0000BB   476 _AMX0SL	=	0x00bb
+                           0000BC   477 G$ADC0CF$0$0 == 0x00bc
+                           0000BC   478 _ADC0CF	=	0x00bc
+                           0000BD   479 G$P1MDIN$0$0 == 0x00bd
+                           0000BD   480 _P1MDIN	=	0x00bd
+                           0000BE   481 G$ADC0L$0$0 == 0x00be
+                           0000BE   482 _ADC0L	=	0x00be
+                           0000BF   483 G$ADC0H$0$0 == 0x00bf
+                           0000BF   484 _ADC0H	=	0x00bf
+                           0000C0   485 G$SMB0CN$0$0 == 0x00c0
+                           0000C0   486 _SMB0CN	=	0x00c0
+                           0000C1   487 G$SMB0STA$0$0 == 0x00c1
+                           0000C1   488 _SMB0STA	=	0x00c1
+                           0000C2   489 G$SMB0DAT$0$0 == 0x00c2
+                           0000C2   490 _SMB0DAT	=	0x00c2
+                           0000C3   491 G$SMB0ADR$0$0 == 0x00c3
+                           0000C3   492 _SMB0ADR	=	0x00c3
+                           0000C4   493 G$ADC0GTL$0$0 == 0x00c4
+                           0000C4   494 _ADC0GTL	=	0x00c4
+                           0000C5   495 G$ADC0GTH$0$0 == 0x00c5
+                           0000C5   496 _ADC0GTH	=	0x00c5
+                           0000C6   497 G$ADC0LTL$0$0 == 0x00c6
+                           0000C6   498 _ADC0LTL	=	0x00c6
+                           0000C7   499 G$ADC0LTH$0$0 == 0x00c7
+                           0000C7   500 _ADC0LTH	=	0x00c7
+                           0000C8   501 G$T2CON$0$0 == 0x00c8
+                           0000C8   502 _T2CON	=	0x00c8
+                           0000C9   503 G$T4CON$0$0 == 0x00c9
+                           0000C9   504 _T4CON	=	0x00c9
+                           0000CA   505 G$RCAP2L$0$0 == 0x00ca
+                           0000CA   506 _RCAP2L	=	0x00ca
+                           0000CB   507 G$RCAP2H$0$0 == 0x00cb
+                           0000CB   508 _RCAP2H	=	0x00cb
+                           0000CC   509 G$TL2$0$0 == 0x00cc
+                           0000CC   510 _TL2	=	0x00cc
+                           0000CD   511 G$TH2$0$0 == 0x00cd
+                           0000CD   512 _TH2	=	0x00cd
+                           0000CF   513 G$SMB0CR$0$0 == 0x00cf
+                           0000CF   514 _SMB0CR	=	0x00cf
+                           0000D0   515 G$PSW$0$0 == 0x00d0
+                           0000D0   516 _PSW	=	0x00d0
+                           0000D1   517 G$REF0CN$0$0 == 0x00d1
+                           0000D1   518 _REF0CN	=	0x00d1
+                           0000D2   519 G$DAC0L$0$0 == 0x00d2
+                           0000D2   520 _DAC0L	=	0x00d2
+                           0000D3   521 G$DAC0H$0$0 == 0x00d3
+                           0000D3   522 _DAC0H	=	0x00d3
+                           0000D4   523 G$DAC0CN$0$0 == 0x00d4
+                           0000D4   524 _DAC0CN	=	0x00d4
+                           0000D5   525 G$DAC1L$0$0 == 0x00d5
+                           0000D5   526 _DAC1L	=	0x00d5
+                           0000D6   527 G$DAC1H$0$0 == 0x00d6
+                           0000D6   528 _DAC1H	=	0x00d6
+                           0000D7   529 G$DAC1CN$0$0 == 0x00d7
+                           0000D7   530 _DAC1CN	=	0x00d7
+                           0000D8   531 G$PCA0CN$0$0 == 0x00d8
+                           0000D8   532 _PCA0CN	=	0x00d8
+                           0000D9   533 G$PCA0MD$0$0 == 0x00d9
+                           0000D9   534 _PCA0MD	=	0x00d9
+                           0000DA   535 G$PCA0CPM0$0$0 == 0x00da
+                           0000DA   536 _PCA0CPM0	=	0x00da
+                           0000DB   537 G$PCA0CPM1$0$0 == 0x00db
+                           0000DB   538 _PCA0CPM1	=	0x00db
+                           0000DC   539 G$PCA0CPM2$0$0 == 0x00dc
+                           0000DC   540 _PCA0CPM2	=	0x00dc
+                           0000DD   541 G$PCA0CPM3$0$0 == 0x00dd
+                           0000DD   542 _PCA0CPM3	=	0x00dd
+                           0000DE   543 G$PCA0CPM4$0$0 == 0x00de
+                           0000DE   544 _PCA0CPM4	=	0x00de
+                           0000E0   545 G$ACC$0$0 == 0x00e0
+                           0000E0   546 _ACC	=	0x00e0
+                           0000E1   547 G$XBR0$0$0 == 0x00e1
+                           0000E1   548 _XBR0	=	0x00e1
+                           0000E2   549 G$XBR1$0$0 == 0x00e2
+                           0000E2   550 _XBR1	=	0x00e2
+                           0000E3   551 G$XBR2$0$0 == 0x00e3
+                           0000E3   552 _XBR2	=	0x00e3
+                           0000E4   553 G$RCAP4L$0$0 == 0x00e4
+                           0000E4   554 _RCAP4L	=	0x00e4
+                           0000E5   555 G$RCAP4H$0$0 == 0x00e5
+                           0000E5   556 _RCAP4H	=	0x00e5
+                           0000E6   557 G$EIE1$0$0 == 0x00e6
+                           0000E6   558 _EIE1	=	0x00e6
+                           0000E7   559 G$EIE2$0$0 == 0x00e7
+                           0000E7   560 _EIE2	=	0x00e7
+                           0000E8   561 G$ADC0CN$0$0 == 0x00e8
+                           0000E8   562 _ADC0CN	=	0x00e8
+                           0000E9   563 G$PCA0L$0$0 == 0x00e9
+                           0000E9   564 _PCA0L	=	0x00e9
+                           0000EA   565 G$PCA0CPL0$0$0 == 0x00ea
+                           0000EA   566 _PCA0CPL0	=	0x00ea
+                           0000EB   567 G$PCA0CPL1$0$0 == 0x00eb
+                           0000EB   568 _PCA0CPL1	=	0x00eb
+                           0000EC   569 G$PCA0CPL2$0$0 == 0x00ec
+                           0000EC   570 _PCA0CPL2	=	0x00ec
+                           0000ED   571 G$PCA0CPL3$0$0 == 0x00ed
+                           0000ED   572 _PCA0CPL3	=	0x00ed
+                           0000EE   573 G$PCA0CPL4$0$0 == 0x00ee
+                           0000EE   574 _PCA0CPL4	=	0x00ee
+                           0000EF   575 G$RSTSRC$0$0 == 0x00ef
+                           0000EF   576 _RSTSRC	=	0x00ef
+                           0000F0   577 G$B$0$0 == 0x00f0
+                           0000F0   578 _B	=	0x00f0
+                           0000F1   579 G$SCON1$0$0 == 0x00f1
+                           0000F1   580 _SCON1	=	0x00f1
+                           0000F2   581 G$SBUF1$0$0 == 0x00f2
+                           0000F2   582 _SBUF1	=	0x00f2
+                           0000F3   583 G$SADDR1$0$0 == 0x00f3
+                           0000F3   584 _SADDR1	=	0x00f3
+                           0000F4   585 G$TL4$0$0 == 0x00f4
+                           0000F4   586 _TL4	=	0x00f4
+                           0000F5   587 G$TH4$0$0 == 0x00f5
+                           0000F5   588 _TH4	=	0x00f5
+                           0000F6   589 G$EIP1$0$0 == 0x00f6
+                           0000F6   590 _EIP1	=	0x00f6
+                           0000F7   591 G$EIP2$0$0 == 0x00f7
+                           0000F7   592 _EIP2	=	0x00f7
+                           0000F8   593 G$SPI0CN$0$0 == 0x00f8
+                           0000F8   594 _SPI0CN	=	0x00f8
+                           0000F9   595 G$PCA0H$0$0 == 0x00f9
+                           0000F9   596 _PCA0H	=	0x00f9
+                           0000FA   597 G$PCA0CPH0$0$0 == 0x00fa
+                           0000FA   598 _PCA0CPH0	=	0x00fa
+                           0000FB   599 G$PCA0CPH1$0$0 == 0x00fb
+                           0000FB   600 _PCA0CPH1	=	0x00fb
+                           0000FC   601 G$PCA0CPH2$0$0 == 0x00fc
+                           0000FC   602 _PCA0CPH2	=	0x00fc
+                           0000FD   603 G$PCA0CPH3$0$0 == 0x00fd
+                           0000FD   604 _PCA0CPH3	=	0x00fd
+                           0000FE   605 G$PCA0CPH4$0$0 == 0x00fe
+                           0000FE   606 _PCA0CPH4	=	0x00fe
+                           0000FF   607 G$WDTCN$0$0 == 0x00ff
+                           0000FF   608 _WDTCN	=	0x00ff
+                           008C8A   609 G$TMR0$0$0 == 0x8c8a
+                           008C8A   610 _TMR0	=	0x8c8a
+                           008D8B   611 G$TMR1$0$0 == 0x8d8b
+                           008D8B   612 _TMR1	=	0x8d8b
+                           00CDCC   613 G$TMR2$0$0 == 0xcdcc
+                           00CDCC   614 _TMR2	=	0xcdcc
+                           00CBCA   615 G$RCAP2$0$0 == 0xcbca
+                           00CBCA   616 _RCAP2	=	0xcbca
+                           009594   617 G$TMR3$0$0 == 0x9594
+                           009594   618 _TMR3	=	0x9594
+                           009392   619 G$TMR3RL$0$0 == 0x9392
+                           009392   620 _TMR3RL	=	0x9392
+                           00F5F4   621 G$TMR4$0$0 == 0xf5f4
+                           00F5F4   622 _TMR4	=	0xf5f4
+                           00E5E4   623 G$RCAP4$0$0 == 0xe5e4
+                           00E5E4   624 _RCAP4	=	0xe5e4
+                           00BFBE   625 G$ADC0$0$0 == 0xbfbe
+                           00BFBE   626 _ADC0	=	0xbfbe
+                           00C5C4   627 G$ADC0GT$0$0 == 0xc5c4
+                           00C5C4   628 _ADC0GT	=	0xc5c4
+                           00C7C6   629 G$ADC0LT$0$0 == 0xc7c6
+                           00C7C6   630 _ADC0LT	=	0xc7c6
+                           00D3D2   631 G$DAC0$0$0 == 0xd3d2
+                           00D3D2   632 _DAC0	=	0xd3d2
+                           00D6D5   633 G$DAC1$0$0 == 0xd6d5
+                           00D6D5   634 _DAC1	=	0xd6d5
+                           00F9E9   635 G$PCA0$0$0 == 0xf9e9
+                           00F9E9   636 _PCA0	=	0xf9e9
+                           00FAEA   637 G$PCA0CP0$0$0 == 0xfaea
+                           00FAEA   638 _PCA0CP0	=	0xfaea
+                           00FBEB   639 G$PCA0CP1$0$0 == 0xfbeb
+                           00FBEB   640 _PCA0CP1	=	0xfbeb
+                           00FCEC   641 G$PCA0CP2$0$0 == 0xfcec
+                           00FCEC   642 _PCA0CP2	=	0xfcec
+                           00FDED   643 G$PCA0CP3$0$0 == 0xfded
+                           00FDED   644 _PCA0CP3	=	0xfded
+                           00FEEE   645 G$PCA0CP4$0$0 == 0xfeee
+                           00FEEE   646 _PCA0CP4	=	0xfeee
+                                    647 ;--------------------------------------------------------
+                                    648 ; special function bits
+                                    649 ;--------------------------------------------------------
+                                    650 	.area RSEG    (ABS,DATA)
+      000000                        651 	.org 0x0000
+                           000080   652 G$P0_0$0$0 == 0x0080
+                           000080   653 _P0_0	=	0x0080
+                           000081   654 G$P0_1$0$0 == 0x0081
+                           000081   655 _P0_1	=	0x0081
+                           000082   656 G$P0_2$0$0 == 0x0082
+                           000082   657 _P0_2	=	0x0082
+                           000083   658 G$P0_3$0$0 == 0x0083
+                           000083   659 _P0_3	=	0x0083
+                           000084   660 G$P0_4$0$0 == 0x0084
+                           000084   661 _P0_4	=	0x0084
+                           000085   662 G$P0_5$0$0 == 0x0085
+                           000085   663 _P0_5	=	0x0085
+                           000086   664 G$P0_6$0$0 == 0x0086
+                           000086   665 _P0_6	=	0x0086
+                           000087   666 G$P0_7$0$0 == 0x0087
+                           000087   667 _P0_7	=	0x0087
+                           000088   668 G$IT0$0$0 == 0x0088
+                           000088   669 _IT0	=	0x0088
+                           000089   670 G$IE0$0$0 == 0x0089
+                           000089   671 _IE0	=	0x0089
+                           00008A   672 G$IT1$0$0 == 0x008a
+                           00008A   673 _IT1	=	0x008a
+                           00008B   674 G$IE1$0$0 == 0x008b
+                           00008B   675 _IE1	=	0x008b
+                           00008C   676 G$TR0$0$0 == 0x008c
+                           00008C   677 _TR0	=	0x008c
+                           00008D   678 G$TF0$0$0 == 0x008d
+                           00008D   679 _TF0	=	0x008d
+                           00008E   680 G$TR1$0$0 == 0x008e
+                           00008E   681 _TR1	=	0x008e
+                           00008F   682 G$TF1$0$0 == 0x008f
+                           00008F   683 _TF1	=	0x008f
+                           000090   684 G$P1_0$0$0 == 0x0090
+                           000090   685 _P1_0	=	0x0090
+                           000091   686 G$P1_1$0$0 == 0x0091
+                           000091   687 _P1_1	=	0x0091
+                           000092   688 G$P1_2$0$0 == 0x0092
+                           000092   689 _P1_2	=	0x0092
+                           000093   690 G$P1_3$0$0 == 0x0093
+                           000093   691 _P1_3	=	0x0093
+                           000094   692 G$P1_4$0$0 == 0x0094
+                           000094   693 _P1_4	=	0x0094
+                           000095   694 G$P1_5$0$0 == 0x0095
+                           000095   695 _P1_5	=	0x0095
+                           000096   696 G$P1_6$0$0 == 0x0096
+                           000096   697 _P1_6	=	0x0096
+                           000097   698 G$P1_7$0$0 == 0x0097
+                           000097   699 _P1_7	=	0x0097
+                           000098   700 G$RI$0$0 == 0x0098
+                           000098   701 _RI	=	0x0098
+                           000098   702 G$RI0$0$0 == 0x0098
+                           000098   703 _RI0	=	0x0098
+                           000099   704 G$TI$0$0 == 0x0099
+                           000099   705 _TI	=	0x0099
+                           000099   706 G$TI0$0$0 == 0x0099
+                           000099   707 _TI0	=	0x0099
+                           00009A   708 G$RB8$0$0 == 0x009a
+                           00009A   709 _RB8	=	0x009a
+                           00009A   710 G$RB80$0$0 == 0x009a
+                           00009A   711 _RB80	=	0x009a
+                           00009B   712 G$TB8$0$0 == 0x009b
+                           00009B   713 _TB8	=	0x009b
+                           00009B   714 G$TB80$0$0 == 0x009b
+                           00009B   715 _TB80	=	0x009b
+                           00009C   716 G$REN$0$0 == 0x009c
+                           00009C   717 _REN	=	0x009c
+                           00009C   718 G$REN0$0$0 == 0x009c
+                           00009C   719 _REN0	=	0x009c
+                           00009D   720 G$SM2$0$0 == 0x009d
+                           00009D   721 _SM2	=	0x009d
+                           00009D   722 G$SM20$0$0 == 0x009d
+                           00009D   723 _SM20	=	0x009d
+                           00009D   724 G$MCE0$0$0 == 0x009d
+                           00009D   725 _MCE0	=	0x009d
+                           00009E   726 G$SM1$0$0 == 0x009e
+                           00009E   727 _SM1	=	0x009e
+                           00009E   728 G$SM10$0$0 == 0x009e
+                           00009E   729 _SM10	=	0x009e
+                           00009F   730 G$SM0$0$0 == 0x009f
+                           00009F   731 _SM0	=	0x009f
+                           00009F   732 G$SM00$0$0 == 0x009f
+                           00009F   733 _SM00	=	0x009f
+                           00009F   734 G$S0MODE$0$0 == 0x009f
+                           00009F   735 _S0MODE	=	0x009f
+                           0000A0   736 G$P2_0$0$0 == 0x00a0
+                           0000A0   737 _P2_0	=	0x00a0
+                           0000A1   738 G$P2_1$0$0 == 0x00a1
+                           0000A1   739 _P2_1	=	0x00a1
+                           0000A2   740 G$P2_2$0$0 == 0x00a2
+                           0000A2   741 _P2_2	=	0x00a2
+                           0000A3   742 G$P2_3$0$0 == 0x00a3
+                           0000A3   743 _P2_3	=	0x00a3
+                           0000A4   744 G$P2_4$0$0 == 0x00a4
+                           0000A4   745 _P2_4	=	0x00a4
+                           0000A5   746 G$P2_5$0$0 == 0x00a5
+                           0000A5   747 _P2_5	=	0x00a5
+                           0000A6   748 G$P2_6$0$0 == 0x00a6
+                           0000A6   749 _P2_6	=	0x00a6
+                           0000A7   750 G$P2_7$0$0 == 0x00a7
+                           0000A7   751 _P2_7	=	0x00a7
+                           0000A8   752 G$EX0$0$0 == 0x00a8
+                           0000A8   753 _EX0	=	0x00a8
+                           0000A9   754 G$ET0$0$0 == 0x00a9
+                           0000A9   755 _ET0	=	0x00a9
+                           0000AA   756 G$EX1$0$0 == 0x00aa
+                           0000AA   757 _EX1	=	0x00aa
+                           0000AB   758 G$ET1$0$0 == 0x00ab
+                           0000AB   759 _ET1	=	0x00ab
+                           0000AC   760 G$ES0$0$0 == 0x00ac
+                           0000AC   761 _ES0	=	0x00ac
+                           0000AC   762 G$ES$0$0 == 0x00ac
+                           0000AC   763 _ES	=	0x00ac
+                           0000AD   764 G$ET2$0$0 == 0x00ad
+                           0000AD   765 _ET2	=	0x00ad
+                           0000AF   766 G$EA$0$0 == 0x00af
+                           0000AF   767 _EA	=	0x00af
+                           0000B0   768 G$P3_0$0$0 == 0x00b0
+                           0000B0   769 _P3_0	=	0x00b0
+                           0000B1   770 G$P3_1$0$0 == 0x00b1
+                           0000B1   771 _P3_1	=	0x00b1
+                           0000B2   772 G$P3_2$0$0 == 0x00b2
+                           0000B2   773 _P3_2	=	0x00b2
+                           0000B3   774 G$P3_3$0$0 == 0x00b3
+                           0000B3   775 _P3_3	=	0x00b3
+                           0000B4   776 G$P3_4$0$0 == 0x00b4
+                           0000B4   777 _P3_4	=	0x00b4
+                           0000B5   778 G$P3_5$0$0 == 0x00b5
+                           0000B5   779 _P3_5	=	0x00b5
+                           0000B6   780 G$P3_6$0$0 == 0x00b6
+                           0000B6   781 _P3_6	=	0x00b6
+                           0000B7   782 G$P3_7$0$0 == 0x00b7
+                           0000B7   783 _P3_7	=	0x00b7
+                           0000B8   784 G$PX0$0$0 == 0x00b8
+                           0000B8   785 _PX0	=	0x00b8
+                           0000B9   786 G$PT0$0$0 == 0x00b9
+                           0000B9   787 _PT0	=	0x00b9
+                           0000BA   788 G$PX1$0$0 == 0x00ba
+                           0000BA   789 _PX1	=	0x00ba
+                           0000BB   790 G$PT1$0$0 == 0x00bb
+                           0000BB   791 _PT1	=	0x00bb
+                           0000BC   792 G$PS0$0$0 == 0x00bc
+                           0000BC   793 _PS0	=	0x00bc
+                           0000BC   794 G$PS$0$0 == 0x00bc
+                           0000BC   795 _PS	=	0x00bc
+                           0000BD   796 G$PT2$0$0 == 0x00bd
+                           0000BD   797 _PT2	=	0x00bd
+                           0000C0   798 G$SMBTOE$0$0 == 0x00c0
+                           0000C0   799 _SMBTOE	=	0x00c0
+                           0000C1   800 G$SMBFTE$0$0 == 0x00c1
+                           0000C1   801 _SMBFTE	=	0x00c1
+                           0000C2   802 G$AA$0$0 == 0x00c2
+                           0000C2   803 _AA	=	0x00c2
+                           0000C3   804 G$SI$0$0 == 0x00c3
+                           0000C3   805 _SI	=	0x00c3
+                           0000C4   806 G$STO$0$0 == 0x00c4
+                           0000C4   807 _STO	=	0x00c4
+                           0000C5   808 G$STA$0$0 == 0x00c5
+                           0000C5   809 _STA	=	0x00c5
+                           0000C6   810 G$ENSMB$0$0 == 0x00c6
+                           0000C6   811 _ENSMB	=	0x00c6
+                           0000C7   812 G$BUSY$0$0 == 0x00c7
+                           0000C7   813 _BUSY	=	0x00c7
+                           0000C8   814 G$CPRL2$0$0 == 0x00c8
+                           0000C8   815 _CPRL2	=	0x00c8
+                           0000C9   816 G$CT2$0$0 == 0x00c9
+                           0000C9   817 _CT2	=	0x00c9
+                           0000CA   818 G$TR2$0$0 == 0x00ca
+                           0000CA   819 _TR2	=	0x00ca
+                           0000CB   820 G$EXEN2$0$0 == 0x00cb
+                           0000CB   821 _EXEN2	=	0x00cb
+                           0000CC   822 G$TCLK$0$0 == 0x00cc
+                           0000CC   823 _TCLK	=	0x00cc
+                           0000CD   824 G$RCLK$0$0 == 0x00cd
+                           0000CD   825 _RCLK	=	0x00cd
+                           0000CE   826 G$EXF2$0$0 == 0x00ce
+                           0000CE   827 _EXF2	=	0x00ce
+                           0000CF   828 G$TF2$0$0 == 0x00cf
+                           0000CF   829 _TF2	=	0x00cf
+                           0000D0   830 G$P$0$0 == 0x00d0
+                           0000D0   831 _P	=	0x00d0
+                           0000D1   832 G$F1$0$0 == 0x00d1
+                           0000D1   833 _F1	=	0x00d1
+                           0000D2   834 G$OV$0$0 == 0x00d2
+                           0000D2   835 _OV	=	0x00d2
+                           0000D3   836 G$RS0$0$0 == 0x00d3
+                           0000D3   837 _RS0	=	0x00d3
+                           0000D4   838 G$RS1$0$0 == 0x00d4
+                           0000D4   839 _RS1	=	0x00d4
+                           0000D5   840 G$F0$0$0 == 0x00d5
+                           0000D5   841 _F0	=	0x00d5
+                           0000D6   842 G$AC$0$0 == 0x00d6
+                           0000D6   843 _AC	=	0x00d6
+                           0000D7   844 G$CY$0$0 == 0x00d7
+                           0000D7   845 _CY	=	0x00d7
+                           0000D8   846 G$CCF0$0$0 == 0x00d8
+                           0000D8   847 _CCF0	=	0x00d8
+                           0000D9   848 G$CCF1$0$0 == 0x00d9
+                           0000D9   849 _CCF1	=	0x00d9
+                           0000DA   850 G$CCF2$0$0 == 0x00da
+                           0000DA   851 _CCF2	=	0x00da
+                           0000DB   852 G$CCF3$0$0 == 0x00db
+                           0000DB   853 _CCF3	=	0x00db
+                           0000DC   854 G$CCF4$0$0 == 0x00dc
+                           0000DC   855 _CCF4	=	0x00dc
+                           0000DE   856 G$CR$0$0 == 0x00de
+                           0000DE   857 _CR	=	0x00de
+                           0000DF   858 G$CF$0$0 == 0x00df
+                           0000DF   859 _CF	=	0x00df
+                           0000E8   860 G$ADLJST$0$0 == 0x00e8
+                           0000E8   861 _ADLJST	=	0x00e8
+                           0000E8   862 G$AD0LJST$0$0 == 0x00e8
+                           0000E8   863 _AD0LJST	=	0x00e8
+                           0000E9   864 G$ADWINT$0$0 == 0x00e9
+                           0000E9   865 _ADWINT	=	0x00e9
+                           0000E9   866 G$AD0WINT$0$0 == 0x00e9
+                           0000E9   867 _AD0WINT	=	0x00e9
+                           0000EA   868 G$ADSTM0$0$0 == 0x00ea
+                           0000EA   869 _ADSTM0	=	0x00ea
+                           0000EA   870 G$AD0CM0$0$0 == 0x00ea
+                           0000EA   871 _AD0CM0	=	0x00ea
+                           0000EB   872 G$ADSTM1$0$0 == 0x00eb
+                           0000EB   873 _ADSTM1	=	0x00eb
+                           0000EB   874 G$AD0CM1$0$0 == 0x00eb
+                           0000EB   875 _AD0CM1	=	0x00eb
+                           0000EC   876 G$ADBUSY$0$0 == 0x00ec
+                           0000EC   877 _ADBUSY	=	0x00ec
+                           0000EC   878 G$AD0BUSY$0$0 == 0x00ec
+                           0000EC   879 _AD0BUSY	=	0x00ec
+                           0000ED   880 G$ADCINT$0$0 == 0x00ed
+                           0000ED   881 _ADCINT	=	0x00ed
+                           0000ED   882 G$AD0INT$0$0 == 0x00ed
+                           0000ED   883 _AD0INT	=	0x00ed
+                           0000EE   884 G$ADCTM$0$0 == 0x00ee
+                           0000EE   885 _ADCTM	=	0x00ee
+                           0000EE   886 G$AD0TM$0$0 == 0x00ee
+                           0000EE   887 _AD0TM	=	0x00ee
+                           0000EF   888 G$ADCEN$0$0 == 0x00ef
+                           0000EF   889 _ADCEN	=	0x00ef
+                           0000EF   890 G$AD0EN$0$0 == 0x00ef
+                           0000EF   891 _AD0EN	=	0x00ef
+                           0000F8   892 G$SPIEN$0$0 == 0x00f8
+                           0000F8   893 _SPIEN	=	0x00f8
+                           0000F9   894 G$MSTEN$0$0 == 0x00f9
+                           0000F9   895 _MSTEN	=	0x00f9
+                           0000FA   896 G$SLVSEL$0$0 == 0x00fa
+                           0000FA   897 _SLVSEL	=	0x00fa
+                           0000FB   898 G$TXBSY$0$0 == 0x00fb
+                           0000FB   899 _TXBSY	=	0x00fb
+                           0000FC   900 G$RXOVRN$0$0 == 0x00fc
+                           0000FC   901 _RXOVRN	=	0x00fc
+                           0000FD   902 G$MODF$0$0 == 0x00fd
+                           0000FD   903 _MODF	=	0x00fd
+                           0000FE   904 G$WCOL$0$0 == 0x00fe
+                           0000FE   905 _WCOL	=	0x00fe
+                           0000FF   906 G$SPIF$0$0 == 0x00ff
+                           0000FF   907 _SPIF	=	0x00ff
+                           0000C7   908 G$BUS_BUSY$0$0 == 0x00c7
+                           0000C7   909 _BUS_BUSY	=	0x00c7
+                           0000C6   910 G$BUS_EN$0$0 == 0x00c6
+                           0000C6   911 _BUS_EN	=	0x00c6
+                           0000C5   912 G$BUS_START$0$0 == 0x00c5
+                           0000C5   913 _BUS_START	=	0x00c5
+                           0000C4   914 G$BUS_STOP$0$0 == 0x00c4
+                           0000C4   915 _BUS_STOP	=	0x00c4
+                           0000C3   916 G$BUS_INT$0$0 == 0x00c3
+                           0000C3   917 _BUS_INT	=	0x00c3
+                           0000C2   918 G$BUS_AA$0$0 == 0x00c2
+                           0000C2   919 _BUS_AA	=	0x00c2
+                           0000C1   920 G$BUS_FTE$0$0 == 0x00c1
+                           0000C1   921 _BUS_FTE	=	0x00c1
+                           0000C0   922 G$BUS_TOE$0$0 == 0x00c0
+                           0000C0   923 _BUS_TOE	=	0x00c0
+                           000083   924 G$BUS_SCL$0$0 == 0x0083
+                           000083   925 _BUS_SCL	=	0x0083
+                                    926 ;--------------------------------------------------------
+                                    927 ; overlayable register banks
+                                    928 ;--------------------------------------------------------
+                                    929 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        930 	.ds 8
+                                    931 ;--------------------------------------------------------
+                                    932 ; internal ram data
+                                    933 ;--------------------------------------------------------
+                                    934 	.area DSEG    (DATA)
+                           000000   935 G$Data2$0$0==.
+      000000                        936 _Data2::
+      000000                        937 	.ds 3
+                           000003   938 LHW10.aligned_alloc$size$1$39==.
+      000003                        939 _aligned_alloc_PARM_2:
+      000003                        940 	.ds 2
+                           000005   941 LHW10.lcd_clear$NumBytes$1$85==.
+      000005                        942 _lcd_clear_NumBytes_1_85:
+      000005                        943 	.ds 1
+                           000006   944 LHW10.lcd_clear$Cmd$1$85==.
+      000006                        945 _lcd_clear_Cmd_1_85:
+      000006                        946 	.ds 2
+                           000008   947 LHW10.read_keypad$Data$1$86==.
+      000008                        948 _read_keypad_Data_1_86:
+      000008                        949 	.ds 2
+                           00000A   950 LHW10.i2c_write_data$start_reg$1$105==.
+      00000A                        951 _i2c_write_data_PARM_2:
+      00000A                        952 	.ds 1
+                           00000B   953 LHW10.i2c_write_data$buffer$1$105==.
+      00000B                        954 _i2c_write_data_PARM_3:
+      00000B                        955 	.ds 3
+                           00000E   956 LHW10.i2c_write_data$num_bytes$1$105==.
+      00000E                        957 _i2c_write_data_PARM_4:
+      00000E                        958 	.ds 1
+                           00000F   959 LHW10.i2c_read_data$start_reg$1$107==.
+      00000F                        960 _i2c_read_data_PARM_2:
+      00000F                        961 	.ds 1
+                           000010   962 LHW10.i2c_read_data$buffer$1$107==.
+      000010                        963 _i2c_read_data_PARM_3:
+      000010                        964 	.ds 3
+                           000013   965 LHW10.i2c_read_data$num_bytes$1$107==.
+      000013                        966 _i2c_read_data_PARM_4:
+      000013                        967 	.ds 1
+                           000014   968 G$counts$0$0==.
+      000014                        969 _counts::
+      000014                        970 	.ds 2
+                           000016   971 G$ranger_count$0$0==.
+      000016                        972 _ranger_count::
+      000016                        973 	.ds 2
+                           000018   974 G$compass_count$0$0==.
+      000018                        975 _compass_count::
+      000018                        976 	.ds 2
+                           00001A   977 G$does_ranger_have_new_data$0$0==.
+      00001A                        978 _does_ranger_have_new_data::
+      00001A                        979 	.ds 1
+                           00001B   980 G$does_compass_have_new_data$0$0==.
+      00001B                        981 _does_compass_have_new_data::
+      00001B                        982 	.ds 1
+                           00001C   983 G$heading$0$0==.
+      00001C                        984 _heading::
+      00001C                        985 	.ds 2
+                           00001E   986 G$range$0$0==.
+      00001E                        987 _range::
+      00001E                        988 	.ds 2
+                           000020   989 G$input_data$0$0==.
+      000020                        990 _input_data::
+      000020                        991 	.ds 1
+                           000021   992 G$compass_version$0$0==.
+      000021                        993 _compass_version::
+      000021                        994 	.ds 1
+                           000022   995 G$ranger_version$0$0==.
+      000022                        996 _ranger_version::
+      000022                        997 	.ds 1
+                           000023   998 G$data_array$0$0==.
+      000023                        999 _data_array::
+      000023                       1000 	.ds 2
+                           000025  1001 G$version_array$0$0==.
+      000025                       1002 _version_array::
+      000025                       1003 	.ds 1
+                                   1004 ;--------------------------------------------------------
+                                   1005 ; overlayable items in internal ram 
+                                   1006 ;--------------------------------------------------------
+                                   1007 	.area	OSEG    (OVR,DATA)
+                                   1008 	.area	OSEG    (OVR,DATA)
+                                   1009 	.area	OSEG    (OVR,DATA)
+                                   1010 	.area	OSEG    (OVR,DATA)
+                                   1011 	.area	OSEG    (OVR,DATA)
+                                   1012 	.area	OSEG    (OVR,DATA)
+                                   1013 	.area	OSEG    (OVR,DATA)
+                                   1014 ;--------------------------------------------------------
+                                   1015 ; Stack segment in internal ram 
+                                   1016 ;--------------------------------------------------------
+                                   1017 	.area	SSEG
+      000000                       1018 __start__stack:
+      000000                       1019 	.ds	1
+                                   1020 
+                                   1021 ;--------------------------------------------------------
+                                   1022 ; indirectly addressable internal ram data
+                                   1023 ;--------------------------------------------------------
+                                   1024 	.area ISEG    (DATA)
+                                   1025 ;--------------------------------------------------------
+                                   1026 ; absolute internal ram data
+                                   1027 ;--------------------------------------------------------
+                                   1028 	.area IABS    (ABS,DATA)
+                                   1029 	.area IABS    (ABS,DATA)
+                                   1030 ;--------------------------------------------------------
+                                   1031 ; bit data
+                                   1032 ;--------------------------------------------------------
+                                   1033 	.area BSEG    (BIT)
+                                   1034 ;--------------------------------------------------------
+                                   1035 ; paged external ram data
+                                   1036 ;--------------------------------------------------------
+                                   1037 	.area PSEG    (PAG,XDATA)
+                                   1038 ;--------------------------------------------------------
+                                   1039 ; external ram data
+                                   1040 ;--------------------------------------------------------
+                                   1041 	.area XSEG    (XDATA)
+                           000000  1042 LHW10.lcd_print$text$1$81==.
+      000000                       1043 _lcd_print_text_1_81:
+      000000                       1044 	.ds 80
+                                   1045 ;--------------------------------------------------------
+                                   1046 ; absolute external ram data
+                                   1047 ;--------------------------------------------------------
+                                   1048 	.area XABS    (ABS,XDATA)
+                                   1049 ;--------------------------------------------------------
+                                   1050 ; external initialized ram data
+                                   1051 ;--------------------------------------------------------
+                                   1052 	.area XISEG   (XDATA)
+                                   1053 	.area HOME    (CODE)
+                                   1054 	.area GSINIT0 (CODE)
+                                   1055 	.area GSINIT1 (CODE)
+                                   1056 	.area GSINIT2 (CODE)
+                                   1057 	.area GSINIT3 (CODE)
+                                   1058 	.area GSINIT4 (CODE)
+                                   1059 	.area GSINIT5 (CODE)
+                                   1060 	.area GSINIT  (CODE)
+                                   1061 	.area GSFINAL (CODE)
+                                   1062 	.area CSEG    (CODE)
+                                   1063 ;--------------------------------------------------------
+                                   1064 ; interrupt vector 
+                                   1065 ;--------------------------------------------------------
+                                   1066 	.area HOME    (CODE)
+      000000                       1067 __interrupt_vect:
+      000000 02r00r00         [24] 1068 	ljmp	__sdcc_gsinit_startup
+      000003 32               [24] 1069 	reti
+      000004                       1070 	.ds	7
+      00000B 32               [24] 1071 	reti
+      00000C                       1072 	.ds	7
+      000013 32               [24] 1073 	reti
+      000014                       1074 	.ds	7
+      00001B 32               [24] 1075 	reti
+      00001C                       1076 	.ds	7
+      000023 32               [24] 1077 	reti
+      000024                       1078 	.ds	7
+      00002B 32               [24] 1079 	reti
+      00002C                       1080 	.ds	7
+      000033 32               [24] 1081 	reti
+      000034                       1082 	.ds	7
+      00003B 32               [24] 1083 	reti
+      00003C                       1084 	.ds	7
+      000043 32               [24] 1085 	reti
+      000044                       1086 	.ds	7
+      00004B 02r05rAA         [24] 1087 	ljmp	_PCA_ISR
+                                   1088 ;--------------------------------------------------------
+                                   1089 ; global & static initialisations
+                                   1090 ;--------------------------------------------------------
+                                   1091 	.area HOME    (CODE)
+                                   1092 	.area GSINIT  (CODE)
+                                   1093 	.area GSFINAL (CODE)
+                                   1094 	.area GSINIT  (CODE)
+                                   1095 	.globl __sdcc_gsinit_startup
+                                   1096 	.globl __sdcc_program_startup
+                                   1097 	.globl __start__stack
+                                   1098 	.globl __mcs51_genXINIT
+                                   1099 	.globl __mcs51_genXRAMCLEAR
+                                   1100 	.globl __mcs51_genRAMCLEAR
+                           000000  1101 	C$HW10.c$27$1$141 ==.
+                                   1102 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:27: unsigned int counts = 0;
+      000000 E4               [12] 1103 	clr	a
+      000001 F5*14            [12] 1104 	mov	_counts,a
+      000003 F5*15            [12] 1105 	mov	(_counts + 1),a
+                           000005  1106 	C$HW10.c$28$1$141 ==.
+                                   1107 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:28: unsigned int ranger_count = 0;
+      000005 F5*16            [12] 1108 	mov	_ranger_count,a
+      000007 F5*17            [12] 1109 	mov	(_ranger_count + 1),a
+                           000009  1110 	C$HW10.c$29$1$141 ==.
+                                   1111 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:29: unsigned int compass_count = 0;
+      000009 F5*18            [12] 1112 	mov	_compass_count,a
+      00000B F5*19            [12] 1113 	mov	(_compass_count + 1),a
+                           00000D  1114 	C$HW10.c$31$1$141 ==.
+                                   1115 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:31: unsigned char does_ranger_have_new_data = 0;
+                                   1116 ;	1-genFromRTrack replaced	mov	_does_ranger_have_new_data,#0x00
+      00000D F5*1A            [12] 1117 	mov	_does_ranger_have_new_data,a
+                           00000F  1118 	C$HW10.c$32$1$141 ==.
+                                   1119 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:32: unsigned char does_compass_have_new_data = 0;
+                                   1120 ;	1-genFromRTrack replaced	mov	_does_compass_have_new_data,#0x00
+      00000F F5*1B            [12] 1121 	mov	_does_compass_have_new_data,a
+                           000011  1122 	C$HW10.c$34$1$141 ==.
+                                   1123 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:34: int heading = 0;
+      000011 F5*1C            [12] 1124 	mov	_heading,a
+      000013 F5*1D            [12] 1125 	mov	(_heading + 1),a
+                           000015  1126 	C$HW10.c$35$1$141 ==.
+                                   1127 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:35: unsigned int range = 0;
+      000015 F5*1E            [12] 1128 	mov	_range,a
+      000017 F5*1F            [12] 1129 	mov	(_range + 1),a
+                           000019  1130 	C$HW10.c$37$1$141 ==.
+                                   1131 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:37: unsigned char input_data[0] = {0x50}; // 0x50 is the code for "use inches"
+      000019 75*20 50         [24] 1132 	mov	_input_data,#0x50
+                           00001C  1133 	C$HW10.c$38$1$141 ==.
+                                   1134 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:38: unsigned char compass_version = 0;
+                                   1135 ;	1-genFromRTrack replaced	mov	_compass_version,#0x00
+      00001C F5*21            [12] 1136 	mov	_compass_version,a
+                           00001E  1137 	C$HW10.c$39$1$141 ==.
+                                   1138 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:39: unsigned char ranger_version = 0;
+                                   1139 ;	1-genFromRTrack replaced	mov	_ranger_version,#0x00
+      00001E F5*22            [12] 1140 	mov	_ranger_version,a
+                                   1141 	.area GSFINAL (CODE)
+      000000 02r00r4E         [24] 1142 	ljmp	__sdcc_program_startup
+                                   1143 ;--------------------------------------------------------
+                                   1144 ; Home
+                                   1145 ;--------------------------------------------------------
+                                   1146 	.area HOME    (CODE)
+                                   1147 	.area HOME    (CODE)
+      00004E                       1148 __sdcc_program_startup:
+      00004E 02r05r06         [24] 1149 	ljmp	_main
+                                   1150 ;	return from main will return to caller
+                                   1151 ;--------------------------------------------------------
+                                   1152 ; code
+                                   1153 ;--------------------------------------------------------
+                                   1154 	.area CSEG    (CODE)
+                                   1155 ;------------------------------------------------------------
+                                   1156 ;Allocation info for local variables in function 'SYSCLK_Init'
+                                   1157 ;------------------------------------------------------------
+                                   1158 ;i                         Allocated to registers r6 r7 
+                                   1159 ;------------------------------------------------------------
+                           000000  1160 	G$SYSCLK_Init$0$0 ==.
+                           000000  1161 	C$c8051_SDCC.h$62$0$0 ==.
+                                   1162 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:62: void SYSCLK_Init(void)
+                                   1163 ;	-----------------------------------------
+                                   1164 ;	 function SYSCLK_Init
+                                   1165 ;	-----------------------------------------
+      000000                       1166 _SYSCLK_Init:
+                           000007  1167 	ar7 = 0x07
+                           000006  1168 	ar6 = 0x06
+                           000005  1169 	ar5 = 0x05
+                           000004  1170 	ar4 = 0x04
+                           000003  1171 	ar3 = 0x03
+                           000002  1172 	ar2 = 0x02
+                           000001  1173 	ar1 = 0x01
+                           000000  1174 	ar0 = 0x00
+                           000000  1175 	C$c8051_SDCC.h$66$1$2 ==.
+                                   1176 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:66: OSCXCN = 0x67;                      // start external oscillator with
+      000000 75 B1 67         [24] 1177 	mov	_OSCXCN,#0x67
+                           000003  1178 	C$c8051_SDCC.h$69$1$2 ==.
+                                   1179 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:69: for (i=0; i < 256; i++);            // wait for oscillator to start
+      000003 7E 00            [12] 1180 	mov	r6,#0x00
+      000005 7F 01            [12] 1181 	mov	r7,#0x01
+      000007                       1182 00107$:
+      000007 EE               [12] 1183 	mov	a,r6
+      000008 24 FF            [12] 1184 	add	a,#0xff
+      00000A FC               [12] 1185 	mov	r4,a
+      00000B EF               [12] 1186 	mov	a,r7
+      00000C 34 FF            [12] 1187 	addc	a,#0xff
+      00000E FD               [12] 1188 	mov	r5,a
+      00000F 8C 06            [24] 1189 	mov	ar6,r4
+      000011 8D 07            [24] 1190 	mov	ar7,r5
+      000013 EC               [12] 1191 	mov	a,r4
+      000014 4D               [12] 1192 	orl	a,r5
+      000015 70 F0            [24] 1193 	jnz	00107$
+                           000017  1194 	C$c8051_SDCC.h$71$1$2 ==.
+                                   1195 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:71: while (!(OSCXCN & 0x80));           // Wait for crystal osc. to settle
+      000017                       1196 00102$:
+      000017 E5 B1            [12] 1197 	mov	a,_OSCXCN
+      000019 30 E7 FB         [24] 1198 	jnb	acc.7,00102$
+                           00001C  1199 	C$c8051_SDCC.h$73$1$2 ==.
+                                   1200 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:73: OSCICN = 0x88;                      // select external oscillator as SYSCLK
+      00001C 75 B2 88         [24] 1201 	mov	_OSCICN,#0x88
+                           00001F  1202 	C$c8051_SDCC.h$76$1$2 ==.
+                           00001F  1203 	XG$SYSCLK_Init$0$0 ==.
+      00001F 22               [24] 1204 	ret
+                                   1205 ;------------------------------------------------------------
+                                   1206 ;Allocation info for local variables in function 'UART0_Init'
+                                   1207 ;------------------------------------------------------------
+                           000020  1208 	G$UART0_Init$0$0 ==.
+                           000020  1209 	C$c8051_SDCC.h$84$1$2 ==.
+                                   1210 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:84: void UART0_Init(void)
+                                   1211 ;	-----------------------------------------
+                                   1212 ;	 function UART0_Init
+                                   1213 ;	-----------------------------------------
+      000020                       1214 _UART0_Init:
+                           000020  1215 	C$c8051_SDCC.h$86$1$4 ==.
+                                   1216 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:86: SCON0  = 0x50;                      // SCON0: mode 1, 8-bit UART, enable RX
+      000020 75 98 50         [24] 1217 	mov	_SCON0,#0x50
+                           000023  1218 	C$c8051_SDCC.h$87$1$4 ==.
+                                   1219 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:87: TMOD   = 0x20;                      // TMOD: timer 1, mode 2, 8-bit reload
+      000023 75 89 20         [24] 1220 	mov	_TMOD,#0x20
+                           000026  1221 	C$c8051_SDCC.h$88$1$4 ==.
+                                   1222 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:88: TH1    = 0xFF&-(SYSCLK/BAUDRATE/16);     // set Timer1 reload value for baudrate
+      000026 75 8D DC         [24] 1223 	mov	_TH1,#0xdc
+                           000029  1224 	C$c8051_SDCC.h$89$1$4 ==.
+                                   1225 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:89: TR1    = 1;                         // start Timer1
+      000029 D2 8E            [12] 1226 	setb	_TR1
+                           00002B  1227 	C$c8051_SDCC.h$90$1$4 ==.
+                                   1228 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:90: CKCON |= 0x10;                      // Timer1 uses SYSCLK as time base
+      00002B 43 8E 10         [24] 1229 	orl	_CKCON,#0x10
+                           00002E  1230 	C$c8051_SDCC.h$91$1$4 ==.
+                                   1231 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:91: PCON  |= 0x80;                      // SMOD00 = 1 (disable baud rate 
+      00002E 43 87 80         [24] 1232 	orl	_PCON,#0x80
+                           000031  1233 	C$c8051_SDCC.h$93$1$4 ==.
+                                   1234 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:93: TI0    = 1;                         // Indicate TX0 ready
+      000031 D2 99            [12] 1235 	setb	_TI0
+                           000033  1236 	C$c8051_SDCC.h$94$1$4 ==.
+                                   1237 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:94: P0MDOUT |= 0x01;                    // Set TX0 to push/pull
+      000033 43 A4 01         [24] 1238 	orl	_P0MDOUT,#0x01
+                           000036  1239 	C$c8051_SDCC.h$95$1$4 ==.
+                           000036  1240 	XG$UART0_Init$0$0 ==.
+      000036 22               [24] 1241 	ret
+                                   1242 ;------------------------------------------------------------
+                                   1243 ;Allocation info for local variables in function 'Sys_Init'
+                                   1244 ;------------------------------------------------------------
+                           000037  1245 	G$Sys_Init$0$0 ==.
+                           000037  1246 	C$c8051_SDCC.h$103$1$4 ==.
+                                   1247 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:103: void Sys_Init(void)
+                                   1248 ;	-----------------------------------------
+                                   1249 ;	 function Sys_Init
+                                   1250 ;	-----------------------------------------
+      000037                       1251 _Sys_Init:
+                           000037  1252 	C$c8051_SDCC.h$105$1$6 ==.
+                                   1253 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:105: WDTCN = 0xde;			// disable watchdog timer
+      000037 75 FF DE         [24] 1254 	mov	_WDTCN,#0xde
+                           00003A  1255 	C$c8051_SDCC.h$106$1$6 ==.
+                                   1256 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:106: WDTCN = 0xad;
+      00003A 75 FF AD         [24] 1257 	mov	_WDTCN,#0xad
+                           00003D  1258 	C$c8051_SDCC.h$108$1$6 ==.
+                                   1259 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:108: SYSCLK_Init();			// initialize oscillator
+      00003D 12r00r00         [24] 1260 	lcall	_SYSCLK_Init
+                           000040  1261 	C$c8051_SDCC.h$109$1$6 ==.
+                                   1262 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:109: UART0_Init();			// initialize UART0
+      000040 12r00r20         [24] 1263 	lcall	_UART0_Init
+                           000043  1264 	C$c8051_SDCC.h$111$1$6 ==.
+                                   1265 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:111: XBR0 |= 0x04;
+      000043 43 E1 04         [24] 1266 	orl	_XBR0,#0x04
+                           000046  1267 	C$c8051_SDCC.h$112$1$6 ==.
+                                   1268 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:112: XBR2 |= 0x40;                    	// Enable crossbar and weak pull-ups
+      000046 43 E3 40         [24] 1269 	orl	_XBR2,#0x40
+                           000049  1270 	C$c8051_SDCC.h$113$1$6 ==.
+                           000049  1271 	XG$Sys_Init$0$0 ==.
+      000049 22               [24] 1272 	ret
+                                   1273 ;------------------------------------------------------------
+                                   1274 ;Allocation info for local variables in function 'putchar'
+                                   1275 ;------------------------------------------------------------
+                                   1276 ;c                         Allocated to registers r7 
+                                   1277 ;------------------------------------------------------------
+                           00004A  1278 	G$putchar$0$0 ==.
+                           00004A  1279 	C$c8051_SDCC.h$129$1$6 ==.
+                                   1280 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:129: void putchar(char c)
+                                   1281 ;	-----------------------------------------
+                                   1282 ;	 function putchar
+                                   1283 ;	-----------------------------------------
+      00004A                       1284 _putchar:
+      00004A AF 82            [24] 1285 	mov	r7,dpl
+                           00004C  1286 	C$c8051_SDCC.h$132$1$8 ==.
+                                   1287 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:132: while (!TI0); 
+      00004C                       1288 00101$:
+                           00004C  1289 	C$c8051_SDCC.h$133$1$8 ==.
+                                   1290 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:133: TI0 = 0;
+      00004C 10 99 02         [24] 1291 	jbc	_TI0,00112$
+      00004F 80 FB            [24] 1292 	sjmp	00101$
+      000051                       1293 00112$:
+                           000051  1294 	C$c8051_SDCC.h$134$1$8 ==.
+                                   1295 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:134: SBUF0 = c;
+      000051 8F 99            [24] 1296 	mov	_SBUF0,r7
+                           000053  1297 	C$c8051_SDCC.h$135$1$8 ==.
+                           000053  1298 	XG$putchar$0$0 ==.
+      000053 22               [24] 1299 	ret
+                                   1300 ;------------------------------------------------------------
+                                   1301 ;Allocation info for local variables in function 'getchar'
+                                   1302 ;------------------------------------------------------------
+                                   1303 ;c                         Allocated to registers r7 
+                                   1304 ;------------------------------------------------------------
+                           000054  1305 	G$getchar$0$0 ==.
+                           000054  1306 	C$c8051_SDCC.h$154$1$8 ==.
+                                   1307 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:154: char getchar(void)
+                                   1308 ;	-----------------------------------------
+                                   1309 ;	 function getchar
+                                   1310 ;	-----------------------------------------
+      000054                       1311 _getchar:
+                           000054  1312 	C$c8051_SDCC.h$157$1$10 ==.
+                                   1313 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:157: while (!RI0);
+      000054                       1314 00101$:
+                           000054  1315 	C$c8051_SDCC.h$158$1$10 ==.
+                                   1316 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:158: RI0 = 0;
+      000054 10 98 02         [24] 1317 	jbc	_RI0,00112$
+      000057 80 FB            [24] 1318 	sjmp	00101$
+      000059                       1319 00112$:
+                           000059  1320 	C$c8051_SDCC.h$159$1$10 ==.
+                                   1321 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:159: c = SBUF0;
+      000059 AF 99            [24] 1322 	mov	r7,_SBUF0
+                           00005B  1323 	C$c8051_SDCC.h$160$1$10 ==.
+                                   1324 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:160: putchar(c);                          // echo to terminal
+      00005B 8F 82            [24] 1325 	mov	dpl,r7
+      00005D C0 07            [24] 1326 	push	ar7
+      00005F 12r00r4A         [24] 1327 	lcall	_putchar
+      000062 D0 07            [24] 1328 	pop	ar7
+                           000064  1329 	C$c8051_SDCC.h$161$1$10 ==.
+                                   1330 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:161: return c;
+      000064 8F 82            [24] 1331 	mov	dpl,r7
+                           000066  1332 	C$c8051_SDCC.h$162$1$10 ==.
+                           000066  1333 	XG$getchar$0$0 ==.
+      000066 22               [24] 1334 	ret
+                                   1335 ;------------------------------------------------------------
+                                   1336 ;Allocation info for local variables in function 'getchar_nw'
+                                   1337 ;------------------------------------------------------------
+                                   1338 ;c                         Allocated to registers 
+                                   1339 ;------------------------------------------------------------
+                           000067  1340 	G$getchar_nw$0$0 ==.
+                           000067  1341 	C$c8051_SDCC.h$168$1$10 ==.
+                                   1342 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:168: char getchar_nw(void)
+                                   1343 ;	-----------------------------------------
+                                   1344 ;	 function getchar_nw
+                                   1345 ;	-----------------------------------------
+      000067                       1346 _getchar_nw:
+                           000067  1347 	C$c8051_SDCC.h$171$1$12 ==.
+                                   1348 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:171: if (!RI0) return 0xFF;
+      000067 20 98 05         [24] 1349 	jb	_RI0,00102$
+      00006A 75 82 FF         [24] 1350 	mov	dpl,#0xff
+      00006D 80 0B            [24] 1351 	sjmp	00104$
+      00006F                       1352 00102$:
+                           00006F  1353 	C$c8051_SDCC.h$174$2$13 ==.
+                                   1354 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:174: RI0 = 0;
+      00006F C2 98            [12] 1355 	clr	_RI0
+                           000071  1356 	C$c8051_SDCC.h$175$2$13 ==.
+                                   1357 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:175: c = SBUF0;
+      000071 85 99 82         [24] 1358 	mov	dpl,_SBUF0
+                           000074  1359 	C$c8051_SDCC.h$176$2$13 ==.
+                                   1360 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:176: putchar(c);                          // echo to terminal
+      000074 12r00r4A         [24] 1361 	lcall	_putchar
+                           000077  1362 	C$c8051_SDCC.h$177$2$13 ==.
+                                   1363 ;	C:/Program Files/SDCC/bin/../include/mcs51/c8051_SDCC.h:177: return SBUF0;
+      000077 85 99 82         [24] 1364 	mov	dpl,_SBUF0
+      00007A                       1365 00104$:
+                           00007A  1366 	C$c8051_SDCC.h$179$1$12 ==.
+                           00007A  1367 	XG$getchar_nw$0$0 ==.
+      00007A 22               [24] 1368 	ret
+                                   1369 ;------------------------------------------------------------
+                                   1370 ;Allocation info for local variables in function 'lcd_print'
+                                   1371 ;------------------------------------------------------------
+                                   1372 ;fmt                       Allocated to stack - _bp -5
+                                   1373 ;len                       Allocated to registers r6 
+                                   1374 ;i                         Allocated to registers 
+                                   1375 ;ap                        Allocated to registers 
+                                   1376 ;text                      Allocated with name '_lcd_print_text_1_81'
+                                   1377 ;------------------------------------------------------------
+                           00007B  1378 	G$lcd_print$0$0 ==.
+                           00007B  1379 	C$i2c.h$84$1$12 ==.
+                                   1380 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:84: void lcd_print(const char *fmt, ...)
+                                   1381 ;	-----------------------------------------
+                                   1382 ;	 function lcd_print
+                                   1383 ;	-----------------------------------------
+      00007B                       1384 _lcd_print:
+      00007B C0*00            [24] 1385 	push	_bp
+      00007D 85 81*00         [24] 1386 	mov	_bp,sp
+                           000080  1387 	C$i2c.h$90$1$81 ==.
+                                   1388 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:90: if ( strlen(fmt) <= 0 ) return;         //If there is no data to print, return
+      000080 E5*00            [12] 1389 	mov	a,_bp
+      000082 24 FB            [12] 1390 	add	a,#0xfb
+      000084 F8               [12] 1391 	mov	r0,a
+      000085 86 82            [24] 1392 	mov	dpl,@r0
+      000087 08               [12] 1393 	inc	r0
+      000088 86 83            [24] 1394 	mov	dph,@r0
+      00008A 08               [12] 1395 	inc	r0
+      00008B 86 F0            [24] 1396 	mov	b,@r0
+      00008D 12r00r00         [24] 1397 	lcall	_strlen
+      000090 E5 82            [12] 1398 	mov	a,dpl
+      000092 85 83 F0         [24] 1399 	mov	b,dph
+      000095 45 F0            [12] 1400 	orl	a,b
+      000097 70 02            [24] 1401 	jnz	00102$
+      000099 80 62            [24] 1402 	sjmp	00109$
+      00009B                       1403 00102$:
+                           00009B  1404 	C$i2c.h$92$2$82 ==.
+                                   1405 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:92: va_start(ap, fmt);
+      00009B E5*00            [12] 1406 	mov	a,_bp
+      00009D 24 FB            [12] 1407 	add	a,#0xfb
+      00009F FF               [12] 1408 	mov	r7,a
+      0000A0 8F*00            [24] 1409 	mov	_vsprintf_PARM_3,r7
+                           0000A2  1410 	C$i2c.h$93$1$81 ==.
+                                   1411 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:93: vsprintf(text, fmt, ap);
+      0000A2 E5*00            [12] 1412 	mov	a,_bp
+      0000A4 24 FB            [12] 1413 	add	a,#0xfb
+      0000A6 F8               [12] 1414 	mov	r0,a
+      0000A7 86*00            [24] 1415 	mov	_vsprintf_PARM_2,@r0
+      0000A9 08               [12] 1416 	inc	r0
+      0000AA 86*01            [24] 1417 	mov	(_vsprintf_PARM_2 + 1),@r0
+      0000AC 08               [12] 1418 	inc	r0
+      0000AD 86*02            [24] 1419 	mov	(_vsprintf_PARM_2 + 2),@r0
+      0000AF 90r00r00         [24] 1420 	mov	dptr,#_lcd_print_text_1_81
+      0000B2 75 F0 00         [24] 1421 	mov	b,#0x00
+      0000B5 12r00r00         [24] 1422 	lcall	_vsprintf
+                           0000B8  1423 	C$i2c.h$96$1$81 ==.
+                                   1424 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:96: len = strlen(text);
+      0000B8 90r00r00         [24] 1425 	mov	dptr,#_lcd_print_text_1_81
+      0000BB 75 F0 00         [24] 1426 	mov	b,#0x00
+      0000BE 12r00r00         [24] 1427 	lcall	_strlen
+      0000C1 AE 82            [24] 1428 	mov	r6,dpl
+                           0000C3  1429 	C$i2c.h$97$1$81 ==.
+                                   1430 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:97: for(i=0; i<len; i++)
+      0000C3 7F 00            [12] 1431 	mov	r7,#0x00
+      0000C5                       1432 00107$:
+      0000C5 C3               [12] 1433 	clr	c
+      0000C6 EF               [12] 1434 	mov	a,r7
+      0000C7 9E               [12] 1435 	subb	a,r6
+      0000C8 50 1F            [24] 1436 	jnc	00105$
+                           0000CA  1437 	C$i2c.h$99$2$84 ==.
+                                   1438 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:99: if(text[i] == (unsigned char)'\n') text[i] = 13;
+      0000CA EF               [12] 1439 	mov	a,r7
+      0000CB 24r00            [12] 1440 	add	a,#_lcd_print_text_1_81
+      0000CD F5 82            [12] 1441 	mov	dpl,a
+      0000CF E4               [12] 1442 	clr	a
+      0000D0 34s00            [12] 1443 	addc	a,#(_lcd_print_text_1_81 >> 8)
+      0000D2 F5 83            [12] 1444 	mov	dph,a
+      0000D4 E0               [24] 1445 	movx	a,@dptr
+      0000D5 FD               [12] 1446 	mov	r5,a
+      0000D6 BD 0A 0D         [24] 1447 	cjne	r5,#0x0a,00108$
+      0000D9 EF               [12] 1448 	mov	a,r7
+      0000DA 24r00            [12] 1449 	add	a,#_lcd_print_text_1_81
+      0000DC F5 82            [12] 1450 	mov	dpl,a
+      0000DE E4               [12] 1451 	clr	a
+      0000DF 34s00            [12] 1452 	addc	a,#(_lcd_print_text_1_81 >> 8)
+      0000E1 F5 83            [12] 1453 	mov	dph,a
+      0000E3 74 0D            [12] 1454 	mov	a,#0x0d
+      0000E5 F0               [24] 1455 	movx	@dptr,a
+      0000E6                       1456 00108$:
+                           0000E6  1457 	C$i2c.h$97$1$81 ==.
+                                   1458 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:97: for(i=0; i<len; i++)
+      0000E6 0F               [12] 1459 	inc	r7
+      0000E7 80 DC            [24] 1460 	sjmp	00107$
+      0000E9                       1461 00105$:
+                           0000E9  1462 	C$i2c.h$102$1$81 ==.
+                                   1463 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:102: i2c_write_data(0xC6, 0x00, text, len);
+      0000E9 75*0Br00         [24] 1464 	mov	_i2c_write_data_PARM_3,#_lcd_print_text_1_81
+      0000EC 75*0Cs00         [24] 1465 	mov	(_i2c_write_data_PARM_3 + 1),#(_lcd_print_text_1_81 >> 8)
+      0000EF 75*0D 00         [24] 1466 	mov	(_i2c_write_data_PARM_3 + 2),#0x00
+      0000F2 75*0A 00         [24] 1467 	mov	_i2c_write_data_PARM_2,#0x00
+      0000F5 8E*0E            [24] 1468 	mov	_i2c_write_data_PARM_4,r6
+      0000F7 75 82 C6         [24] 1469 	mov	dpl,#0xc6
+      0000FA 12r03r8C         [24] 1470 	lcall	_i2c_write_data
+      0000FD                       1471 00109$:
+      0000FD D0*00            [24] 1472 	pop	_bp
+                           0000FF  1473 	C$i2c.h$103$1$81 ==.
+                           0000FF  1474 	XG$lcd_print$0$0 ==.
+      0000FF 22               [24] 1475 	ret
+                                   1476 ;------------------------------------------------------------
+                                   1477 ;Allocation info for local variables in function 'lcd_clear'
+                                   1478 ;------------------------------------------------------------
+                                   1479 ;NumBytes                  Allocated with name '_lcd_clear_NumBytes_1_85'
+                                   1480 ;Cmd                       Allocated with name '_lcd_clear_Cmd_1_85'
+                                   1481 ;------------------------------------------------------------
+                           000100  1482 	G$lcd_clear$0$0 ==.
+                           000100  1483 	C$i2c.h$106$1$81 ==.
+                                   1484 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:106: void lcd_clear()
+                                   1485 ;	-----------------------------------------
+                                   1486 ;	 function lcd_clear
+                                   1487 ;	-----------------------------------------
+      000100                       1488 _lcd_clear:
+                           000100  1489 	C$i2c.h$108$1$81 ==.
+                                   1490 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:108: unsigned char NumBytes=0, Cmd[2];
+      000100 75*05 00         [24] 1491 	mov	_lcd_clear_NumBytes_1_85,#0x00
+                           000103  1492 	C$i2c.h$110$1$85 ==.
+                                   1493 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:110: while(NumBytes < 64) i2c_read_data(0xC6, 0x00, &NumBytes, 1);
+      000103                       1494 00101$:
+      000103 74 C0            [12] 1495 	mov	a,#0x100 - 0x40
+      000105 25*05            [12] 1496 	add	a,_lcd_clear_NumBytes_1_85
+      000107 40 17            [24] 1497 	jc	00103$
+      000109 75*10r05         [24] 1498 	mov	_i2c_read_data_PARM_3,#_lcd_clear_NumBytes_1_85
+      00010C 75*11 00         [24] 1499 	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      00010F 75*12 40         [24] 1500 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+      000112 75*0F 00         [24] 1501 	mov	_i2c_read_data_PARM_2,#0x00
+      000115 75*13 01         [24] 1502 	mov	_i2c_read_data_PARM_4,#0x01
+      000118 75 82 C6         [24] 1503 	mov	dpl,#0xc6
+      00011B 12r04r06         [24] 1504 	lcall	_i2c_read_data
+      00011E 80 E3            [24] 1505 	sjmp	00101$
+      000120                       1506 00103$:
+                           000120  1507 	C$i2c.h$112$1$85 ==.
+                                   1508 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:112: Cmd[0] = 12;
+      000120 75*06 0C         [24] 1509 	mov	_lcd_clear_Cmd_1_85,#0x0c
+                           000123  1510 	C$i2c.h$113$1$85 ==.
+                                   1511 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:113: i2c_write_data(0xC6, 0x00, Cmd, 1);
+      000123 75*0Br06         [24] 1512 	mov	_i2c_write_data_PARM_3,#_lcd_clear_Cmd_1_85
+      000126 75*0C 00         [24] 1513 	mov	(_i2c_write_data_PARM_3 + 1),#0x00
+      000129 75*0D 40         [24] 1514 	mov	(_i2c_write_data_PARM_3 + 2),#0x40
+      00012C 75*0A 00         [24] 1515 	mov	_i2c_write_data_PARM_2,#0x00
+      00012F 75*0E 01         [24] 1516 	mov	_i2c_write_data_PARM_4,#0x01
+      000132 75 82 C6         [24] 1517 	mov	dpl,#0xc6
+      000135 12r03r8C         [24] 1518 	lcall	_i2c_write_data
+                           000138  1519 	C$i2c.h$114$1$85 ==.
+                           000138  1520 	XG$lcd_clear$0$0 ==.
+      000138 22               [24] 1521 	ret
+                                   1522 ;------------------------------------------------------------
+                                   1523 ;Allocation info for local variables in function 'read_keypad'
+                                   1524 ;------------------------------------------------------------
+                                   1525 ;i                         Allocated to registers r7 
+                                   1526 ;Data                      Allocated with name '_read_keypad_Data_1_86'
+                                   1527 ;------------------------------------------------------------
+                           000139  1528 	G$read_keypad$0$0 ==.
+                           000139  1529 	C$i2c.h$117$1$85 ==.
+                                   1530 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:117: char read_keypad()
+                                   1531 ;	-----------------------------------------
+                                   1532 ;	 function read_keypad
+                                   1533 ;	-----------------------------------------
+      000139                       1534 _read_keypad:
+                           000139  1535 	C$i2c.h$121$1$86 ==.
+                                   1536 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:121: i2c_read_data(0xC6, 0x01, Data, 2); //Read I2C data on address 192, register 1, 2 bytes of data.
+      000139 75*10r08         [24] 1537 	mov	_i2c_read_data_PARM_3,#_read_keypad_Data_1_86
+      00013C 75*11 00         [24] 1538 	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      00013F 75*12 40         [24] 1539 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+      000142 75*0F 01         [24] 1540 	mov	_i2c_read_data_PARM_2,#0x01
+      000145 75*13 02         [24] 1541 	mov	_i2c_read_data_PARM_4,#0x02
+      000148 75 82 C6         [24] 1542 	mov	dpl,#0xc6
+      00014B 12r04r06         [24] 1543 	lcall	_i2c_read_data
+                           00014E  1544 	C$i2c.h$122$1$86 ==.
+                                   1545 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:122: if(Data[0] == 0xFF) return 0;   //No response on bus, no display
+      00014E 74 FF            [12] 1546 	mov	a,#0xff
+      000150 B5*08 05         [24] 1547 	cjne	a,_read_keypad_Data_1_86,00102$
+      000153 75 82 00         [24] 1548 	mov	dpl,#0x00
+      000156 80 5F            [24] 1549 	sjmp	00116$
+      000158                       1550 00102$:
+                           000158  1551 	C$i2c.h$124$1$86 ==.
+                                   1552 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:124: for(i=0; i<8; i++)              //loop 8 times
+      000158 7F 00            [12] 1553 	mov	r7,#0x00
+      00015A 8F 06            [24] 1554 	mov	ar6,r7
+      00015C                       1555 00114$:
+                           00015C  1556 	C$i2c.h$126$2$87 ==.
+                                   1557 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:126: if(Data[0] & (0x01 << i))   //find the ASCII value of the keypad read, if it is the current loop value
+      00015C 8E F0            [24] 1558 	mov	b,r6
+      00015E 05 F0            [12] 1559 	inc	b
+      000160 7C 01            [12] 1560 	mov	r4,#0x01
+      000162 7D 00            [12] 1561 	mov	r5,#0x00
+      000164 80 06            [24] 1562 	sjmp	00145$
+      000166                       1563 00144$:
+      000166 EC               [12] 1564 	mov	a,r4
+      000167 2C               [12] 1565 	add	a,r4
+      000168 FC               [12] 1566 	mov	r4,a
+      000169 ED               [12] 1567 	mov	a,r5
+      00016A 33               [12] 1568 	rlc	a
+      00016B FD               [12] 1569 	mov	r5,a
+      00016C                       1570 00145$:
+      00016C D5 F0 F7         [24] 1571 	djnz	b,00144$
+      00016F AA*08            [24] 1572 	mov	r2,_read_keypad_Data_1_86
+      000171 7B 00            [12] 1573 	mov	r3,#0x00
+      000173 EA               [12] 1574 	mov	a,r2
+      000174 52 04            [12] 1575 	anl	ar4,a
+      000176 EB               [12] 1576 	mov	a,r3
+      000177 52 05            [12] 1577 	anl	ar5,a
+      000179 EC               [12] 1578 	mov	a,r4
+      00017A 4D               [12] 1579 	orl	a,r5
+      00017B 60 07            [24] 1580 	jz	00115$
+                           00017D  1581 	C$i2c.h$127$2$87 ==.
+                                   1582 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:127: return i+49;
+      00017D 74 31            [12] 1583 	mov	a,#0x31
+      00017F 2F               [12] 1584 	add	a,r7
+      000180 F5 82            [12] 1585 	mov	dpl,a
+      000182 80 33            [24] 1586 	sjmp	00116$
+      000184                       1587 00115$:
+                           000184  1588 	C$i2c.h$124$1$86 ==.
+                                   1589 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:124: for(i=0; i<8; i++)              //loop 8 times
+      000184 0E               [12] 1590 	inc	r6
+      000185 8E 07            [24] 1591 	mov	ar7,r6
+      000187 BE 08 00         [24] 1592 	cjne	r6,#0x08,00147$
+      00018A                       1593 00147$:
+      00018A 40 D0            [24] 1594 	jc	00114$
+                           00018C  1595 	C$i2c.h$130$1$86 ==.
+                                   1596 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:130: if(Data[1] & 0x01) return '9';  //if the value is equal to 9 return 9.
+      00018C E5*09            [12] 1597 	mov	a,(_read_keypad_Data_1_86 + 0x0001)
+      00018E 30 E0 05         [24] 1598 	jnb	acc.0,00107$
+      000191 75 82 39         [24] 1599 	mov	dpl,#0x39
+      000194 80 21            [24] 1600 	sjmp	00116$
+      000196                       1601 00107$:
+                           000196  1602 	C$i2c.h$132$1$86 ==.
+                                   1603 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:132: if(Data[1] & 0x02) return '*';  //if the value is equal to the star.
+      000196 E5*09            [12] 1604 	mov	a,(_read_keypad_Data_1_86 + 0x0001)
+      000198 30 E1 05         [24] 1605 	jnb	acc.1,00109$
+      00019B 75 82 2A         [24] 1606 	mov	dpl,#0x2a
+      00019E 80 17            [24] 1607 	sjmp	00116$
+      0001A0                       1608 00109$:
+                           0001A0  1609 	C$i2c.h$134$1$86 ==.
+                                   1610 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:134: if(Data[1] & 0x04) return '0';  //if the value is equal to the 0 key
+      0001A0 E5*09            [12] 1611 	mov	a,(_read_keypad_Data_1_86 + 0x0001)
+      0001A2 30 E2 05         [24] 1612 	jnb	acc.2,00111$
+      0001A5 75 82 30         [24] 1613 	mov	dpl,#0x30
+      0001A8 80 0D            [24] 1614 	sjmp	00116$
+      0001AA                       1615 00111$:
+                           0001AA  1616 	C$i2c.h$136$1$86 ==.
+                                   1617 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:136: if(Data[1] & 0x08) return '#';  //if the value is equal to the pound key
+      0001AA E5*09            [12] 1618 	mov	a,(_read_keypad_Data_1_86 + 0x0001)
+      0001AC 30 E3 05         [24] 1619 	jnb	acc.3,00113$
+      0001AF 75 82 23         [24] 1620 	mov	dpl,#0x23
+      0001B2 80 03            [24] 1621 	sjmp	00116$
+      0001B4                       1622 00113$:
+                           0001B4  1623 	C$i2c.h$138$1$86 ==.
+                                   1624 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:138: return 0xFF;                    //else return a numerical -1 (0xFF)
+      0001B4 75 82 FF         [24] 1625 	mov	dpl,#0xff
+      0001B7                       1626 00116$:
+                           0001B7  1627 	C$i2c.h$139$1$86 ==.
+                           0001B7  1628 	XG$read_keypad$0$0 ==.
+      0001B7 22               [24] 1629 	ret
+                                   1630 ;------------------------------------------------------------
+                                   1631 ;Allocation info for local variables in function 'kpd_input'
+                                   1632 ;------------------------------------------------------------
+                                   1633 ;mode                      Allocated to registers r7 
+                                   1634 ;sum                       Allocated to registers r5 r6 
+                                   1635 ;key                       Allocated to registers r3 
+                                   1636 ;i                         Allocated to registers 
+                                   1637 ;------------------------------------------------------------
+                           0001B8  1638 	G$kpd_input$0$0 ==.
+                           0001B8  1639 	C$i2c.h$151$1$86 ==.
+                                   1640 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:151: unsigned int kpd_input(char mode)
+                                   1641 ;	-----------------------------------------
+                                   1642 ;	 function kpd_input
+                                   1643 ;	-----------------------------------------
+      0001B8                       1644 _kpd_input:
+      0001B8 AF 82            [24] 1645 	mov	r7,dpl
+                           0001BA  1646 	C$i2c.h$156$1$89 ==.
+                                   1647 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:156: sum = 0;
+                           0001BA  1648 	C$i2c.h$159$1$89 ==.
+                                   1649 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:159: if(mode==0)lcd_print("\nType digits; end w/#");
+      0001BA E4               [12] 1650 	clr	a
+      0001BB FD               [12] 1651 	mov	r5,a
+      0001BC FE               [12] 1652 	mov	r6,a
+      0001BD EF               [12] 1653 	mov	a,r7
+      0001BE 70 1D            [24] 1654 	jnz	00102$
+      0001C0 C0 06            [24] 1655 	push	ar6
+      0001C2 C0 05            [24] 1656 	push	ar5
+      0001C4 74r00            [12] 1657 	mov	a,#___str_0
+      0001C6 C0 E0            [24] 1658 	push	acc
+      0001C8 74s00            [12] 1659 	mov	a,#(___str_0 >> 8)
+      0001CA C0 E0            [24] 1660 	push	acc
+      0001CC 74 80            [12] 1661 	mov	a,#0x80
+      0001CE C0 E0            [24] 1662 	push	acc
+      0001D0 12r00r7B         [24] 1663 	lcall	_lcd_print
+      0001D3 15 81            [12] 1664 	dec	sp
+      0001D5 15 81            [12] 1665 	dec	sp
+      0001D7 15 81            [12] 1666 	dec	sp
+      0001D9 D0 05            [24] 1667 	pop	ar5
+      0001DB D0 06            [24] 1668 	pop	ar6
+      0001DD                       1669 00102$:
+                           0001DD  1670 	C$i2c.h$161$1$89 ==.
+                                   1671 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:161: lcd_print("     %c%c%c%c%c",0x08,0x08,0x08,0x08,0x08);
+      0001DD C0 06            [24] 1672 	push	ar6
+      0001DF C0 05            [24] 1673 	push	ar5
+      0001E1 74 08            [12] 1674 	mov	a,#0x08
+      0001E3 C0 E0            [24] 1675 	push	acc
+      0001E5 E4               [12] 1676 	clr	a
+      0001E6 C0 E0            [24] 1677 	push	acc
+      0001E8 74 08            [12] 1678 	mov	a,#0x08
+      0001EA C0 E0            [24] 1679 	push	acc
+      0001EC E4               [12] 1680 	clr	a
+      0001ED C0 E0            [24] 1681 	push	acc
+      0001EF 74 08            [12] 1682 	mov	a,#0x08
+      0001F1 C0 E0            [24] 1683 	push	acc
+      0001F3 E4               [12] 1684 	clr	a
+      0001F4 C0 E0            [24] 1685 	push	acc
+      0001F6 74 08            [12] 1686 	mov	a,#0x08
+      0001F8 C0 E0            [24] 1687 	push	acc
+      0001FA E4               [12] 1688 	clr	a
+      0001FB C0 E0            [24] 1689 	push	acc
+      0001FD 74 08            [12] 1690 	mov	a,#0x08
+      0001FF C0 E0            [24] 1691 	push	acc
+      000201 E4               [12] 1692 	clr	a
+      000202 C0 E0            [24] 1693 	push	acc
+      000204 74r16            [12] 1694 	mov	a,#___str_1
+      000206 C0 E0            [24] 1695 	push	acc
+      000208 74s00            [12] 1696 	mov	a,#(___str_1 >> 8)
+      00020A C0 E0            [24] 1697 	push	acc
+      00020C 74 80            [12] 1698 	mov	a,#0x80
+      00020E C0 E0            [24] 1699 	push	acc
+      000210 12r00r7B         [24] 1700 	lcall	_lcd_print
+      000213 E5 81            [12] 1701 	mov	a,sp
+      000215 24 F3            [12] 1702 	add	a,#0xf3
+      000217 F5 81            [12] 1703 	mov	sp,a
+                           000219  1704 	C$i2c.h$163$1$89 ==.
+                                   1705 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:163: delay_time(500000);             //Add 20ms delay before reading i2c in loop
+      000219 90 A1 20         [24] 1706 	mov	dptr,#0xa120
+      00021C 75 F0 07         [24] 1707 	mov	b,#0x07
+      00021F E4               [12] 1708 	clr	a
+      000220 12r03r27         [24] 1709 	lcall	_delay_time
+      000223 D0 05            [24] 1710 	pop	ar5
+      000225 D0 06            [24] 1711 	pop	ar6
+                           000227  1712 	C$i2c.h$167$1$89 ==.
+                                   1713 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:167: for(i=0; i<5; i++)
+      000227 7F 00            [12] 1714 	mov	r7,#0x00
+                           000229  1715 	C$i2c.h$169$3$92 ==.
+                                   1716 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:169: while(((key=read_keypad()) == 0xFF) || (key == '*'))delay_time(10000);
+      000229                       1717 00104$:
+      000229 C0 07            [24] 1718 	push	ar7
+      00022B C0 06            [24] 1719 	push	ar6
+      00022D C0 05            [24] 1720 	push	ar5
+      00022F 12r01r39         [24] 1721 	lcall	_read_keypad
+      000232 AC 82            [24] 1722 	mov	r4,dpl
+      000234 D0 05            [24] 1723 	pop	ar5
+      000236 D0 06            [24] 1724 	pop	ar6
+      000238 D0 07            [24] 1725 	pop	ar7
+      00023A 8C 03            [24] 1726 	mov	ar3,r4
+      00023C BC FF 02         [24] 1727 	cjne	r4,#0xff,00146$
+      00023F 80 03            [24] 1728 	sjmp	00105$
+      000241                       1729 00146$:
+      000241 BB 2A 17         [24] 1730 	cjne	r3,#0x2a,00106$
+      000244                       1731 00105$:
+      000244 90 27 10         [24] 1732 	mov	dptr,#0x2710
+      000247 E4               [12] 1733 	clr	a
+      000248 F5 F0            [12] 1734 	mov	b,a
+      00024A C0 07            [24] 1735 	push	ar7
+      00024C C0 06            [24] 1736 	push	ar6
+      00024E C0 05            [24] 1737 	push	ar5
+      000250 12r03r27         [24] 1738 	lcall	_delay_time
+      000253 D0 05            [24] 1739 	pop	ar5
+      000255 D0 06            [24] 1740 	pop	ar6
+      000257 D0 07            [24] 1741 	pop	ar7
+      000259 80 CE            [24] 1742 	sjmp	00104$
+      00025B                       1743 00106$:
+                           00025B  1744 	C$i2c.h$170$2$90 ==.
+                                   1745 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:170: if(key == '#')
+      00025B BB 23 2A         [24] 1746 	cjne	r3,#0x23,00114$
+                           00025E  1747 	C$i2c.h$172$3$91 ==.
+                                   1748 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:172: while(read_keypad() == '#')delay_time(10000);
+      00025E                       1749 00107$:
+      00025E C0 06            [24] 1750 	push	ar6
+      000260 C0 05            [24] 1751 	push	ar5
+      000262 12r01r39         [24] 1752 	lcall	_read_keypad
+      000265 AC 82            [24] 1753 	mov	r4,dpl
+      000267 D0 05            [24] 1754 	pop	ar5
+      000269 D0 06            [24] 1755 	pop	ar6
+      00026B BC 23 13         [24] 1756 	cjne	r4,#0x23,00109$
+      00026E 90 27 10         [24] 1757 	mov	dptr,#0x2710
+      000271 E4               [12] 1758 	clr	a
+      000272 F5 F0            [12] 1759 	mov	b,a
+      000274 C0 06            [24] 1760 	push	ar6
+      000276 C0 05            [24] 1761 	push	ar5
+      000278 12r03r27         [24] 1762 	lcall	_delay_time
+      00027B D0 05            [24] 1763 	pop	ar5
+      00027D D0 06            [24] 1764 	pop	ar6
+      00027F 80 DD            [24] 1765 	sjmp	00107$
+      000281                       1766 00109$:
+                           000281  1767 	C$i2c.h$173$3$91 ==.
+                                   1768 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:173: return sum;
+      000281 8D 82            [24] 1769 	mov	dpl,r5
+      000283 8E 83            [24] 1770 	mov	dph,r6
+      000285 02r03r26         [24] 1771 	ljmp	00119$
+      000288                       1772 00114$:
+                           000288  1773 	C$i2c.h$177$3$92 ==.
+                                   1774 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:177: lcd_print("%c", key);
+      000288 8B 02            [24] 1775 	mov	ar2,r3
+      00028A 7C 00            [12] 1776 	mov	r4,#0x00
+      00028C C0 07            [24] 1777 	push	ar7
+      00028E C0 06            [24] 1778 	push	ar6
+      000290 C0 05            [24] 1779 	push	ar5
+      000292 C0 04            [24] 1780 	push	ar4
+      000294 C0 03            [24] 1781 	push	ar3
+      000296 C0 02            [24] 1782 	push	ar2
+      000298 C0 02            [24] 1783 	push	ar2
+      00029A C0 04            [24] 1784 	push	ar4
+      00029C 74r26            [12] 1785 	mov	a,#___str_2
+      00029E C0 E0            [24] 1786 	push	acc
+      0002A0 74s00            [12] 1787 	mov	a,#(___str_2 >> 8)
+      0002A2 C0 E0            [24] 1788 	push	acc
+      0002A4 74 80            [12] 1789 	mov	a,#0x80
+      0002A6 C0 E0            [24] 1790 	push	acc
+      0002A8 12r00r7B         [24] 1791 	lcall	_lcd_print
+      0002AB E5 81            [12] 1792 	mov	a,sp
+      0002AD 24 FB            [12] 1793 	add	a,#0xfb
+      0002AF F5 81            [12] 1794 	mov	sp,a
+      0002B1 D0 02            [24] 1795 	pop	ar2
+      0002B3 D0 03            [24] 1796 	pop	ar3
+      0002B5 D0 04            [24] 1797 	pop	ar4
+      0002B7 D0 05            [24] 1798 	pop	ar5
+      0002B9 D0 06            [24] 1799 	pop	ar6
+                           0002BB  1800 	C$i2c.h$178$1$89 ==.
+                                   1801 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:178: sum = sum*10 + key - '0';
+      0002BB 8D*00            [24] 1802 	mov	__mulint_PARM_2,r5
+      0002BD 8E*01            [24] 1803 	mov	(__mulint_PARM_2 + 1),r6
+      0002BF 90 00 0A         [24] 1804 	mov	dptr,#0x000a
+      0002C2 C0 04            [24] 1805 	push	ar4
+      0002C4 C0 03            [24] 1806 	push	ar3
+      0002C6 C0 02            [24] 1807 	push	ar2
+      0002C8 12r00r00         [24] 1808 	lcall	__mulint
+      0002CB A8 82            [24] 1809 	mov	r0,dpl
+      0002CD A9 83            [24] 1810 	mov	r1,dph
+      0002CF D0 02            [24] 1811 	pop	ar2
+      0002D1 D0 03            [24] 1812 	pop	ar3
+      0002D3 D0 04            [24] 1813 	pop	ar4
+      0002D5 D0 07            [24] 1814 	pop	ar7
+      0002D7 EA               [12] 1815 	mov	a,r2
+      0002D8 28               [12] 1816 	add	a,r0
+      0002D9 F8               [12] 1817 	mov	r0,a
+      0002DA EC               [12] 1818 	mov	a,r4
+      0002DB 39               [12] 1819 	addc	a,r1
+      0002DC F9               [12] 1820 	mov	r1,a
+      0002DD E8               [12] 1821 	mov	a,r0
+      0002DE 24 D0            [12] 1822 	add	a,#0xd0
+      0002E0 FD               [12] 1823 	mov	r5,a
+      0002E1 E9               [12] 1824 	mov	a,r1
+      0002E2 34 FF            [12] 1825 	addc	a,#0xff
+      0002E4 FE               [12] 1826 	mov	r6,a
+                           0002E5  1827 	C$i2c.h$179$3$92 ==.
+                                   1828 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:179: while(read_keypad() == key)delay_time(10000); //wait for key to be released
+      0002E5                       1829 00110$:
+      0002E5 C0 07            [24] 1830 	push	ar7
+      0002E7 C0 06            [24] 1831 	push	ar6
+      0002E9 C0 05            [24] 1832 	push	ar5
+      0002EB C0 03            [24] 1833 	push	ar3
+      0002ED 12r01r39         [24] 1834 	lcall	_read_keypad
+      0002F0 AC 82            [24] 1835 	mov	r4,dpl
+      0002F2 D0 03            [24] 1836 	pop	ar3
+      0002F4 D0 05            [24] 1837 	pop	ar5
+      0002F6 D0 06            [24] 1838 	pop	ar6
+      0002F8 D0 07            [24] 1839 	pop	ar7
+      0002FA EC               [12] 1840 	mov	a,r4
+      0002FB B5 03 1B         [24] 1841 	cjne	a,ar3,00118$
+      0002FE 90 27 10         [24] 1842 	mov	dptr,#0x2710
+      000301 E4               [12] 1843 	clr	a
+      000302 F5 F0            [12] 1844 	mov	b,a
+      000304 C0 07            [24] 1845 	push	ar7
+      000306 C0 06            [24] 1846 	push	ar6
+      000308 C0 05            [24] 1847 	push	ar5
+      00030A C0 03            [24] 1848 	push	ar3
+      00030C 12r03r27         [24] 1849 	lcall	_delay_time
+      00030F D0 03            [24] 1850 	pop	ar3
+      000311 D0 05            [24] 1851 	pop	ar5
+      000313 D0 06            [24] 1852 	pop	ar6
+      000315 D0 07            [24] 1853 	pop	ar7
+      000317 80 CC            [24] 1854 	sjmp	00110$
+      000319                       1855 00118$:
+                           000319  1856 	C$i2c.h$167$1$89 ==.
+                                   1857 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:167: for(i=0; i<5; i++)
+      000319 0F               [12] 1858 	inc	r7
+      00031A BF 05 00         [24] 1859 	cjne	r7,#0x05,00155$
+      00031D                       1860 00155$:
+      00031D 50 03            [24] 1861 	jnc	00156$
+      00031F 02r02r29         [24] 1862 	ljmp	00104$
+      000322                       1863 00156$:
+                           000322  1864 	C$i2c.h$182$1$89 ==.
+                                   1865 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:182: return sum;
+      000322 8D 82            [24] 1866 	mov	dpl,r5
+      000324 8E 83            [24] 1867 	mov	dph,r6
+      000326                       1868 00119$:
+                           000326  1869 	C$i2c.h$183$1$89 ==.
+                           000326  1870 	XG$kpd_input$0$0 ==.
+      000326 22               [24] 1871 	ret
+                                   1872 ;------------------------------------------------------------
+                                   1873 ;Allocation info for local variables in function 'delay_time'
+                                   1874 ;------------------------------------------------------------
+                                   1875 ;time_end                  Allocated to registers r4 r5 r6 r7 
+                                   1876 ;index                     Allocated to registers 
+                                   1877 ;------------------------------------------------------------
+                           000327  1878 	G$delay_time$0$0 ==.
+                           000327  1879 	C$i2c.h$192$1$89 ==.
+                                   1880 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:192: void delay_time (unsigned long time_end)
+                                   1881 ;	-----------------------------------------
+                                   1882 ;	 function delay_time
+                                   1883 ;	-----------------------------------------
+      000327                       1884 _delay_time:
+      000327 AC 82            [24] 1885 	mov	r4,dpl
+      000329 AD 83            [24] 1886 	mov	r5,dph
+      00032B AE F0            [24] 1887 	mov	r6,b
+      00032D FF               [12] 1888 	mov	r7,a
+                           00032E  1889 	C$i2c.h$196$1$94 ==.
+                                   1890 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:196: for (index = 0; index < time_end; index++); //for loop delay
+      00032E 78 00            [12] 1891 	mov	r0,#0x00
+      000330 79 00            [12] 1892 	mov	r1,#0x00
+      000332 7A 00            [12] 1893 	mov	r2,#0x00
+      000334 7B 00            [12] 1894 	mov	r3,#0x00
+      000336                       1895 00103$:
+      000336 C3               [12] 1896 	clr	c
+      000337 E8               [12] 1897 	mov	a,r0
+      000338 9C               [12] 1898 	subb	a,r4
+      000339 E9               [12] 1899 	mov	a,r1
+      00033A 9D               [12] 1900 	subb	a,r5
+      00033B EA               [12] 1901 	mov	a,r2
+      00033C 9E               [12] 1902 	subb	a,r6
+      00033D EB               [12] 1903 	mov	a,r3
+      00033E 9F               [12] 1904 	subb	a,r7
+      00033F 50 0F            [24] 1905 	jnc	00105$
+      000341 08               [12] 1906 	inc	r0
+      000342 B8 00 09         [24] 1907 	cjne	r0,#0x00,00115$
+      000345 09               [12] 1908 	inc	r1
+      000346 B9 00 05         [24] 1909 	cjne	r1,#0x00,00115$
+      000349 0A               [12] 1910 	inc	r2
+      00034A BA 00 E9         [24] 1911 	cjne	r2,#0x00,00103$
+      00034D 0B               [12] 1912 	inc	r3
+      00034E                       1913 00115$:
+      00034E 80 E6            [24] 1914 	sjmp	00103$
+      000350                       1915 00105$:
+                           000350  1916 	C$i2c.h$197$1$94 ==.
+                           000350  1917 	XG$delay_time$0$0 ==.
+      000350 22               [24] 1918 	ret
+                                   1919 ;------------------------------------------------------------
+                                   1920 ;Allocation info for local variables in function 'i2c_start'
+                                   1921 ;------------------------------------------------------------
+                           000351  1922 	G$i2c_start$0$0 ==.
+                           000351  1923 	C$i2c.h$200$1$94 ==.
+                                   1924 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:200: void i2c_start(void)
+                                   1925 ;	-----------------------------------------
+                                   1926 ;	 function i2c_start
+                                   1927 ;	-----------------------------------------
+      000351                       1928 _i2c_start:
+                           000351  1929 	C$i2c.h$202$1$96 ==.
+                                   1930 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:202: while(BUSY);                //Wait until SMBus0 is free
+      000351                       1931 00101$:
+      000351 20 C7 FD         [24] 1932 	jb	_BUSY,00101$
+                           000354  1933 	C$i2c.h$203$1$96 ==.
+                                   1934 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:203: STA = 1;                    //Set Start Bit
+      000354 D2 C5            [12] 1935 	setb	_STA
+                           000356  1936 	C$i2c.h$204$1$96 ==.
+                                   1937 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:204: while(!SI);                 //Wait until start sent
+      000356                       1938 00104$:
+      000356 30 C3 FD         [24] 1939 	jnb	_SI,00104$
+                           000359  1940 	C$i2c.h$205$1$96 ==.
+                                   1941 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:205: STA = 0;                    //Clear start bit
+      000359 C2 C5            [12] 1942 	clr	_STA
+                           00035B  1943 	C$i2c.h$206$1$96 ==.
+                                   1944 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:206: SI = 0;                     //Clear SI
+      00035B C2 C3            [12] 1945 	clr	_SI
+                           00035D  1946 	C$i2c.h$207$1$96 ==.
+                           00035D  1947 	XG$i2c_start$0$0 ==.
+      00035D 22               [24] 1948 	ret
+                                   1949 ;------------------------------------------------------------
+                                   1950 ;Allocation info for local variables in function 'i2c_write'
+                                   1951 ;------------------------------------------------------------
+                                   1952 ;output_data               Allocated to registers 
+                                   1953 ;------------------------------------------------------------
+                           00035E  1954 	G$i2c_write$0$0 ==.
+                           00035E  1955 	C$i2c.h$210$1$96 ==.
+                                   1956 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:210: void i2c_write(unsigned char output_data)
+                                   1957 ;	-----------------------------------------
+                                   1958 ;	 function i2c_write
+                                   1959 ;	-----------------------------------------
+      00035E                       1960 _i2c_write:
+      00035E 85 82 C2         [24] 1961 	mov	_SMB0DAT,dpl
+                           000361  1962 	C$i2c.h$213$1$98 ==.
+                                   1963 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:213: while(!SI);                 //Wait until send is complete
+      000361                       1964 00101$:
+                           000361  1965 	C$i2c.h$214$1$98 ==.
+                                   1966 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:214: SI = 0;                     //Clear SI
+      000361 10 C3 02         [24] 1967 	jbc	_SI,00112$
+      000364 80 FB            [24] 1968 	sjmp	00101$
+      000366                       1969 00112$:
+                           000366  1970 	C$i2c.h$215$1$98 ==.
+                           000366  1971 	XG$i2c_write$0$0 ==.
+      000366 22               [24] 1972 	ret
+                                   1973 ;------------------------------------------------------------
+                                   1974 ;Allocation info for local variables in function 'i2c_write_and_stop'
+                                   1975 ;------------------------------------------------------------
+                                   1976 ;output_data               Allocated to registers 
+                                   1977 ;------------------------------------------------------------
+                           000367  1978 	G$i2c_write_and_stop$0$0 ==.
+                           000367  1979 	C$i2c.h$218$1$98 ==.
+                                   1980 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:218: void i2c_write_and_stop(unsigned char output_data)
+                                   1981 ;	-----------------------------------------
+                                   1982 ;	 function i2c_write_and_stop
+                                   1983 ;	-----------------------------------------
+      000367                       1984 _i2c_write_and_stop:
+      000367 85 82 C2         [24] 1985 	mov	_SMB0DAT,dpl
+                           00036A  1986 	C$i2c.h$221$1$100 ==.
+                                   1987 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:221: STO = 1;                    //Set stop bit
+      00036A D2 C4            [12] 1988 	setb	_STO
+                           00036C  1989 	C$i2c.h$222$1$100 ==.
+                                   1990 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:222: while(!SI);                 //Wait until send is complete
+      00036C                       1991 00101$:
+                           00036C  1992 	C$i2c.h$223$1$100 ==.
+                                   1993 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:223: SI = 0;                     //Clear SI
+      00036C 10 C3 02         [24] 1994 	jbc	_SI,00112$
+      00036F 80 FB            [24] 1995 	sjmp	00101$
+      000371                       1996 00112$:
+                           000371  1997 	C$i2c.h$224$1$100 ==.
+                           000371  1998 	XG$i2c_write_and_stop$0$0 ==.
+      000371 22               [24] 1999 	ret
+                                   2000 ;------------------------------------------------------------
+                                   2001 ;Allocation info for local variables in function 'i2c_read'
+                                   2002 ;------------------------------------------------------------
+                                   2003 ;input_data                Allocated to registers 
+                                   2004 ;------------------------------------------------------------
+                           000372  2005 	G$i2c_read$0$0 ==.
+                           000372  2006 	C$i2c.h$227$1$100 ==.
+                                   2007 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:227: unsigned char i2c_read(void)
+                                   2008 ;	-----------------------------------------
+                                   2009 ;	 function i2c_read
+                                   2010 ;	-----------------------------------------
+      000372                       2011 _i2c_read:
+                           000372  2012 	C$i2c.h$231$1$102 ==.
+                                   2013 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:231: while(!SI);                 //Wait until we have data to read
+      000372                       2014 00101$:
+      000372 30 C3 FD         [24] 2015 	jnb	_SI,00101$
+                           000375  2016 	C$i2c.h$232$1$102 ==.
+                                   2017 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:232: input_data = SMB0DAT;       //Read the data
+      000375 85 C2 82         [24] 2018 	mov	dpl,_SMB0DAT
+                           000378  2019 	C$i2c.h$233$1$102 ==.
+                                   2020 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:233: SI = 0;                     //Clear SI
+      000378 C2 C3            [12] 2021 	clr	_SI
+                           00037A  2022 	C$i2c.h$234$1$102 ==.
+                                   2023 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:234: return input_data;          //Return the read data
+                           00037A  2024 	C$i2c.h$235$1$102 ==.
+                           00037A  2025 	XG$i2c_read$0$0 ==.
+      00037A 22               [24] 2026 	ret
+                                   2027 ;------------------------------------------------------------
+                                   2028 ;Allocation info for local variables in function 'i2c_read_and_stop'
+                                   2029 ;------------------------------------------------------------
+                                   2030 ;input_data                Allocated to registers r7 
+                                   2031 ;------------------------------------------------------------
+                           00037B  2032 	G$i2c_read_and_stop$0$0 ==.
+                           00037B  2033 	C$i2c.h$238$1$102 ==.
+                                   2034 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:238: unsigned char i2c_read_and_stop(void)
+                                   2035 ;	-----------------------------------------
+                                   2036 ;	 function i2c_read_and_stop
+                                   2037 ;	-----------------------------------------
+      00037B                       2038 _i2c_read_and_stop:
+                           00037B  2039 	C$i2c.h$242$1$104 ==.
+                                   2040 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:242: while(!SI);                 //Wait until we have data to read
+      00037B                       2041 00101$:
+      00037B 30 C3 FD         [24] 2042 	jnb	_SI,00101$
+                           00037E  2043 	C$i2c.h$243$1$104 ==.
+                                   2044 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:243: input_data = SMB0DAT;       //Read the data
+      00037E AF C2            [24] 2045 	mov	r7,_SMB0DAT
+                           000380  2046 	C$i2c.h$244$1$104 ==.
+                                   2047 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:244: SI = 0;                     //Clear SI
+      000380 C2 C3            [12] 2048 	clr	_SI
+                           000382  2049 	C$i2c.h$245$1$104 ==.
+                                   2050 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:245: STO = 1;                    //Set stop bit
+      000382 D2 C4            [12] 2051 	setb	_STO
+                           000384  2052 	C$i2c.h$246$1$104 ==.
+                                   2053 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:246: while(!SI);                 //Wait for stop
+      000384                       2054 00104$:
+                           000384  2055 	C$i2c.h$247$1$104 ==.
+                                   2056 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:247: SI = 0;
+      000384 10 C3 02         [24] 2057 	jbc	_SI,00122$
+      000387 80 FB            [24] 2058 	sjmp	00104$
+      000389                       2059 00122$:
+                           000389  2060 	C$i2c.h$248$1$104 ==.
+                                   2061 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:248: return input_data;          //Return the read data
+      000389 8F 82            [24] 2062 	mov	dpl,r7
+                           00038B  2063 	C$i2c.h$249$1$104 ==.
+                           00038B  2064 	XG$i2c_read_and_stop$0$0 ==.
+      00038B 22               [24] 2065 	ret
+                                   2066 ;------------------------------------------------------------
+                                   2067 ;Allocation info for local variables in function 'i2c_write_data'
+                                   2068 ;------------------------------------------------------------
+                                   2069 ;start_reg                 Allocated with name '_i2c_write_data_PARM_2'
+                                   2070 ;buffer                    Allocated with name '_i2c_write_data_PARM_3'
+                                   2071 ;num_bytes                 Allocated with name '_i2c_write_data_PARM_4'
+                                   2072 ;addr                      Allocated to registers r7 
+                                   2073 ;i                         Allocated to registers 
+                                   2074 ;------------------------------------------------------------
+                           00038C  2075 	G$i2c_write_data$0$0 ==.
+                           00038C  2076 	C$i2c.h$252$1$104 ==.
+                                   2077 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:252: void i2c_write_data(unsigned char addr, unsigned char start_reg, unsigned char *buffer, unsigned char num_bytes)
+                                   2078 ;	-----------------------------------------
+                                   2079 ;	 function i2c_write_data
+                                   2080 ;	-----------------------------------------
+      00038C                       2081 _i2c_write_data:
+      00038C AF 82            [24] 2082 	mov	r7,dpl
+                           00038E  2083 	C$i2c.h$256$1$106 ==.
+                                   2084 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:256: EA = 0;                     //Don't allow interrupts during I2C work
+      00038E C2 AF            [12] 2085 	clr	_EA
+                           000390  2086 	C$i2c.h$257$1$106 ==.
+                                   2087 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:257: i2c_start();                //Initiate I2C transfer
+      000390 C0 07            [24] 2088 	push	ar7
+      000392 12r03r51         [24] 2089 	lcall	_i2c_start
+      000395 D0 07            [24] 2090 	pop	ar7
+                           000397  2091 	C$i2c.h$258$1$106 ==.
+                                   2092 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:258: i2c_write(addr & ~0x01);    //Write the desired address to the bus
+      000397 74 FE            [12] 2093 	mov	a,#0xfe
+      000399 5F               [12] 2094 	anl	a,r7
+      00039A F5 82            [12] 2095 	mov	dpl,a
+      00039C 12r03r5E         [24] 2096 	lcall	_i2c_write
+                           00039F  2097 	C$i2c.h$259$1$106 ==.
+                                   2098 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:259: i2c_write(start_reg);       //Write the start register to the bus
+      00039F 85*0A 82         [24] 2099 	mov	dpl,_i2c_write_data_PARM_2
+      0003A2 12r03r5E         [24] 2100 	lcall	_i2c_write
+                           0003A5  2101 	C$i2c.h$260$1$106 ==.
+                                   2102 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:260: for(i=0; i<num_bytes-1; i++) //Write the data to the register(s)
+      0003A5 7F 00            [12] 2103 	mov	r7,#0x00
+      0003A7                       2104 00103$:
+      0003A7 AD*0E            [24] 2105 	mov	r5,_i2c_write_data_PARM_4
+      0003A9 7E 00            [12] 2106 	mov	r6,#0x00
+      0003AB 1D               [12] 2107 	dec	r5
+      0003AC BD FF 01         [24] 2108 	cjne	r5,#0xff,00114$
+      0003AF 1E               [12] 2109 	dec	r6
+      0003B0                       2110 00114$:
+      0003B0 8F 03            [24] 2111 	mov	ar3,r7
+      0003B2 7C 00            [12] 2112 	mov	r4,#0x00
+      0003B4 C3               [12] 2113 	clr	c
+      0003B5 EB               [12] 2114 	mov	a,r3
+      0003B6 9D               [12] 2115 	subb	a,r5
+      0003B7 EC               [12] 2116 	mov	a,r4
+      0003B8 64 80            [12] 2117 	xrl	a,#0x80
+      0003BA 8E F0            [24] 2118 	mov	b,r6
+      0003BC 63 F0 80         [24] 2119 	xrl	b,#0x80
+      0003BF 95 F0            [12] 2120 	subb	a,b
+      0003C1 50 1F            [24] 2121 	jnc	00101$
+                           0003C3  2122 	C$i2c.h$261$1$106 ==.
+                                   2123 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:261: i2c_write(buffer[i]);
+      0003C3 EF               [12] 2124 	mov	a,r7
+      0003C4 25*0B            [12] 2125 	add	a,_i2c_write_data_PARM_3
+      0003C6 FC               [12] 2126 	mov	r4,a
+      0003C7 E4               [12] 2127 	clr	a
+      0003C8 35*0C            [12] 2128 	addc	a,(_i2c_write_data_PARM_3 + 1)
+      0003CA FD               [12] 2129 	mov	r5,a
+      0003CB AE*0D            [24] 2130 	mov	r6,(_i2c_write_data_PARM_3 + 2)
+      0003CD 8C 82            [24] 2131 	mov	dpl,r4
+      0003CF 8D 83            [24] 2132 	mov	dph,r5
+      0003D1 8E F0            [24] 2133 	mov	b,r6
+      0003D3 12r00r00         [24] 2134 	lcall	__gptrget
+      0003D6 F5 82            [12] 2135 	mov	dpl,a
+      0003D8 C0 07            [24] 2136 	push	ar7
+      0003DA 12r03r5E         [24] 2137 	lcall	_i2c_write
+      0003DD D0 07            [24] 2138 	pop	ar7
+                           0003DF  2139 	C$i2c.h$260$1$106 ==.
+                                   2140 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:260: for(i=0; i<num_bytes-1; i++) //Write the data to the register(s)
+      0003DF 0F               [12] 2141 	inc	r7
+      0003E0 80 C5            [24] 2142 	sjmp	00103$
+      0003E2                       2143 00101$:
+                           0003E2  2144 	C$i2c.h$262$1$106 ==.
+                                   2145 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:262: i2c_write_and_stop(buffer[num_bytes-1]); //Stop transfer
+      0003E2 AE*0E            [24] 2146 	mov	r6,_i2c_write_data_PARM_4
+      0003E4 7F 00            [12] 2147 	mov	r7,#0x00
+      0003E6 1E               [12] 2148 	dec	r6
+      0003E7 BE FF 01         [24] 2149 	cjne	r6,#0xff,00116$
+      0003EA 1F               [12] 2150 	dec	r7
+      0003EB                       2151 00116$:
+      0003EB EE               [12] 2152 	mov	a,r6
+      0003EC 25*0B            [12] 2153 	add	a,_i2c_write_data_PARM_3
+      0003EE FE               [12] 2154 	mov	r6,a
+      0003EF EF               [12] 2155 	mov	a,r7
+      0003F0 35*0C            [12] 2156 	addc	a,(_i2c_write_data_PARM_3 + 1)
+      0003F2 FF               [12] 2157 	mov	r7,a
+      0003F3 AD*0D            [24] 2158 	mov	r5,(_i2c_write_data_PARM_3 + 2)
+      0003F5 8E 82            [24] 2159 	mov	dpl,r6
+      0003F7 8F 83            [24] 2160 	mov	dph,r7
+      0003F9 8D F0            [24] 2161 	mov	b,r5
+      0003FB 12r00r00         [24] 2162 	lcall	__gptrget
+      0003FE F5 82            [12] 2163 	mov	dpl,a
+      000400 12r03r67         [24] 2164 	lcall	_i2c_write_and_stop
+                           000403  2165 	C$i2c.h$263$1$106 ==.
+                                   2166 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:263: EA = 1;                     //Re-Enable interrupts
+      000403 D2 AF            [12] 2167 	setb	_EA
+                           000405  2168 	C$i2c.h$264$1$106 ==.
+                           000405  2169 	XG$i2c_write_data$0$0 ==.
+      000405 22               [24] 2170 	ret
+                                   2171 ;------------------------------------------------------------
+                                   2172 ;Allocation info for local variables in function 'i2c_read_data'
+                                   2173 ;------------------------------------------------------------
+                                   2174 ;start_reg                 Allocated with name '_i2c_read_data_PARM_2'
+                                   2175 ;buffer                    Allocated with name '_i2c_read_data_PARM_3'
+                                   2176 ;num_bytes                 Allocated with name '_i2c_read_data_PARM_4'
+                                   2177 ;addr                      Allocated to registers r7 
+                                   2178 ;j                         Allocated to registers 
+                                   2179 ;------------------------------------------------------------
+                           000406  2180 	G$i2c_read_data$0$0 ==.
+                           000406  2181 	C$i2c.h$267$1$106 ==.
+                                   2182 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:267: void i2c_read_data(unsigned char addr, unsigned char start_reg, unsigned char *buffer, unsigned char num_bytes)
+                                   2183 ;	-----------------------------------------
+                                   2184 ;	 function i2c_read_data
+                                   2185 ;	-----------------------------------------
+      000406                       2186 _i2c_read_data:
+      000406 AF 82            [24] 2187 	mov	r7,dpl
+                           000408  2188 	C$i2c.h$271$1$108 ==.
+                                   2189 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:271: EA = 0;                     //Don't allow interrupts during I2C work
+      000408 C2 AF            [12] 2190 	clr	_EA
+                           00040A  2191 	C$i2c.h$272$1$108 ==.
+                                   2192 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:272: i2c_start();                //Start I2C transfer
+      00040A C0 07            [24] 2193 	push	ar7
+      00040C 12r03r51         [24] 2194 	lcall	_i2c_start
+      00040F D0 07            [24] 2195 	pop	ar7
+                           000411  2196 	C$i2c.h$273$1$108 ==.
+                                   2197 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:273: i2c_write(addr & ~0x01);    //Write address of device that will be written to, send 0
+      000411 74 FE            [12] 2198 	mov	a,#0xfe
+      000413 5F               [12] 2199 	anl	a,r7
+      000414 F5 82            [12] 2200 	mov	dpl,a
+      000416 C0 07            [24] 2201 	push	ar7
+      000418 12r03r5E         [24] 2202 	lcall	_i2c_write
+                           00041B  2203 	C$i2c.h$274$1$108 ==.
+                                   2204 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:274: i2c_write_and_stop(start_reg); //Write & stop the 1st register to be read
+      00041B 85*0F 82         [24] 2205 	mov	dpl,_i2c_read_data_PARM_2
+      00041E 12r03r67         [24] 2206 	lcall	_i2c_write_and_stop
+                           000421  2207 	C$i2c.h$275$1$108 ==.
+                                   2208 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:275: i2c_start();                //Start I2C transfer
+      000421 12r03r51         [24] 2209 	lcall	_i2c_start
+      000424 D0 07            [24] 2210 	pop	ar7
+                           000426  2211 	C$i2c.h$276$1$108 ==.
+                                   2212 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:276: i2c_write(addr | 0x01);     //Write address again, this time indicating a read operation
+      000426 74 01            [12] 2213 	mov	a,#0x01
+      000428 4F               [12] 2214 	orl	a,r7
+      000429 F5 82            [12] 2215 	mov	dpl,a
+      00042B 12r03r5E         [24] 2216 	lcall	_i2c_write
+                           00042E  2217 	C$i2c.h$277$1$108 ==.
+                                   2218 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:277: for(j = 0; j < num_bytes - 1; j++)
+      00042E 7F 00            [12] 2219 	mov	r7,#0x00
+      000430                       2220 00103$:
+      000430 AD*13            [24] 2221 	mov	r5,_i2c_read_data_PARM_4
+      000432 7E 00            [12] 2222 	mov	r6,#0x00
+      000434 1D               [12] 2223 	dec	r5
+      000435 BD FF 01         [24] 2224 	cjne	r5,#0xff,00114$
+      000438 1E               [12] 2225 	dec	r6
+      000439                       2226 00114$:
+      000439 8F 03            [24] 2227 	mov	ar3,r7
+      00043B 7C 00            [12] 2228 	mov	r4,#0x00
+      00043D C3               [12] 2229 	clr	c
+      00043E EB               [12] 2230 	mov	a,r3
+      00043F 9D               [12] 2231 	subb	a,r5
+      000440 EC               [12] 2232 	mov	a,r4
+      000441 64 80            [12] 2233 	xrl	a,#0x80
+      000443 8E F0            [24] 2234 	mov	b,r6
+      000445 63 F0 80         [24] 2235 	xrl	b,#0x80
+      000448 95 F0            [12] 2236 	subb	a,b
+      00044A 50 2E            [24] 2237 	jnc	00101$
+                           00044C  2238 	C$i2c.h$279$2$109 ==.
+                                   2239 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:279: AA = 1;                 //Set acknowledge bit
+      00044C D2 C2            [12] 2240 	setb	_AA
+                           00044E  2241 	C$i2c.h$280$2$109 ==.
+                                   2242 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:280: buffer[j] = i2c_read(); //Read data, save it in buffer
+      00044E EF               [12] 2243 	mov	a,r7
+      00044F 25*10            [12] 2244 	add	a,_i2c_read_data_PARM_3
+      000451 FC               [12] 2245 	mov	r4,a
+      000452 E4               [12] 2246 	clr	a
+      000453 35*11            [12] 2247 	addc	a,(_i2c_read_data_PARM_3 + 1)
+      000455 FD               [12] 2248 	mov	r5,a
+      000456 AE*12            [24] 2249 	mov	r6,(_i2c_read_data_PARM_3 + 2)
+      000458 C0 07            [24] 2250 	push	ar7
+      00045A C0 06            [24] 2251 	push	ar6
+      00045C C0 05            [24] 2252 	push	ar5
+      00045E C0 04            [24] 2253 	push	ar4
+      000460 12r03r72         [24] 2254 	lcall	_i2c_read
+      000463 AB 82            [24] 2255 	mov	r3,dpl
+      000465 D0 04            [24] 2256 	pop	ar4
+      000467 D0 05            [24] 2257 	pop	ar5
+      000469 D0 06            [24] 2258 	pop	ar6
+      00046B D0 07            [24] 2259 	pop	ar7
+      00046D 8C 82            [24] 2260 	mov	dpl,r4
+      00046F 8D 83            [24] 2261 	mov	dph,r5
+      000471 8E F0            [24] 2262 	mov	b,r6
+      000473 EB               [12] 2263 	mov	a,r3
+      000474 12r00r00         [24] 2264 	lcall	__gptrput
+                           000477  2265 	C$i2c.h$277$1$108 ==.
+                                   2266 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:277: for(j = 0; j < num_bytes - 1; j++)
+      000477 0F               [12] 2267 	inc	r7
+      000478 80 B6            [24] 2268 	sjmp	00103$
+      00047A                       2269 00101$:
+                           00047A  2270 	C$i2c.h$282$1$108 ==.
+                                   2271 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:282: AA = 0;
+      00047A C2 C2            [12] 2272 	clr	_AA
+                           00047C  2273 	C$i2c.h$283$1$108 ==.
+                                   2274 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:283: buffer[num_bytes - 1] = i2c_read_and_stop(); //Read the last byte and stop, save it in the buffer
+      00047C AE*13            [24] 2275 	mov	r6,_i2c_read_data_PARM_4
+      00047E 7F 00            [12] 2276 	mov	r7,#0x00
+      000480 1E               [12] 2277 	dec	r6
+      000481 BE FF 01         [24] 2278 	cjne	r6,#0xff,00116$
+      000484 1F               [12] 2279 	dec	r7
+      000485                       2280 00116$:
+      000485 EE               [12] 2281 	mov	a,r6
+      000486 25*10            [12] 2282 	add	a,_i2c_read_data_PARM_3
+      000488 FE               [12] 2283 	mov	r6,a
+      000489 EF               [12] 2284 	mov	a,r7
+      00048A 35*11            [12] 2285 	addc	a,(_i2c_read_data_PARM_3 + 1)
+      00048C FF               [12] 2286 	mov	r7,a
+      00048D AD*12            [24] 2287 	mov	r5,(_i2c_read_data_PARM_3 + 2)
+      00048F C0 07            [24] 2288 	push	ar7
+      000491 C0 06            [24] 2289 	push	ar6
+      000493 C0 05            [24] 2290 	push	ar5
+      000495 12r03r7B         [24] 2291 	lcall	_i2c_read_and_stop
+      000498 AC 82            [24] 2292 	mov	r4,dpl
+      00049A D0 05            [24] 2293 	pop	ar5
+      00049C D0 06            [24] 2294 	pop	ar6
+      00049E D0 07            [24] 2295 	pop	ar7
+      0004A0 8E 82            [24] 2296 	mov	dpl,r6
+      0004A2 8F 83            [24] 2297 	mov	dph,r7
+      0004A4 8D F0            [24] 2298 	mov	b,r5
+      0004A6 EC               [12] 2299 	mov	a,r4
+      0004A7 12r00r00         [24] 2300 	lcall	__gptrput
+                           0004AA  2301 	C$i2c.h$284$1$108 ==.
+                                   2302 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:284: EA = 1;                     //Re-Enable interrupts
+      0004AA D2 AF            [12] 2303 	setb	_EA
+                           0004AC  2304 	C$i2c.h$285$1$108 ==.
+                           0004AC  2305 	XG$i2c_read_data$0$0 ==.
+      0004AC 22               [24] 2306 	ret
+                                   2307 ;------------------------------------------------------------
+                                   2308 ;Allocation info for local variables in function 'Accel_Init'
+                                   2309 ;------------------------------------------------------------
+                           0004AD  2310 	G$Accel_Init$0$0 ==.
+                           0004AD  2311 	C$i2c.h$294$1$108 ==.
+                                   2312 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:294: void Accel_Init(void)
+                                   2313 ;	-----------------------------------------
+                                   2314 ;	 function Accel_Init
+                                   2315 ;	-----------------------------------------
+      0004AD                       2316 _Accel_Init:
+                           0004AD  2317 	C$i2c.h$298$1$111 ==.
+                                   2318 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:298: Data2[0]=0x23;  //normal power mode, 50Hz ODR, y & x axes enabled
+      0004AD 75*00 23         [24] 2319 	mov	_Data2,#0x23
+                           0004B0  2320 	C$i2c.h$300$1$111 ==.
+                                   2321 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:300: Data2[1]=0x00;  //default - no filtering
+      0004B0 75*01 00         [24] 2322 	mov	(_Data2 + 0x0001),#0x00
+                           0004B3  2323 	C$i2c.h$301$1$111 ==.
+                                   2324 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:301: Data2[1]=0x10;  //filtered data selected, HPF = 1.0->0.125Hz
+      0004B3 75*01 10         [24] 2325 	mov	(_Data2 + 0x0001),#0x10
+                           0004B6  2326 	C$i2c.h$302$1$111 ==.
+                                   2327 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:302: Data2[2]=0x00;  //default - no interrupts enabled
+      0004B6 75*02 00         [24] 2328 	mov	(_Data2 + 0x0002),#0x00
+                           0004B9  2329 	C$i2c.h$304$1$111 ==.
+                                   2330 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:304: i2c_write_data(addr_accel, 0x20, Data2, 1);
+      0004B9 75*0Br00         [24] 2331 	mov	_i2c_write_data_PARM_3,#_Data2
+      0004BC 75*0C 00         [24] 2332 	mov	(_i2c_write_data_PARM_3 + 1),#0x00
+      0004BF 75*0D 40         [24] 2333 	mov	(_i2c_write_data_PARM_3 + 2),#0x40
+      0004C2 75*0A 20         [24] 2334 	mov	_i2c_write_data_PARM_2,#0x20
+      0004C5 75*0E 01         [24] 2335 	mov	_i2c_write_data_PARM_4,#0x01
+      0004C8 75 82 30         [24] 2336 	mov	dpl,#0x30
+      0004CB 12r03r8C         [24] 2337 	lcall	_i2c_write_data
+                           0004CE  2338 	C$i2c.h$310$1$111 ==.
+                           0004CE  2339 	XG$Accel_Init$0$0 ==.
+      0004CE 22               [24] 2340 	ret
+                                   2341 ;------------------------------------------------------------
+                                   2342 ;Allocation info for local variables in function 'Accel_Init_C'
+                                   2343 ;------------------------------------------------------------
+                           0004CF  2344 	G$Accel_Init_C$0$0 ==.
+                           0004CF  2345 	C$i2c.h$313$1$111 ==.
+                                   2346 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:313: void Accel_Init_C(void)
+                                   2347 ;	-----------------------------------------
+                                   2348 ;	 function Accel_Init_C
+                                   2349 ;	-----------------------------------------
+      0004CF                       2350 _Accel_Init_C:
+                           0004CF  2351 	C$i2c.h$318$1$113 ==.
+                                   2352 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:318: Data2[0]=0x04;  //set register address auto increment bit
+      0004CF 75*00 04         [24] 2353 	mov	_Data2,#0x04
+                           0004D2  2354 	C$i2c.h$319$1$113 ==.
+                                   2355 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:319: i2c_write_data(addr_accelC, 0x23, Data2, 1);
+      0004D2 75*0Br00         [24] 2356 	mov	_i2c_write_data_PARM_3,#_Data2
+      0004D5 75*0C 00         [24] 2357 	mov	(_i2c_write_data_PARM_3 + 1),#0x00
+      0004D8 75*0D 40         [24] 2358 	mov	(_i2c_write_data_PARM_3 + 2),#0x40
+      0004DB 75*0A 23         [24] 2359 	mov	_i2c_write_data_PARM_2,#0x23
+      0004DE 75*0E 01         [24] 2360 	mov	_i2c_write_data_PARM_4,#0x01
+      0004E1 75 82 3A         [24] 2361 	mov	dpl,#0x3a
+      0004E4 12r03r8C         [24] 2362 	lcall	_i2c_write_data
+                           0004E7  2363 	C$i2c.h$321$1$113 ==.
+                                   2364 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:321: Data2[0]=0x6B;  //R20 normal power mode, 800Hz ODR, y & x axes enabled
+      0004E7 75*00 6B         [24] 2365 	mov	_Data2,#0x6b
+                           0004EA  2366 	C$i2c.h$323$1$113 ==.
+                                   2367 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:323: Data2[1]=0x00;  //R21 Default - no HP filtering
+      0004EA 75*01 00         [24] 2368 	mov	(_Data2 + 0x0001),#0x00
+                           0004ED  2369 	C$i2c.h$325$1$113 ==.
+                                   2370 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:325: Data2[2]=0x00;  //R22 Default - no interrupts enabled
+      0004ED 75*02 00         [24] 2371 	mov	(_Data2 + 0x0002),#0x00
+                           0004F0  2372 	C$i2c.h$326$1$113 ==.
+                                   2373 ;	C:/Program Files/SDCC/bin/../include/mcs51/i2c.h:326: i2c_write_data(addr_accelC, 0x20, Data2, 1);
+      0004F0 75*0Br00         [24] 2374 	mov	_i2c_write_data_PARM_3,#_Data2
+      0004F3 75*0C 00         [24] 2375 	mov	(_i2c_write_data_PARM_3 + 1),#0x00
+      0004F6 75*0D 40         [24] 2376 	mov	(_i2c_write_data_PARM_3 + 2),#0x40
+      0004F9 75*0A 20         [24] 2377 	mov	_i2c_write_data_PARM_2,#0x20
+      0004FC 75*0E 01         [24] 2378 	mov	_i2c_write_data_PARM_4,#0x01
+      0004FF 75 82 3A         [24] 2379 	mov	dpl,#0x3a
+      000502 12r03r8C         [24] 2380 	lcall	_i2c_write_data
+                           000505  2381 	C$i2c.h$328$1$113 ==.
+                           000505  2382 	XG$Accel_Init_C$0$0 ==.
+      000505 22               [24] 2383 	ret
+                                   2384 ;------------------------------------------------------------
+                                   2385 ;Allocation info for local variables in function 'main'
+                                   2386 ;------------------------------------------------------------
+                           000506  2387 	G$main$0$0 ==.
+                           000506  2388 	C$HW10.c$47$1$113 ==.
+                                   2389 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:47: void main(void)
+                                   2390 ;	-----------------------------------------
+                                   2391 ;	 function main
+                                   2392 ;	-----------------------------------------
+      000506                       2393 _main:
+                           000506  2394 	C$HW10.c$50$1$122 ==.
+                                   2395 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:50: Sys_Init();
+      000506 12r00r37         [24] 2396 	lcall	_Sys_Init
+                           000509  2397 	C$HW10.c$51$1$122 ==.
+                                   2398 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:51: putchar(' ');
+      000509 75 82 20         [24] 2399 	mov	dpl,#0x20
+      00050C 12r00r4A         [24] 2400 	lcall	_putchar
+                           00050F  2401 	C$HW10.c$52$1$122 ==.
+                                   2402 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:52: Port_Init();
+      00050F 12r05r84         [24] 2403 	lcall	_Port_Init
+                           000512  2404 	C$HW10.c$53$1$122 ==.
+                                   2405 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:53: XBR0_Init();
+      000512 12r05r8B         [24] 2406 	lcall	_XBR0_Init
+                           000515  2407 	C$HW10.c$54$1$122 ==.
+                                   2408 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:54: PCA_Init();
+      000515 12r05r8F         [24] 2409 	lcall	_PCA_Init
+                           000518  2410 	C$HW10.c$55$1$122 ==.
+                                   2411 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:55: SMB_Init();
+      000518 12r05rA4         [24] 2412 	lcall	_SMB_Init
+                           00051B  2413 	C$HW10.c$58$1$122 ==.
+                                   2414 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:58: while(1) // infinite loop
+      00051B                       2415 00108$:
+                           00051B  2416 	C$HW10.c$60$2$123 ==.
+                                   2417 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:60: if(does_ranger_have_new_data)
+      00051B E5*1A            [12] 2418 	mov	a,_does_ranger_have_new_data
+      00051D 60 1B            [24] 2419 	jz	00102$
+                           00051F  2420 	C$HW10.c$62$3$124 ==.
+                                   2421 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:62: ranger(); // get data set to array
+      00051F 12r06r03         [24] 2422 	lcall	_ranger
+                           000522  2423 	C$HW10.c$63$3$124 ==.
+                                   2424 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:63: i2c_write_data(0xE0, 0, input_data, 1); //start new ultrasonic ping to get back in inches
+      000522 75*0Br20         [24] 2425 	mov	_i2c_write_data_PARM_3,#_input_data
+      000525 75*0C 00         [24] 2426 	mov	(_i2c_write_data_PARM_3 + 1),#0x00
+      000528 75*0D 40         [24] 2427 	mov	(_i2c_write_data_PARM_3 + 2),#0x40
+      00052B 75*0A 00         [24] 2428 	mov	_i2c_write_data_PARM_2,#0x00
+      00052E 75*0E 01         [24] 2429 	mov	_i2c_write_data_PARM_4,#0x01
+      000531 75 82 E0         [24] 2430 	mov	dpl,#0xe0
+      000534 12r03r8C         [24] 2431 	lcall	_i2c_write_data
+                           000537  2432 	C$HW10.c$64$3$124 ==.
+                                   2433 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:64: does_ranger_have_new_data = 0;
+      000537 75*1A 00         [24] 2434 	mov	_does_ranger_have_new_data,#0x00
+      00053A                       2435 00102$:
+                           00053A  2436 	C$HW10.c$67$2$123 ==.
+                                   2437 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:67: if(does_compass_have_new_data)
+      00053A E5*1B            [12] 2438 	mov	a,_does_compass_have_new_data
+      00053C 60 06            [24] 2439 	jz	00104$
+                           00053E  2440 	C$HW10.c$69$3$125 ==.
+                                   2441 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:69: compass(); // get data set to array
+      00053E 12r06r3F         [24] 2442 	lcall	_compass
+                           000541  2443 	C$HW10.c$70$3$125 ==.
+                                   2444 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:70: does_compass_have_new_data = 0;
+      000541 75*1B 00         [24] 2445 	mov	_does_compass_have_new_data,#0x00
+      000544                       2446 00104$:
+                           000544  2447 	C$HW10.c$73$2$123 ==.
+                                   2448 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:73: if(counts >= 8) // guarentees both will have refreshed data
+      000544 C3               [12] 2449 	clr	c
+      000545 E5*14            [12] 2450 	mov	a,_counts
+      000547 94 08            [12] 2451 	subb	a,#0x08
+      000549 E5*15            [12] 2452 	mov	a,(_counts + 1)
+      00054B 94 00            [12] 2453 	subb	a,#0x00
+      00054D 40 CC            [24] 2454 	jc	00108$
+                           00054F  2455 	C$HW10.c$76$3$126 ==.
+                                   2456 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:76: range, ranger_version, heading, compass_version);
+      00054F AE*21            [24] 2457 	mov	r6,_compass_version
+      000551 7F 00            [12] 2458 	mov	r7,#0x00
+      000553 AC*22            [24] 2459 	mov	r4,_ranger_version
+      000555 7D 00            [12] 2460 	mov	r5,#0x00
+                           000557  2461 	C$HW10.c$75$3$126 ==.
+                                   2462 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:75: printf("Current Distance (3rd echo) = %u    Software Revision (ranger) # = %d    Heading: %i    Software Revision (compass) # = %d \r\n",
+      000557 C0 06            [24] 2463 	push	ar6
+      000559 C0 07            [24] 2464 	push	ar7
+      00055B C0*1C            [24] 2465 	push	_heading
+      00055D C0*1D            [24] 2466 	push	(_heading + 1)
+      00055F C0 04            [24] 2467 	push	ar4
+      000561 C0 05            [24] 2468 	push	ar5
+      000563 C0*1E            [24] 2469 	push	_range
+      000565 C0*1F            [24] 2470 	push	(_range + 1)
+      000567 74r29            [12] 2471 	mov	a,#___str_3
+      000569 C0 E0            [24] 2472 	push	acc
+      00056B 74s00            [12] 2473 	mov	a,#(___str_3 >> 8)
+      00056D C0 E0            [24] 2474 	push	acc
+      00056F 74 80            [12] 2475 	mov	a,#0x80
+      000571 C0 E0            [24] 2476 	push	acc
+      000573 12r00r00         [24] 2477 	lcall	_printf
+      000576 E5 81            [12] 2478 	mov	a,sp
+      000578 24 F5            [12] 2479 	add	a,#0xf5
+      00057A F5 81            [12] 2480 	mov	sp,a
+                           00057C  2481 	C$HW10.c$77$3$126 ==.
+                                   2482 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:77: counts = 0; // reset print counts
+      00057C E4               [12] 2483 	clr	a
+      00057D F5*14            [12] 2484 	mov	_counts,a
+      00057F F5*15            [12] 2485 	mov	(_counts + 1),a
+      000581 80 98            [24] 2486 	sjmp	00108$
+                           000583  2487 	C$HW10.c$80$1$122 ==.
+                           000583  2488 	XG$main$0$0 ==.
+      000583 22               [24] 2489 	ret
+                                   2490 ;------------------------------------------------------------
+                                   2491 ;Allocation info for local variables in function 'Port_Init'
+                                   2492 ;------------------------------------------------------------
+                           000584  2493 	G$Port_Init$0$0 ==.
+                           000584  2494 	C$HW10.c$88$1$122 ==.
+                                   2495 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:88: void Port_Init()
+                                   2496 ;	-----------------------------------------
+                                   2497 ;	 function Port_Init
+                                   2498 ;	-----------------------------------------
+      000584                       2499 _Port_Init:
+                           000584  2500 	C$HW10.c$90$1$127 ==.
+                                   2501 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:90: P1MDOUT |= 0x0F;  // set output pins P1.0-3 as output
+      000584 43 A5 0F         [24] 2502 	orl	_P1MDOUT,#0x0f
+                           000587  2503 	C$HW10.c$91$1$127 ==.
+                                   2504 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:91: P0MDOUT &= 0xFC;  // set SMB pins as input
+      000587 53 A4 FC         [24] 2505 	anl	_P0MDOUT,#0xfc
+                           00058A  2506 	C$HW10.c$92$1$127 ==.
+                           00058A  2507 	XG$Port_Init$0$0 ==.
+      00058A 22               [24] 2508 	ret
+                                   2509 ;------------------------------------------------------------
+                                   2510 ;Allocation info for local variables in function 'XBR0_Init'
+                                   2511 ;------------------------------------------------------------
+                           00058B  2512 	G$XBR0_Init$0$0 ==.
+                           00058B  2513 	C$HW10.c$100$1$127 ==.
+                                   2514 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:100: void XBR0_Init()
+                                   2515 ;	-----------------------------------------
+                                   2516 ;	 function XBR0_Init
+                                   2517 ;	-----------------------------------------
+      00058B                       2518 _XBR0_Init:
+                           00058B  2519 	C$HW10.c$102$1$128 ==.
+                                   2520 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:102: XBR0 = 0x27;  // configure crossbar like lab
+      00058B 75 E1 27         [24] 2521 	mov	_XBR0,#0x27
+                           00058E  2522 	C$HW10.c$103$1$128 ==.
+                           00058E  2523 	XG$XBR0_Init$0$0 ==.
+      00058E 22               [24] 2524 	ret
+                                   2525 ;------------------------------------------------------------
+                                   2526 ;Allocation info for local variables in function 'PCA_Init'
+                                   2527 ;------------------------------------------------------------
+                           00058F  2528 	G$PCA_Init$0$0 ==.
+                           00058F  2529 	C$HW10.c$111$1$128 ==.
+                                   2530 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:111: void PCA_Init(void)
+                                   2531 ;	-----------------------------------------
+                                   2532 ;	 function PCA_Init
+                                   2533 ;	-----------------------------------------
+      00058F                       2534 _PCA_Init:
+                           00058F  2535 	C$HW10.c$113$1$130 ==.
+                                   2536 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:113: PCA0MD = 0x81; // SYSCLK/12
+      00058F 75 D9 81         [24] 2537 	mov	_PCA0MD,#0x81
+                           000592  2538 	C$HW10.c$114$1$130 ==.
+                                   2539 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:114: PCA0CPM0 = PCA0CPM2 = PCA0CPM3 = 0xC2; //set CEX 0 2 and 3 to 16 bit mode
+      000592 75 DD C2         [24] 2540 	mov	_PCA0CPM3,#0xc2
+      000595 75 DC C2         [24] 2541 	mov	_PCA0CPM2,#0xc2
+      000598 75 DA C2         [24] 2542 	mov	_PCA0CPM0,#0xc2
+                           00059B  2543 	C$HW10.c$115$1$130 ==.
+                                   2544 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:115: PCA0CN |= 0x40; // start counting
+      00059B 43 D8 40         [24] 2545 	orl	_PCA0CN,#0x40
+                           00059E  2546 	C$HW10.c$117$1$130 ==.
+                                   2547 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:117: EA = 1; //initialize interrupts
+      00059E D2 AF            [12] 2548 	setb	_EA
+                           0005A0  2549 	C$HW10.c$118$1$130 ==.
+                                   2550 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:118: EIE1 |= 0x08;
+      0005A0 43 E6 08         [24] 2551 	orl	_EIE1,#0x08
+                           0005A3  2552 	C$HW10.c$119$1$130 ==.
+                           0005A3  2553 	XG$PCA_Init$0$0 ==.
+      0005A3 22               [24] 2554 	ret
+                                   2555 ;------------------------------------------------------------
+                                   2556 ;Allocation info for local variables in function 'SMB_Init'
+                                   2557 ;------------------------------------------------------------
+                           0005A4  2558 	G$SMB_Init$0$0 ==.
+                           0005A4  2559 	C$HW10.c$125$1$130 ==.
+                                   2560 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:125: void SMB_Init(void)
+                                   2561 ;	-----------------------------------------
+                                   2562 ;	 function SMB_Init
+                                   2563 ;	-----------------------------------------
+      0005A4                       2564 _SMB_Init:
+                           0005A4  2565 	C$HW10.c$127$1$132 ==.
+                                   2566 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:127: SMB0CR = 0x93;
+      0005A4 75 CF 93         [24] 2567 	mov	_SMB0CR,#0x93
+                           0005A7  2568 	C$HW10.c$128$1$132 ==.
+                                   2569 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:128: ENSMB = 1;
+      0005A7 D2 C6            [12] 2570 	setb	_ENSMB
+                           0005A9  2571 	C$HW10.c$129$1$132 ==.
+                           0005A9  2572 	XG$SMB_Init$0$0 ==.
+      0005A9 22               [24] 2573 	ret
+                                   2574 ;------------------------------------------------------------
+                                   2575 ;Allocation info for local variables in function 'PCA_ISR'
+                                   2576 ;------------------------------------------------------------
+                           0005AA  2577 	G$PCA_ISR$0$0 ==.
+                           0005AA  2578 	C$HW10.c$137$1$132 ==.
+                                   2579 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:137: void PCA_ISR ( void ) __interrupt 9
+                                   2580 ;	-----------------------------------------
+                                   2581 ;	 function PCA_ISR
+                                   2582 ;	-----------------------------------------
+      0005AA                       2583 _PCA_ISR:
+      0005AA C0 E0            [24] 2584 	push	acc
+      0005AC C0 D0            [24] 2585 	push	psw
+                           0005AE  2586 	C$HW10.c$139$1$134 ==.
+                                   2587 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:139: if (CF) // overflow flag
+                           0005AE  2588 	C$HW10.c$141$2$135 ==.
+                                   2589 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:141: CF = 0; // clear
+      0005AE 10 DF 02         [24] 2590 	jbc	_CF,00118$
+      0005B1 80 1E            [24] 2591 	sjmp	00102$
+      0005B3                       2592 00118$:
+                           0005B3  2593 	C$HW10.c$142$2$135 ==.
+                                   2594 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:142: PCA0 = 28703; // start value for 20ms
+      0005B3 75 E9 1F         [24] 2595 	mov	((_PCA0 >> 0) & 0xFF),#0x1f
+      0005B6 75 F9 70         [24] 2596 	mov	((_PCA0 >> 8) & 0xFF),#0x70
+                           0005B9  2597 	C$HW10.c$143$2$135 ==.
+                                   2598 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:143: ranger_count++; // increment
+      0005B9 05*16            [12] 2599 	inc	_ranger_count
+      0005BB E4               [12] 2600 	clr	a
+      0005BC B5*16 02         [24] 2601 	cjne	a,_ranger_count,00119$
+      0005BF 05*17            [12] 2602 	inc	(_ranger_count + 1)
+      0005C1                       2603 00119$:
+                           0005C1  2604 	C$HW10.c$144$2$135 ==.
+                                   2605 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:144: compass_count++; // increment
+      0005C1 05*18            [12] 2606 	inc	_compass_count
+      0005C3 E4               [12] 2607 	clr	a
+      0005C4 B5*18 02         [24] 2608 	cjne	a,_compass_count,00120$
+      0005C7 05*19            [12] 2609 	inc	(_compass_count + 1)
+      0005C9                       2610 00120$:
+                           0005C9  2611 	C$HW10.c$145$2$135 ==.
+                                   2612 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:145: counts++; // increment
+      0005C9 05*14            [12] 2613 	inc	_counts
+      0005CB E4               [12] 2614 	clr	a
+      0005CC B5*14 02         [24] 2615 	cjne	a,_counts,00121$
+      0005CF 05*15            [12] 2616 	inc	(_counts + 1)
+      0005D1                       2617 00121$:
+      0005D1                       2618 00102$:
+                           0005D1  2619 	C$HW10.c$148$1$134 ==.
+                                   2620 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:148: PCA0CN &= 0x40;
+      0005D1 53 D8 40         [24] 2621 	anl	_PCA0CN,#0x40
+                           0005D4  2622 	C$HW10.c$150$1$134 ==.
+                                   2623 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:150: if (ranger_count == 4) // long enough so that ranger gets a value
+      0005D4 74 04            [12] 2624 	mov	a,#0x04
+      0005D6 B5*16 06         [24] 2625 	cjne	a,_ranger_count,00122$
+      0005D9 E4               [12] 2626 	clr	a
+      0005DA B5*17 02         [24] 2627 	cjne	a,(_ranger_count + 1),00122$
+      0005DD 80 02            [24] 2628 	sjmp	00123$
+      0005DF                       2629 00122$:
+      0005DF 80 08            [24] 2630 	sjmp	00104$
+      0005E1                       2631 00123$:
+                           0005E1  2632 	C$HW10.c$152$2$136 ==.
+                                   2633 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:152: does_ranger_have_new_data = 1;
+      0005E1 75*1A 01         [24] 2634 	mov	_does_ranger_have_new_data,#0x01
+                           0005E4  2635 	C$HW10.c$153$2$136 ==.
+                                   2636 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:153: ranger_count = 0;
+      0005E4 E4               [12] 2637 	clr	a
+      0005E5 F5*16            [12] 2638 	mov	_ranger_count,a
+      0005E7 F5*17            [12] 2639 	mov	(_ranger_count + 1),a
+      0005E9                       2640 00104$:
+                           0005E9  2641 	C$HW10.c$156$1$134 ==.
+                                   2642 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:156: if (compass_count == 2) // long enough so that compass gets a value
+      0005E9 74 02            [12] 2643 	mov	a,#0x02
+      0005EB B5*18 06         [24] 2644 	cjne	a,_compass_count,00124$
+      0005EE E4               [12] 2645 	clr	a
+      0005EF B5*19 02         [24] 2646 	cjne	a,(_compass_count + 1),00124$
+      0005F2 80 02            [24] 2647 	sjmp	00125$
+      0005F4                       2648 00124$:
+      0005F4 80 08            [24] 2649 	sjmp	00107$
+      0005F6                       2650 00125$:
+                           0005F6  2651 	C$HW10.c$158$2$137 ==.
+                                   2652 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:158: does_compass_have_new_data = 1;
+      0005F6 75*1B 01         [24] 2653 	mov	_does_compass_have_new_data,#0x01
+                           0005F9  2654 	C$HW10.c$159$2$137 ==.
+                                   2655 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:159: compass_count = 0;
+      0005F9 E4               [12] 2656 	clr	a
+      0005FA F5*18            [12] 2657 	mov	_compass_count,a
+      0005FC F5*19            [12] 2658 	mov	(_compass_count + 1),a
+      0005FE                       2659 00107$:
+      0005FE D0 D0            [24] 2660 	pop	psw
+      000600 D0 E0            [24] 2661 	pop	acc
+                           000602  2662 	C$HW10.c$161$1$134 ==.
+                           000602  2663 	XG$PCA_ISR$0$0 ==.
+      000602 32               [24] 2664 	reti
+                                   2665 ;	eliminated unneeded mov psw,# (no regs used in bank)
+                                   2666 ;	eliminated unneeded push/pop dpl
+                                   2667 ;	eliminated unneeded push/pop dph
+                                   2668 ;	eliminated unneeded push/pop b
+                                   2669 ;------------------------------------------------------------
+                                   2670 ;Allocation info for local variables in function 'ranger'
+                                   2671 ;------------------------------------------------------------
+                                   2672 ;addr                      Allocated to registers 
+                                   2673 ;------------------------------------------------------------
+                           000603  2674 	G$ranger$0$0 ==.
+                           000603  2675 	C$HW10.c$163$1$134 ==.
+                                   2676 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:163: void ranger(void)
+                                   2677 ;	-----------------------------------------
+                                   2678 ;	 function ranger
+                                   2679 ;	-----------------------------------------
+      000603                       2680 _ranger:
+                           000603  2681 	C$HW10.c$166$1$139 ==.
+                                   2682 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:166: i2c_read_data(addr, 6, data_array, 2); // read register 6 and 7, echo 3
+      000603 75*10r23         [24] 2683 	mov	_i2c_read_data_PARM_3,#_data_array
+      000606 75*11 00         [24] 2684 	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      000609 75*12 40         [24] 2685 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+      00060C 75*0F 06         [24] 2686 	mov	_i2c_read_data_PARM_2,#0x06
+      00060F 75*13 02         [24] 2687 	mov	_i2c_read_data_PARM_4,#0x02
+      000612 75 82 E0         [24] 2688 	mov	dpl,#0xe0
+      000615 12r04r06         [24] 2689 	lcall	_i2c_read_data
+                           000618  2690 	C$HW10.c$167$1$139 ==.
+                                   2691 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:167: range = (((unsigned int)data_array[0] << 8) | data_array[1]); // concatenate
+      000618 AF*23            [24] 2692 	mov	r7,_data_array
+      00061A 7E 00            [12] 2693 	mov	r6,#0x00
+      00061C AC*24            [24] 2694 	mov	r4,(_data_array + 0x0001)
+      00061E 7D 00            [12] 2695 	mov	r5,#0x00
+      000620 EC               [12] 2696 	mov	a,r4
+      000621 4E               [12] 2697 	orl	a,r6
+      000622 F5*1E            [12] 2698 	mov	_range,a
+      000624 ED               [12] 2699 	mov	a,r5
+      000625 4F               [12] 2700 	orl	a,r7
+      000626 F5*1F            [12] 2701 	mov	(_range + 1),a
+                           000628  2702 	C$HW10.c$169$1$139 ==.
+                                   2703 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:169: i2c_read_data(addr, 0 , version_array, 1); // read register 0
+      000628 75*10r25         [24] 2704 	mov	_i2c_read_data_PARM_3,#_version_array
+                                   2705 ;	1-genFromRTrack replaced	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      00062B 8E*11            [24] 2706 	mov	(_i2c_read_data_PARM_3 + 1),r6
+      00062D 75*12 40         [24] 2707 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+                                   2708 ;	1-genFromRTrack replaced	mov	_i2c_read_data_PARM_2,#0x00
+      000630 8E*0F            [24] 2709 	mov	_i2c_read_data_PARM_2,r6
+      000632 75*13 01         [24] 2710 	mov	_i2c_read_data_PARM_4,#0x01
+      000635 75 82 E0         [24] 2711 	mov	dpl,#0xe0
+      000638 12r04r06         [24] 2712 	lcall	_i2c_read_data
+                           00063B  2713 	C$HW10.c$170$1$139 ==.
+                                   2714 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:170: ranger_version = version_array[0]; // store version data
+      00063B 85*25*22         [24] 2715 	mov	_ranger_version,_version_array
+                           00063E  2716 	C$HW10.c$171$1$139 ==.
+                           00063E  2717 	XG$ranger$0$0 ==.
+      00063E 22               [24] 2718 	ret
+                                   2719 ;------------------------------------------------------------
+                                   2720 ;Allocation info for local variables in function 'compass'
+                                   2721 ;------------------------------------------------------------
+                                   2722 ;addr                      Allocated to registers 
+                                   2723 ;------------------------------------------------------------
+                           00063F  2724 	G$compass$0$0 ==.
+                           00063F  2725 	C$HW10.c$173$1$139 ==.
+                                   2726 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:173: void compass(void)
+                                   2727 ;	-----------------------------------------
+                                   2728 ;	 function compass
+                                   2729 ;	-----------------------------------------
+      00063F                       2730 _compass:
+                           00063F  2731 	C$HW10.c$176$1$141 ==.
+                                   2732 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:176: i2c_read_data(addr, 4, data_array, 2); // read register 4 and 5
+      00063F 75*10r23         [24] 2733 	mov	_i2c_read_data_PARM_3,#_data_array
+      000642 75*11 00         [24] 2734 	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      000645 75*12 40         [24] 2735 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+      000648 75*0F 04         [24] 2736 	mov	_i2c_read_data_PARM_2,#0x04
+      00064B 75*13 02         [24] 2737 	mov	_i2c_read_data_PARM_4,#0x02
+      00064E 75 82 C0         [24] 2738 	mov	dpl,#0xc0
+      000651 12r04r06         [24] 2739 	lcall	_i2c_read_data
+                           000654  2740 	C$HW10.c$177$1$141 ==.
+                                   2741 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:177: heading = (((int)data_array[0] << 8) | data_array[1]); // concatenate bytes
+      000654 AF*23            [24] 2742 	mov	r7,_data_array
+      000656 7E 00            [12] 2743 	mov	r6,#0x00
+      000658 AC*24            [24] 2744 	mov	r4,(_data_array + 0x0001)
+      00065A 7D 00            [12] 2745 	mov	r5,#0x00
+      00065C EC               [12] 2746 	mov	a,r4
+      00065D 4E               [12] 2747 	orl	a,r6
+      00065E F5*1C            [12] 2748 	mov	_heading,a
+      000660 ED               [12] 2749 	mov	a,r5
+      000661 4F               [12] 2750 	orl	a,r7
+      000662 F5*1D            [12] 2751 	mov	(_heading + 1),a
+                           000664  2752 	C$HW10.c$179$1$141 ==.
+                                   2753 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:179: i2c_read_data(addr, 0, version_array, 1); // read register 0
+      000664 75*10r25         [24] 2754 	mov	_i2c_read_data_PARM_3,#_version_array
+                                   2755 ;	1-genFromRTrack replaced	mov	(_i2c_read_data_PARM_3 + 1),#0x00
+      000667 8E*11            [24] 2756 	mov	(_i2c_read_data_PARM_3 + 1),r6
+      000669 75*12 40         [24] 2757 	mov	(_i2c_read_data_PARM_3 + 2),#0x40
+                                   2758 ;	1-genFromRTrack replaced	mov	_i2c_read_data_PARM_2,#0x00
+      00066C 8E*0F            [24] 2759 	mov	_i2c_read_data_PARM_2,r6
+      00066E 75*13 01         [24] 2760 	mov	_i2c_read_data_PARM_4,#0x01
+      000671 75 82 C0         [24] 2761 	mov	dpl,#0xc0
+      000674 12r04r06         [24] 2762 	lcall	_i2c_read_data
+                           000677  2763 	C$HW10.c$180$1$141 ==.
+                                   2764 ;	C:\Users\XuMartin\OneDrive2\OneDrive - Rensselaer Polytechnic Institute\1. LITEC\Labs\Lab 3-2\HW10.c:180: compass_version = version_array[0]; // store version data
+      000677 85*25*21         [24] 2765 	mov	_compass_version,_version_array
+                           00067A  2766 	C$HW10.c$181$1$141 ==.
+                           00067A  2767 	XG$compass$0$0 ==.
+      00067A 22               [24] 2768 	ret
+                                   2769 	.area CSEG    (CODE)
+                                   2770 	.area CONST   (CODE)
+                           000000  2771 FHW10$__str_0$0$0 == .
+      000000                       2772 ___str_0:
+      000000 0A                    2773 	.db 0x0a
+      000001 54 79 70 65 20 64 69  2774 	.ascii "Type digits; end w/#"
+             67 69 74 73 3B 20 65
+             6E 64 20 77 2F 23
+      000015 00                    2775 	.db 0x00
+                           000016  2776 FHW10$__str_1$0$0 == .
+      000016                       2777 ___str_1:
+      000016 20 20 20 20 20 25 63  2778 	.ascii "     %c%c%c%c%c"
+             25 63 25 63 25 63 25
+             63
+      000025 00                    2779 	.db 0x00
+                           000026  2780 FHW10$__str_2$0$0 == .
+      000026                       2781 ___str_2:
+      000026 25 63                 2782 	.ascii "%c"
+      000028 00                    2783 	.db 0x00
+                           000029  2784 FHW10$__str_3$0$0 == .
+      000029                       2785 ___str_3:
+      000029 43 75 72 72 65 6E 74  2786 	.ascii "Current Distance (3rd echo) = %u    Software Revision (range"
+             20 44 69 73 74 61 6E
+             63 65 20 28 33 72 64
+             20 65 63 68 6F 29 20
+             3D 20 25 75 20 20 20
+             20 53 6F 66 74 77 61
+             72 65 20 52 65 76 69
+             73 69 6F 6E 20 28 72
+             61 6E 67 65
+      000065 72 29 20 23 20 3D 20  2787 	.ascii "r) # = %d    Heading: %i    Software Revision (compass) # = "
+             25 64 20 20 20 20 48
+             65 61 64 69 6E 67 3A
+             20 25 69 20 20 20 20
+             53 6F 66 74 77 61 72
+             65 20 52 65 76 69 73
+             69 6F 6E 20 28 63 6F
+             6D 70 61 73 73 29 20
+             23 20 3D 20
+      0000A1 25 64 20              2788 	.ascii "%d "
+      0000A4 0D                    2789 	.db 0x0d
+      0000A5 0A                    2790 	.db 0x0a
+      0000A6 00                    2791 	.db 0x00
+                                   2792 	.area XINIT   (CODE)
+                                   2793 	.area CABS    (ABS,CODE)

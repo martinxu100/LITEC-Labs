@@ -1,0 +1,181 @@
+/* Names: Martin Xu, Daniel Alegria, Ankur Singh
+Section/Side/Seat: 1/26/B
+Date: 6/13/19
+
+Description: HW10
+*/
+
+#include <c8051_SDCC.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <i2c.h>
+//-----------------------------------------------------------------------------
+// Function Prototypes
+//-----------------------------------------------------------------------------
+void Port_Init(void);
+void PCA_Init(void);
+void XBR0_Init(void);
+void SMB_Init(void);
+void PCA_ISR( void ) __interrupt 9;
+
+void ranger(void);
+void compass(void);
+
+//-----------------------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------------------
+unsigned int counts = 0;
+unsigned int ranger_count = 0;
+unsigned int compass_count = 0;
+
+unsigned char does_ranger_have_new_data = 0;
+unsigned char does_compass_have_new_data = 0;
+
+int heading = 0;
+unsigned int range = 0;
+
+unsigned char input_data[0] = {0x50}; // 0x50 is the code for "use inches"
+unsigned char compass_version = 0;
+unsigned char ranger_version = 0;
+
+unsigned char data_array[2];
+unsigned char version_array[1];
+
+//-----------------------------------------------------------------------------
+// Main Function
+//-----------------------------------------------------------------------------
+void main(void)
+{
+    // initialize everything
+    Sys_Init();
+    putchar(' ');
+    Port_Init();
+    XBR0_Init();
+    PCA_Init();
+	SMB_Init();
+
+
+	while(1) // infinite loop
+	{
+		if(does_ranger_have_new_data)
+		{
+			ranger(); // get data set to array
+			i2c_write_data(0xE0, 0, input_data, 1); //start new ultrasonic ping to get back in inches
+			does_ranger_have_new_data = 0;
+		}
+		
+		if(does_compass_have_new_data)
+		{
+			compass(); // get data set to array
+			does_compass_have_new_data = 0;
+		}
+		
+		if(counts >= 8) // guarentees both will have refreshed data
+		{
+			printf("Current Distance (3rd echo) = %u    Software Revision (ranger) # = %d    Heading: %i    Software Revision (compass) # = %d \r\n",
+			 range, ranger_version, heading, compass_version);
+			counts = 0; // reset print counts
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Port_Init
+//-----------------------------------------------------------------------------
+//
+// Set up port configuration for I/O
+//
+void Port_Init()
+{
+    P1MDOUT |= 0x0F;  // set output pins P1.0-3 as output
+	P0MDOUT &= 0xFC;  // set SMB pins as input
+}
+
+//-----------------------------------------------------------------------------
+// XBR0_Init
+//-----------------------------------------------------------------------------
+//
+// Set up the crossbar
+//
+void XBR0_Init()
+{
+    XBR0 = 0x27;  // configure crossbar like lab
+}
+
+//-----------------------------------------------------------------------------
+// PCA_Init
+//-----------------------------------------------------------------------------
+//
+// Set up Programmable Counter Array
+//
+void PCA_Init(void)
+{
+    PCA0MD = 0x81; // SYSCLK/12
+	PCA0CPM0 = PCA0CPM2 = PCA0CPM3 = 0xC2; //set CEX 0 2 and 3 to 16 bit mode
+	PCA0CN |= 0x40; // start counting
+	
+	EA = 1; //initialize interrupts
+	EIE1 |= 0x08;
+}
+
+//-----------------------------------------------------------------------------
+// SMB_Init
+//-----------------------------------------------------------------------------
+//
+void SMB_Init(void)
+{
+	SMB0CR = 0x93;
+	ENSMB = 1;
+}
+
+//-----------------------------------------------------------------------------
+// PCA_ISR
+//-----------------------------------------------------------------------------
+//
+// Interrupt Service Routine for Programmable Counter Array Overflow Interrupt
+//
+void PCA_ISR ( void ) __interrupt 9
+{
+    if (CF) // overflow flag
+	{
+		CF = 0; // clear
+		PCA0 = 28703; // start value for 20ms
+		ranger_count++; // increment
+		compass_count++; // increment
+		counts++; // increment
+	}
+
+	PCA0CN &= 0x40;
+
+	if (ranger_count == 4) // long enough so that ranger gets a value
+	{
+		does_ranger_have_new_data = 1;
+		ranger_count = 0;
+	}
+
+	if (compass_count == 2) // long enough so that compass gets a value
+	{
+		does_compass_have_new_data = 1;
+		compass_count = 0;
+	}
+}
+
+void ranger(void)
+{
+	unsigned char addr = 0xE0; // address 0xE0 is the ultrasonic ranger
+	i2c_read_data(addr, 6, data_array, 2); // read register 6 and 7, echo 3
+	range = (((unsigned int)data_array[0] << 8) | data_array[1]); // concatenate
+
+	i2c_read_data(addr, 0 , version_array, 1); // read register 0
+	ranger_version = version_array[0]; // store version data
+}
+
+void compass(void)
+{
+	unsigned char addr = 0xC0; // address 0xC0 is the compass
+	i2c_read_data(addr, 4, data_array, 2); // read register 4 and 5
+	heading = (((int)data_array[0] << 8) | data_array[1]); // concatenate bytes
+
+	i2c_read_data(addr, 0, version_array, 1); // read register 0
+	compass_version = version_array[0]; // store version data
+}

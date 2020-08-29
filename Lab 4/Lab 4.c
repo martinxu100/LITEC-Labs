@@ -1,0 +1,388 @@
+/* Name: Martin Xu, Daniel Alegria, Ankur Singh
+Section: 1
+Date: 6/21/19
+File name: Lab 4
+Description: Automated drive with user inputted settings
+*/
+
+#include <c8051_SDCC.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <i2c.h>
+#include <math.h>
+//-----------------------------------------------------------------------------
+// Function Prototypes
+//-----------------------------------------------------------------------------
+void Port_Init (void);
+void PCA_Init (void);
+void Interrupt_Init (void);
+void XBR0_Init();
+void SMB_Init(void);
+void Set_DrivePulsewidth(void);
+void PCA_ISR (void) __interrupt 9;
+void ReadRanger (void);
+void Steering_Servo();
+unsigned int Read_Compass();
+void errHeading(void);
+void getHeading(void);
+void getGain(void);
+void ObjectInRange(void);
+void printData(void);
+unsigned char read_AD_input(unsigned char n);
+void ADC_Init(void);
+
+//-----------------------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------------------
+
+//Ranger and Drive
+__xdata unsigned int dr_DrivePW_Neutral = 2750;	//Drive Motor Initialization
+__xdata unsigned int dr_DrivePW_Min = 2013; 	//
+__xdata unsigned int dr_DrivePW_Max = 3487;		//
+__xdata unsigned int dr_DrivePW;				//current drive pulsewidth
+unsigned int dr_counts;							//count variables
+unsigned char dr_ranger_count;					//
+unsigned int dr_new_range;						
+unsigned int dr_range;
+unsigned char dr_data_array[2];					//saved i2c data
+unsigned char dr_input_data[0] = {0x51};		//setting to get range back in cm
+unsigned int dr_desired_distance;				//comparison variables used to determine pulse width
+unsigned int dr_actual_distance;				//
+signed char dr_k = 0;							//speed modifier in the pulsewidth equation
+unsigned int forward;							//saves 1 if pulsewidth is above neutral (moving forward), or 0 if below (reverse)
+unsigned char ADC_value;						//sets fraction of max speed with data from the potentiometer
+
+//Compass and Steering
+__xdata unsigned int SV_PW_CENTER = 2900; 		//Steering Initialization
+__xdata unsigned int SV_PW_LEFT = 2400;			//
+__xdata unsigned int SV_PW_RIGHT = 3400;		//
+__xdata unsigned int SV_SERVO_PW;				//current steering pulsewidth
+unsigned int sv_counts = 0;						//count variables
+unsigned char sv_h_count;						//
+unsigned char sv_printcounts;					//
+char sv_input;
+char sv_input2;
+unsigned int sv_heading;						//current heading
+unsigned int sv_new_heading;					//returns if a new heading is gathered
+unsigned int sv_desired_heading = 0;			//heading desired by user input
+signed int sv_error;							//steering error
+signed int sv_k = 0;							//steering multiplier
+signed int sv_temp_servo_pw;					//intermediary between current pulsewidth and input + equations to determine new pulsewidth
+__sbit __at 0xB7 SS;							//sbit labels
+__sbit __at 0xB5 BLED1;	//green
+__sbit __at 0xB6 BLED2;	//red
+__sbit __at 0x93 POT;
+
+//-----------------------------------------------------------------------------
+// Main Function
+//-----------------------------------------------------------------------------
+void main(void)
+{
+    //initialize board
+    Sys_Init();
+    putchar(' ');
+    Port_Init();
+    XBR0_Init();
+    PCA_Init();
+    Interrupt_Init();
+	SMB_Init();
+	ADC_Init();
+	CR = 1;
+
+	//set the PCA output to a neutral setting and wait 1 second
+    dr_DrivePW = dr_DrivePW_Neutral;
+	PCA0CP2 = 0xFFFF - dr_DrivePW;
+	dr_counts = 0;
+	lcd_clear();
+	while (dr_counts <= 50);
+	forward = 1;
+    while(1)
+	{
+		if (SS)		//switch off
+		{
+			//Set drive to neutral
+			dr_DrivePW = dr_DrivePW_Neutral;
+			PCA0CP2 = 0xFFFF - dr_DrivePW;
+
+			//Set steering to center
+			SV_SERVO_PW = SV_PW_CENTER;
+			PCA0CPL0 = 0xFFFF - SV_SERVO_PW;
+			PCA0CPH0 = (0xFFFF - SV_SERVO_PW) >> 8;
+
+			//Get inputs
+			getGain();
+			getHeading();
+			ADC_value = read_AD_input(3);
+		}
+
+
+		if (!SS)	//switch on
+		{
+			if (forward == 1)
+			{
+				BLED1 = 1;
+				BLED2 = 0;
+			}
+			else
+			{
+				BLED1 = 0;
+				BLED2 = 1;
+			}
+				
+			Set_DrivePulsewidth();
+			dr_counts = 0;
+			while (dr_counts < 150)								//Drive 3 seconds
+			{
+				if (sv_new_heading)								//Read Compass
+				{
+					sv_heading = Read_Compass();
+					errHeading();								//Steer
+				}
+			}
+			printData();
+			if (dr_new_range)									//After 3 seconds, read Ranger
+			{
+				ReadRanger();
+				i2c_write_data(0xE0, 0, dr_input_data, 1);		//start ping to get range back in cm
+				dr_new_range = 0;
+				ObjectInRange();
+			}	
+		}
+	}
+}
+
+
+//-----------------------------------------------------------------------------
+// Init
+//-----------------------------------------------------------------------------
+// Set up ports for input and output
+void Port_Init()
+{
+	P1MDOUT &= 0xE6;
+	P1MDIN &= ~0x08;
+	P1MDIN |= 0x11;
+	P1 |= ~0xE6;
+	P0MDOUT &= 0x3F;		//set SDA and SCL to input
+	P3MDOUT &= 0x7F;
+	P3MDOUT |= 0x60; 		
+	P3 = 0x80;
+}
+
+// XBR0_Init
+// Set up the crossbar
+void XBR0_Init()
+{
+	XBR0 = 0x1F;
+}
+
+// PCA_Init
+// Set up Programmable Counter Array
+void PCA_Init(void)
+{
+	PCA0MD = 0x81;		//SYSCLK/12
+	PCA0CPM2 = 0xC2;	//CCM2 in 16 bit compare mode
+	PCA0CPM0 = 0xC2;
+	PCA0CN = 0x40; 		//enable PCA counter
+}
+
+// Interrupt_Init
+// Set up the PCA overflow interrupts
+void Interrupt_Init()
+{
+	EA = 1;			//enable global interrupts
+	EIE1 = 0x08;	//enable PCA interrupt
+}
+
+// PCA_ISR
+// Interrupt Service Routine for Programmable Counter Array Overflow Interrupt
+void PCA_ISR (void) __interrupt 9
+{
+	dr_counts++;
+	dr_ranger_count++;
+	sv_h_count++;
+	sv_counts++;
+	sv_printcounts++;
+	PCA0 = 28672;				//20ms start value
+	CF = 0;
+	PCA0CN &= 0x40;
+
+	if (dr_ranger_count == 4)	//80ms wait
+	{
+		dr_new_range = 1;
+		dr_ranger_count = 0;
+	}
+
+	if (sv_h_count == 3) 		//60ms wait
+	{
+		sv_new_heading = 1;
+		sv_h_count = 0;
+	}
+}
+
+// SMB_Init
+void SMB_Init(void)
+{
+	SMB0CR=0x93; 	//set SCL to 100KHz (actual freq ~ 94,594Hz)*/
+	ENSMB=1; 		//bit 6 of SMB0CN, enable the SMBus */
+}
+
+//ADC_Init
+void ADC_Init(void)
+{
+	
+	REF0CN = 0x03;  //set VREF to internal pin not external
+	ADC1CN = 0x80;  //set ADC1 to active
+	ADC1CF |= 0x01; //set gain to 1
+}
+
+unsigned char read_AD_input(unsigned char n)
+{
+	AMX1SL = n; 			 		 //sets pin P1.n as analog input for ADC1
+	ADC1CN &= ~0x20; 				 //clears conversion flag
+	ADC1CN |= 0x10; 				 //initiate A/D conversion
+	while ((ADC1CN & 0x20) == 0x00); //waits until the control register says conversion is complete
+	return ADC1; 				   	 //outputs conversion's value
+}
+
+
+//-----------------------------------------------------------------------------
+// Ranger and Drive
+//-----------------------------------------------------------------------------
+void ReadRanger(void)
+{
+	unsigned char addr = 0xE0; 															//address 0xE0 is the ultrasonic ranger
+	i2c_read_data(addr, 2, dr_data_array, 2);											//read register 2 and 3, echo 1
+	dr_actual_distance = (((unsigned int)dr_data_array[0] << 8) | dr_data_array[1]);	//concatenate
+}
+
+void ObjectInRange(void)
+{
+	if (dr_actual_distance <= 20)	//if anything within 20cm
+	{
+		if (forward == 1)			//reverse direction
+		{
+			forward = 0;
+		}
+		else
+		{
+			forward = 1;
+		}
+	}
+}
+
+void Set_DrivePulsewidth(void)					//pulsewidth depends on both A/D and inputted gain
+{
+	if (forward == 1)
+	{
+		dr_DrivePW = ((ADC_value*737.0*dr_k)/255.0) + dr_DrivePW_Neutral;
+		if (dr_DrivePW > dr_DrivePW_Max)		//check if greater than pulsewidth maximum
+		{
+			dr_DrivePW = dr_DrivePW_Max;		//set PW to the maximum value
+		}
+	}
+	else
+	{
+		dr_DrivePW = dr_DrivePW_Neutral - ((ADC_value*737.0*dr_k)/255.0);
+		if (dr_DrivePW < dr_DrivePW_Min)		//check if greater than pulsewidth maximum
+		{
+			dr_DrivePW = dr_DrivePW_Min;		//set PW to the maximum value
+		}
+	}
+
+    PCA0CP2 = 0xFFFF - dr_DrivePW;
+}
+
+
+//-----------------------------------------------------------------------------
+// Compass and Steering
+//-----------------------------------------------------------------------------
+unsigned int Read_Compass()
+{
+	unsigned char addr = 0xC0;							//the address of the sensor, 0xC0 for the compass
+	unsigned char Data[2];								//Data is an array with a length of 2
+	unsigned int heading;								//the heading returned in degrees between 0 and 3599 
+	i2c_read_data(addr, 2, Data, 2);					//read two byte, starting at reg 2
+	heading =(((unsigned int)Data[0] << 8) | Data[1]);	//combine the two values
+	return heading;										//heading returned in tenths degrees from 0 to 3599
+}
+
+void errHeading(void)
+{
+	sv_error = sv_desired_heading - sv_heading;		
+	if( sv_error > 1800 ) 								//fixes issue when desired and actual heading are very far away from each other
+	{													
+		sv_error -= 3600;
+	}
+	else if( sv_error < -1800 ) 
+	{
+		sv_error += 3600;
+	}
+	if(forward == 1)									//switches direction but maintains magnitude of wheel turn if moving reverse
+	{
+		sv_temp_servo_pw = ((500.0 * sv_error * sv_k)/1800.0) + SV_PW_CENTER;
+	} 
+	else if (forward == 0)
+	{
+		sv_temp_servo_pw = SV_PW_CENTER - ((500.0 * sv_error * sv_k)/1800.0);
+	} 
+	SV_SERVO_PW = sv_temp_servo_pw;						//saves the equation value as the current pulsewidth
+	PCA0CPL0 = 0xFFFF - SV_SERVO_PW;
+	PCA0CPH0 = (0xFFFF - SV_SERVO_PW) >> 8;
+	sv_new_heading = 0;
+}
+
+
+//-----------------------------------------------------------------------------
+// Get Inputs
+//-----------------------------------------------------------------------------
+void getGain(void) 
+{
+	lcd_clear();									//clears lcd screen
+	lcd_print("Input Drive Gain: ");				//gets input of desired drive gain from keypad and saves to variable
+	dr_k = kpd_input(0);
+	lcd_print("\r\n Drive Gain: %d \r\n", dr_k);
+	printf("Drive Gain: %d \r\n", dr_k);
+	while(sv_printcounts < 100);
+	sv_printcounts = 0;
+	lcd_clear();							
+
+	lcd_print("Input Steer Gain: ");				//gets input of steering from keypad and saves to variable
+	sv_k = kpd_input(0);
+	lcd_print("\r\n Steer Gain: %d \r\n", sv_k);
+	printf("Steer Gain: %d \r\n", sv_k);
+	while(sv_printcounts < 100);
+	lcd_clear();
+}
+
+void getHeading(void)											//gets desired heading
+{
+	lcd_clear();
+	lcd_print("Input Heading: ");
+	sv_desired_heading = kpd_input(0);
+	if(sv_desired_heading < 600 || sv_desired_heading > 1200)	//if input is out of bounds, restarts function and prompts user again
+	{
+		sv_desired_heading = 0;
+		lcd_print("Please input between 600 and 1200");
+		getHeading();
+	}
+	lcd_print("\r\n Desired Heading: %d \r\n", sv_desired_heading);
+	printf("Desired Heading: %d \r\n", sv_desired_heading);
+	while(sv_printcounts < 10)
+	lcd_clear();
+	sv_printcounts = 0;
+}
+
+
+//-----------------------------------------------------------------------------
+// Print Data
+//-----------------------------------------------------------------------------
+void printData(void)											//prints necessary values
+{
+	printf("Compass direction is %d\r\n", sv_heading);
+	printf("The direction error is %d\r\n", sv_error);
+	printf("The steering pulsewidth is %\d\r\n", sv_temp_servo_pw);
+	printf("The current distance is %d\r\n", dr_actual_distance);
+	printf("The ADCI value is %u\r\n", ADC_value);
+	printf("The drive motor pulsewidth is %d\r\n\n", dr_DrivePW);
+	printf("desired direction: %d \r\n", sv_desired_heading);
+}
